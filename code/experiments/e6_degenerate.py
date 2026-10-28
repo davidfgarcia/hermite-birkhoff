@@ -49,13 +49,18 @@ def case(name):
         fun = [hb.partial((0.0, 0.0), (1, 0))] + [f for q in [(0.05, 0.7), (-0.05, -0.4), (0.05, 1.3)]
                                                   for f in hb.hermite_set(q, 1)]
         return fun, dict(degree=1, alpha=2), [0], "generic"
+    if name == "2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)":
+        p0, p1 = (0.2, 0.3), (0.7, 0.6)
+        fun = hb.hermite_set(p0, 3) + hb.hermite_set(p1, 3)
+        return fun, dict(degree=3, alpha=2), [0], "conjecture"
     raise KeyError(name)
 
 
 CASES = ["1D interpolatory: f'(0), f(1), f'(2.5)", "  + value f(4)",
          "2D, K=2: grad at x0; Hermite k=2 at x1", "  + Hermite k=2 at a third node",
          "2D, K=2: f, Dxx at x0; Hermite k=2 at x1 (alpha=4)", "  + Hermite k=2 at a third node (alpha=4)",
-         "2D symmetric: Dx at 0; Hermite k=1 on the x2-axis", "  nodes moved 0.05 off the axis"]
+         "2D symmetric: Dx at 0; Hermite k=1 on the x2-axis", "  nodes moved 0.05 off the axis",
+         "2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)"]
 
 
 def run(name):
@@ -69,7 +74,7 @@ def run(name):
                 if f.order == 0 and name.startswith("2D, K=2: f"):
                     continue           # the value datum satisfies (i); not of interest
                 out.append(dict(case=name, seed=seed, datum=f"{describe(f)} at {tuple(round(c, 2) for c in f.point)}",
-                                theorem=pred, err=e1, err_r1e4=e2, verdict=v))
+                                theorem=pred, err=e1, err_r1e5=e2, verdict=v))
     return out
 
 
@@ -82,14 +87,14 @@ def identities():
     mpop = hb.MPSingularMLS(op)
     y = rng.normal(size=len(fun))
     err = {}
-    for r in (1e-6, 1e-4):
+    for r in (1e-6, 1e-5):
         cache = {}
         for i in np.nonzero(op.node_of_row == 0)[0]:
             f = op.fun[i]
             with mp.workdps(200):
                 err[(describe(f), r)] = float(lambda_u(mpop, f, y, r, cache) - mp.mpf(y[i]))
     rows = []
-    for r in (1e-6, 1e-4):
+    for r in (1e-6, 1e-5):
         e = lambda s: err[(s, r)]
         rows.append(dict(radius=r, Dxx=e("Dxx"), Dyy=e("Dyy"), Dxy=e("Dxy"),
                          Dxxx=e("Dxxx"), three_Dxyy=3 * e("Dxyy"), Dyyy=e("Dyyy"), three_Dxxy=3 * e("Dxxy"),
@@ -103,7 +108,7 @@ if __name__ == "__main__":
     print("(a) degenerate configurations: condition (i) fails at the checked data")
     for r in rows:
         print(f"  {r['case']:<52} seed {r['seed']}  {r['datum']:<22} Theory: {r['theorem']:<16}"
-              f" err {r['err']:.1e} / {r['err_r1e4']:.1e}  -> {r['verdict']}")
+              f" err {r['err']:.1e} / {r['err_r1e5']:.1e}  -> {r['verdict']}")
     ids = identities()
     print("\n(b) error identities, Hermite k=3 node in 2D, alpha=2 (signed errors)")
     for r in ids:

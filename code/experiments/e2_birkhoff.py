@@ -49,7 +49,7 @@ def run_1d(name):
     y = np.random.default_rng(7).normal(size=len(fun))
     node_funs = [f for f in fun if f.point == (0.0,)]
     return [dict(dim=1, pattern=name, datum=describe(f), predicted=predicted(f, node_funs, op.alpha),
-                 err=e1, err_r1e4=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
+                 err=e1, err_r1e5=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
 
 
 def run_2d(name):
@@ -60,7 +60,7 @@ def run_2d(name):
     y = rng.normal(size=len(fun))
     node_funs = P2[name](pts[0])
     return [dict(dim=2, pattern=name, datum=describe(f), predicted=predicted(f, node_funs, op.alpha),
-                 err=e1, err_r1e4=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
+                 err=e1, err_r1e5=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
 
 
 P2_ALPHA2 = {
@@ -80,7 +80,7 @@ def run_2d_alpha2(name):
     op = hb.SingularMLS(fun, degree=3, alpha=2, delta=1.0)
     y = rng.normal(size=len(fun))
     return [dict(dim=2, pattern=name, datum=describe(f), predicted=predicted(f, node_funs, op.alpha),
-                 err=e1, err_r1e4=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
+                 err=e1, err_r1e5=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
 
 
 def run_kl(same_points):
@@ -98,7 +98,7 @@ def run_kl(same_points):
         node_funs = [f for f in fun if f.point == tuple(op.nodes[node])]
         for f, e1, e2, v in check_node(op, y, node):
             out.append(dict(dim=2, pattern=tag, datum=f"node {node}: {describe(f)}",
-                            predicted=predicted(f, node_funs, op.alpha), err=e1, err_r1e4=e2, verdict=v))
+                            predicted=predicted(f, node_funs, op.alpha), err=e1, err_r1e5=e2, verdict=v))
     return out
 
 
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         r["predicted"] = "exact" if r["predicted"] else "not exact"
         ok = r["verdict"] == r["predicted"]
         agree += ok
-        print(f"{r['dim']}D {r['pattern']:<42} {r['datum']:<22} err={r['err']:.1e}/{r['err_r1e4']:.1e}  "
+        print(f"{r['dim']}D {r['pattern']:<42} {r['datum']:<22} err={r['err']:.1e}/{r['err_r1e5']:.1e}  "
               f"{r['verdict']:<10} predicted {r['predicted']:<10}{'' if ok else '   <-- MISMATCH'}")
     print(f"\nprediction agrees with observation for {agree}/{len(rows)} data; "
           f"unstable: {sum(r['verdict'] == 'UNSTABLE' for r in rows)};  {time.time() - t0:.0f}s")

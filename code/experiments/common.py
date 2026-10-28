@@ -88,7 +88,7 @@ def lambda_u(mpop, f, y, r, cache):
     return val
 
 
-def check_node(op, y, node_index, radii=(1e-6, 1e-4)):
+def check_node(op, y, node_index, radii=(1e-6, 1e-5)):
     """lambda(u) - y for every datum at one node, at two stencil radii.
 
     Returns tuples (functional, error at radii[0], error at radii[1], verdict) where

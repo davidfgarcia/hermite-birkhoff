@@ -44,7 +44,7 @@ def case(spec):
     rows = []
     for f, e1, e2, verdict in check_node(op, y, 0):
         rows.append(dict(case=name, dim=dim, k=k, alpha=alpha, degree=m, datum=describe(f),
-                         order=f.order, err_r1e6=e1, err_r1e4=e2, verdict=verdict,
+                         order=f.order, err_r1e6=e1, err_r1e5=e2, verdict=verdict,
                          predicted="exact" if predicted(f, first, alpha) else "not exact"))
     return rows
 
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         ok = r["verdict"] == r["predicted"]
         agree += ok
         print(f"{r['dim']}D {r['case']:<13} k={r['k']} alpha={r['alpha']} m={r['degree']}  {r['datum']:<16}"
-              f" err {r['err_r1e6']:.1e} / {r['err_r1e4']:.1e}   {r['verdict']:<10} predicted {r['predicted']:<10}"
+              f" err {r['err_r1e6']:.1e} / {r['err_r1e5']:.1e}   {r['verdict']:<10} predicted {r['predicted']:<10}"
               f"{'' if ok else '  <-- MISMATCH'}")
     print(f"\nprediction agrees for {agree}/{len(rows)} data;  "
           f"unstable verdicts: {sum(r['verdict'] == 'UNSTABLE' for r in rows)};  {time.time() - t0:.0f}s")
