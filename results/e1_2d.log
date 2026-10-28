@@ -1,0 +1,14 @@
+2D k=1 alpha=2: r=0:0e+00  r=1:0e+00
+2D k=1 alpha=4: r=0:0e+00  r=1:0e+00
+2D k=1 alpha=6: r=0:0e+00  r=1:0e+00
+2D k=2 alpha=2: r=0:0e+00  r=1:0e+00  r=2:2e+02
+2D k=2 alpha=4: r=0:0e+00  r=1:0e+00  r=2:0e+00
+2D k=2 alpha=6: r=0:0e+00  r=1:0e+00  r=2:0e+00
+2D k=3 alpha=2: r=0:0e+00  r=1:0e+00  r=2:7e+01  r=3:1e+03
+2D k=3 alpha=4: r=0:0e+00  r=1:0e+00  r=2:0e+00  r=3:0e+00
+2D k=3 alpha=6: r=0:0e+00  r=1:0e+00  r=2:0e+00  r=3:0e+00
+done in 31s
+
+real	0m31.615s
+user	0m49.757s
+sys	0m0.059s
