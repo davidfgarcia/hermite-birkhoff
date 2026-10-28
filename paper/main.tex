@@ -26,6 +26,7 @@
 \newcommand{\fpz}[3]{\bigl[#1,#2\bigr]_{#3}}     % shifted pairing
 \newcommand{\todo}[1]{\textcolor{red}{[\textbf{TODO:} #1]}}
 \DeclareMathOperator*{\argmin}{arg\,min}
+\setlength{\emergencystretch}{2em}
 
 \title[Hermite--Birkhoff interpolation by singular-weight MLS]{Generalized Hermite--Birkhoff
 interpolation of arbitrary order in any dimension via singular-weight moving least squares}
@@ -35,19 +36,21 @@ interpolation of arbitrary order in any dimension via singular-weight moving lea
 \begin{document}
 
 \begin{abstract}
-\todo{polish last.}
 Singular-weight interpolating moving least squares (SWIMLS) reproduces function values at
 scattered nodes. We study the method when each node carries an arbitrary finite set of linear
 differential data $q(D)f(x_i)$. We prove that the interpolant is $C^\infty$, give an exact
 representation of the error in every datum, and deduce that a datum is reproduced exactly if
 (i) every derivative of its symbol $q$ lies in the span of the symbols prescribed at that node
 and (ii) $\Delta^{\alpha/2}q=0$, where $\alpha$ is the (even) order of the weight singularity.
-Condition (ii) cannot be dropped, whereas condition (i) is needed or not depending on how the
-weights of the other nodes vary near $x_i$, which we make precise. For classical Hermite data
-of order $k$, $\alpha>k$ suffices, which proves a sharpened form of a conjecture of Komargodski
-and Levin; we also give exact counterexamples, in one and two dimensions, to their claim that
-derivatives prescribed at points without function values are interpolated, and a completion
-procedure that makes such data exact.
+Condition (ii) cannot be dropped. Whether condition (i) is needed depends on how the fit to the
+other nodes moves near $x_i$: we identify configurations in which it is not needed and give the
+first-order error otherwise. For classical Hermite data of order $k$, all data are reproduced
+if and only if $\alpha>k$ (the necessity under a mild condition on the other nodes), which
+proves a sharpened form of a conjecture of Komargodski and Levin. We also give exact
+counterexamples, in one and two dimensions, to their claim that derivatives prescribed at
+points without function values are interpolated, and a completion procedure that makes such
+data exact. A stable evaluator and experiments in one to three dimensions confirm the theory;
+in them the root-mean-square error decays like $h^{m+1}$ for local degree $m$.
 \end{abstract}
 
 \maketitle
@@ -62,24 +65,30 @@ due to Levin~\cite{Levin1998} and Wendland~\cite{Wendland2005}, see also~\cite{F
 When the weights are singular at the nodes, $w_i(x)=|x-x_i|^{-\alpha}$, the approximant
 interpolates the data~\cite{LancasterSalkauskas1981}; with constant local polynomials it is
 Shepard's method~\cite{Shepard1968}. Interpolating MLS needs no mesh and no global linear
-system, and it is local, smooth and exact on polynomials of the local degree.
+system, and it is local, smooth and exact on polynomials of the local degree; MLS is also
+optimal in the sense of Backus and Gilbert~\cite{BosSalkauskas1989}, and nearly interpolating
+weights are used to impose boundary conditions in meshless methods~\cite{MostBucher2005}.
 
 In many applications the data include derivatives: slopes and curvatures in curve and surface
 design, gradients in derivative-enhanced surrogate models, fluxes and normal derivatives in
 meshless discretisations of differential equations. Kernel methods handle such
 Hermite--Birkhoff data by building the derivatives into the kernel
-matrix~\cite{Wu1992,NarcowichWard1994}, at the price of a global system. For MLS,
-Komargodski and Levin~\cite{KomargodskiLevin2006} proposed using the same singular weights
-for value and derivative data at a node, and observed that this interpolates gradients but, for
-$\alpha=2$, not second derivatives. They conjectured that $\alpha=2k$ suffices for derivatives
-up to order $k$, and stated that the method also interpolates derivatives prescribed at points
-that carry no function value.
+matrix~\cite{Wu1992,NarcowichWard1994}, at the price of a global system. In meshless methods, derivative data
+have been built into MLS fits~\cite{AtluriChoKim1999}, and generalized MLS approximates
+derivatives and other functionals from values~\cite{MirzaeiSchabackDehghan2012}. For
+interpolating MLS, Komargodski and Levin~\cite{KomargodskiLevin2006} proposed using the same
+singular weights for value and derivative data at a node. They proved that this interpolates
+values and first derivatives in one dimension, and reported that for data up to second
+derivatives $\alpha=2$ is not enough while $\alpha=4$ works. They conjectured that $\alpha=2k$
+suffices for derivatives up to order $k$, and stated that the method also interpolates
+directional derivatives prescribed at points that carry no function value.
 
 Polynomial Hermite--Birkhoff interpolation in several variables is notoriously delicate: whether
 a data pattern is poised depends on the pattern and on the geometry of the
-nodes~\cite{LorentzJetterRiemenschneider1983,GascaSauer2000}, and the natural class of local
-data is that of D-invariant spaces~\cite{deBoorRon1990,SauerXu1995}. Interpolating MLS avoids the
-global poisedness question, since it only asks that the data be unisolvent on the local
+nodes~\cite{LorentzJetterRiemenschneider1983,GascaSauer2000,Lorentz2000}; the natural class
+of local data is that of D-invariant spaces, which characterise ideal
+interpolation~\cite{deBoorRon1990,SauerXu1995}; see also~\cite{deBoor2005,Shekhtman2010}.
+Interpolating MLS avoids the global poisedness question, since it only asks that the data be unisolvent on the local
 polynomial space. It replaces it by a local question: which data are reproduced? This paper
 answers that question.
 
@@ -191,7 +200,7 @@ For a symbol $q$, a smooth function $g$ and a point $z$ we set
   \fpz{q}{g}{z} := \bigl(q(D)g\bigr)(z), \qquad \fp{q}{g}:=\fpz{q}{g}{0}.
 \end{equation}
 For polynomials $q,p$, $\fp{q}{p}=\sum_\beta\beta!\,q_\beta p_\beta$ is the \emph{Fischer inner
-product}; it is positive definite on $\Pm$. Four elementary facts will be used.
+product}~\cite{Fischer1918,Shapiro1989}; it is positive definite on $\Pm$. Four elementary facts will be used.
 
 \begin{lemma}[Fischer adjointness]\label{lem:fischer}
 For symbols $q$ and polynomials $p$, $\fp{q}{z_jp}=\fp{\partial_jq}{p}$. Consequently
@@ -389,8 +398,8 @@ $N_i$; the node value $u(x_i)$ and all errors below do not depend on it. Evennes
 is used twice: to make $t(x)=|x-x_i|^\alpha$ smooth at $x_i$ (Theorem~\ref{thm:structure}) and
 to make it a polynomial, so that Lemmas~\ref{lem:fischer} and~\ref{lem:normpower} apply
 (Theorems~\ref{thm:error} and~\ref{thm:frozen}). If the $\rho_i$ are real analytic, the
-analytic implicit function theorem shows that $u$ is real analytic. \todo{odd $\alpha$:
-smoothness at the nodes is limited; give an example or drop.}
+analytic implicit function theorem shows that $u$ is real analytic. For odd $\alpha$ the function
+$t$ is not smooth at $x_i$, our arguments do not apply, and we do not consider this case.
 \end{remark}
 
 \subsection{An exact error representation}
@@ -460,7 +469,7 @@ by~\ref{c2}.
 
 Condition~\ref{c1} concerns the datum and the data at its own node only; it holds for every
 datum when $Q_i$ is D-invariant, the classical setting of multivariate Hermite
-interpolation~\todo{cite de Boor--Ron, Sauer}. Condition~\ref{c2} holds whenever $\deg q<\alpha$,
+interpolation~\cite{SauerXu1995,deBoor2005}. Condition~\ref{c2} holds whenever $\deg q<\alpha$,
 but also, for instance, for every harmonic symbol when $\alpha=2$. By~\eqref{eq:dinv-error} the
 reproduced data at a D-invariant node form the subspace $\{q\in Q_i:\Delta^{\alpha/2}q=0\}$ plus
 the kernel of the functional $\fpz{\cdot}{\tau}{x_i}$ on $\Delta^{\alpha/2}Q_i$; for instance, at
@@ -595,8 +604,8 @@ every choice of positive weights.
 These cases are not exotic: for two nodes, gradient data at $x_i$ without a function value are
 reproduced for $\alpha\ge2$; in one dimension with $m=1$, the data $f'(0)$, $f(1)$, $f'(5/2)$
 are all reproduced (case (b): only $f(1)$ sees the constants, which form $N_i$ at the slope
-nodes). Adding a further value datum destroys both properties. \todo{numerical confirmation in
-Section~\ref{sec:numerics}.}
+nodes). A third node in the first case, or a further value datum in the second, destroys the
+structure, and the data are then no longer reproduced (Section~\ref{sec:numerics}).
 \end{example}
 
 In general the frozen minimiser moves, and a failure of~\ref{c1} at first order produces an
@@ -676,14 +685,17 @@ values follow by direct computation.
 
 \begin{proposition}\label{prop:kl2}
 Let $d=2$, $m=1$, $\alpha=2$, $\rho_i\equiv1$, and prescribe $f=0$ at $(0,0)$, $(2,0)$, $(0,2)$
-and $\nabla f(1,1)=(1,1)$. Then $u$ is a rational function with a positive denominator,
-$u=0$ at the three value points, and $\nabla u(1,1)=(5/9,5/9)$.
+and $\nabla f(1,1)=(1,1)$. With $s=x_1+x_2$, $r=x_1^2+x_2^2$ and $p=x_1x_2$,
+\[
+  u=\frac{15sr^2-68r^2-64pr+128sr+16ps-128r-96p+48s}{35r^2-120sr+240r+208p-240s+144},
+\]
+which vanishes at the three value points, while $\nabla u(1,1)=(5/9,5/9)$.
 \end{proposition}
 
 \begin{proof}
-Exact computation as in Proposition~\ref{prop:kl} (three unknowns); the denominator is a quartic
-with leading form $35(x_1^2+x_2^2)^2$ whose only real critical point has value $11.21\ldots>0$.
-\todo{display $u$ in an appendix.}
+Exact computation as in Proposition~\ref{prop:kl}, with three unknowns (script in
+\texttt{code/proofs}). The denominator tends to $+\infty$ as $|x|\to\infty$, and its
+minimum, attained on the diagonal near $(0.898,0.898)$, is $11.21\ldots>0$.
 \end{proof}
 
 The failure persists for $\alpha=4$ and for $m=2$ (Section~\ref{sec:numerics}).
@@ -919,23 +931,99 @@ Section~\ref{sec:numerics}.
 % ===========================================================================
 \bibliographystyle{amsplain}
 \begin{thebibliography}{99}
-\bibitem{KomargodskiLevin2006}
-Z.~Komargodski and D.~Levin, \emph{Hermite type moving-least-squares approximations},
-Comput. Math. Appl. \textbf{51} (2006), 1223--1232.
-\bibitem{LancasterSalkauskas1981}
-P.~Lancaster and K.~\v{S}alkauskas, \emph{Surfaces generated by moving least squares methods},
-Math. Comp. \textbf{37} (1981), 141--158.
-\bibitem{Levin1998}
-D.~Levin, \emph{The approximation power of moving least-squares}, Math. Comp. \textbf{67}
-(1998), 1517--1531.
-\bibitem{Shepard1968}
-D.~Shepard, \emph{A two-dimensional interpolation function for irregularly-spaced data},
-Proc. 23rd ACM National Conference, 1968, 517--524.
-\bibitem{Wendland2005}
-H.~Wendland, \emph{Scattered Data Approximation}, Cambridge University Press, 2005.
+
+\bibitem{AtluriChoKim1999}
+S.~N. Atluri, J.~Y. Cho, and H.-G. Kim, \emph{Analysis of thin beams, using the meshless local {P}etrov--{G}alerkin method, with generalized moving least squares interpolations}, Comput. Mech. \textbf{24} (1999), no.~5, 334--347, doi:10.1007/s004660050456.
+% verified: https://link.springer.com/article/10.1007/s004660050456
+
+\bibitem{BosSalkauskas1989}
+L.~Bos and K.~\v{S}alkauskas, \emph{Moving least-squares are {B}ackus--{G}ilbert optimal}, J. Approx. Theory \textbf{59} (1989), no.~3, 267--275.
+% verified: https://iris.univr.it/handle/11562/429372
+
+\bibitem{deBoor2005}
+C.~de Boor, \emph{Ideal interpolation}, Approximation Theory XI: Gatlinburg 2004 (C.~K. Chui, M.~Neamtu, and L.~L. Schumaker, eds.), Nashboro Press, Brentwood, TN, 2005, pp.~59--91.
+% verified: https://ftp1.cs.wisc.edu/Approx/texasxi.pdf
+
+\bibitem{deBoorRon1990}
+C.~de Boor and A.~Ron, \emph{On multivariate polynomial interpolation}, Constr. Approx. \textbf{6} (1990), no.~3, 287--302, doi:10.1007/BF01890412.
+% verified: https://rd.springer.com/article/10.1007/BF01890412
+
+\bibitem{Fasshauer2007}
+G.~E. Fasshauer, \emph{Meshfree Approximation Methods with {MATLAB}}, Interdisciplinary Mathematical Sciences, vol.~6, World Scientific, Singapore, 2007, doi:10.1142/6437.
+% verified: https://www.worldscientific.com/worldscibooks/10.1142/6437
+
+\bibitem{Fischer1918}
+E.~Fischer, \emph{{\"U}ber die {D}ifferentiationsprozesse der {A}lgebra}, J. Reine Angew. Math. \textbf{148} (1918), 1--78, doi:10.1515/crll.1918.148.1.
+% verified: https://eudml.org/doc/149470
+
 \bibitem{GascaSauer2000}
-M.~Gasca and T.~Sauer, \emph{Polynomial interpolation in several variables}, Adv. Comput.
-Math. \textbf{12} (2000), 377--410. \todo{verify}
+M.~Gasca and T.~Sauer, \emph{Polynomial interpolation in several variables}, Adv. Comput. Math. \textbf{12} (2000), no.~4, 377--410, doi:10.1023/A:1018981505752.
+% verified: https://www.doi.org/10.1023/A:1018981505752
+
+\bibitem{KomargodskiLevin2006}
+Z.~Komargodski and D.~Levin, \emph{Hermite type moving-least-squares approximations}, Comput. Math. Appl. \textbf{51} (2006), no.~8, 1223--1232, doi:10.1016/j.camwa.2006.04.005.
+% verified against the PDF (Section 3 read in full)
+
+\bibitem{LancasterSalkauskas1981}
+P.~Lancaster and K.~\v{S}alkauskas, \emph{Surfaces generated by moving least squares methods}, Math. Comp. \textbf{37} (1981), no.~155, 141--158, doi:10.1090/S0025-5718-1981-0616367-1.
+% verified: https://www.ams.org/journals/mcom/1981-37-155/S0025-5718-1981-0616367-1/
+
+\bibitem{Levin1998}
+D.~Levin, \emph{The approximation power of moving least-squares}, Math. Comp. \textbf{67} (1998), no.~224, 1517--1531, doi:10.1090/S0025-5718-98-00974-0.
+% verified: https://www.doi.org/10.1090/S0025-5718-98-00974-0
+
+\bibitem{Lorentz2000}
+R.~A. Lorentz, \emph{Multivariate {H}ermite interpolation by algebraic polynomials: a survey}, J. Comput. Appl. Math. \textbf{122} (2000), no.~1--2, 167--201.
+% verified: https://ftp.math.utah.edu/pub/tex/bib/idx/jcomputapplmath2000/122/1/167_201.html
+
+\bibitem{LorentzJetterRiemenschneider1983}
+G.~G. Lorentz, K.~Jetter, and S.~D. Riemenschneider, \emph{Birkhoff Interpolation}, Encyclopedia of Mathematics and its Applications, vol.~19, Addison-Wesley, Reading, MA, 1983.
+% verified: https://www.cambridge.org/core/books/birkhoff-interpolation/B6518A0D062D7337A14EF193103274CD
+
+\bibitem{McLain1974}
+D.~H. McLain, \emph{Drawing contours from arbitrary data points}, Comput. J. \textbf{17} (1974), no.~4, 318--324, doi:10.1093/comjnl/17.4.318.
+% verified: Franke 1982 (Math. Comp.) reference list
+
+\bibitem{McLain1976}
+D.~H. McLain, \emph{Two dimensional interpolation from random data}, Comput. J. \textbf{19} (1976), no.~2, 178--181, doi:10.1093/comjnl/19.2.178.
+% verified: zbMATH 0321.65009
+
+\bibitem{MirzaeiSchabackDehghan2012}
+D.~Mirzaei, R.~Schaback, and M.~Dehghan, \emph{On generalized moving least squares and diffuse derivatives}, IMA J. Numer. Anal. \textbf{32} (2012), no.~3, 983--1000, doi:10.1093/imanum/drr030.
+% verified: https://academic.oup.com/imajna/article-abstract/32/3/983/675168
+
+\bibitem{MostBucher2005}
+T.~Most and C.~Bucher, \emph{A moving least squares weighting function for the element-free {G}alerkin method which almost fulfills essential boundary conditions}, Struct. Eng. Mech. \textbf{21} (2005), no.~3, 315--332, doi:10.12989/sem.2005.21.3.315.
+% verified: https://koreascience.kr/article/JAKO200521349891864.do
+
+\bibitem{NarcowichWard1994}
+F.~J. Narcowich and J.~D. Ward, \emph{Generalized {H}ermite interpolation via matrix-valued conditionally positive definite functions}, Math. Comp. \textbf{63} (1994), no.~208, 661--687, doi:10.1090/S0025-5718-1994-1254147-6.
+% verified: https://www.ams.org/mcom/1994-63-208/S0025-5718-1994-1254147-6/
+
+\bibitem{SauerXu1995}
+T.~Sauer and Y.~Xu, \emph{On multivariate {H}ermite interpolation}, Adv. Comput. Math. \textbf{4} (1995), no.~1, 207--259, doi:10.1007/BF03177515.
+% verified: https://link.springer.com/article/10.1007/BF03177515
+
+\bibitem{Shapiro1989}
+H.~S. Shapiro, \emph{An algebraic theorem of {E}.~{F}ischer, and the holomorphic {G}oursat problem}, Bull. London Math. Soc. \textbf{21} (1989), no.~6, 513--537, doi:10.1112/blms/21.6.513.
+% verified: https://academic.oup.com/blms/article/21/6/513/344154
+
+\bibitem{Shekhtman2010}
+B.~Shekhtman, \emph{Ideal interpolation: translations to and from algebraic geometry}, Approximate Commutative Algebra, Texts and Monographs in Symbolic Computation, Springer, Vienna, 2010, doi:10.1007/978-3-211-99314-9\_6.
+% verified: https://link.springer.com/chapter/10.1007/978-3-211-99314-9_6
+
+\bibitem{Shepard1968}
+D.~Shepard, \emph{A two-dimensional interpolation function for irregularly-spaced data}, Proceedings of the 1968 23rd ACM National Conference, ACM, New York, 1968, pp.~517--524, doi:10.1145/800186.810616.
+% DOI not checked against the ACM page (unreachable)
+
+\bibitem{Wendland2005}
+H.~Wendland, \emph{Scattered Data Approximation}, Cambridge Monographs on Applied and Computational Mathematics, vol.~17, Cambridge University Press, Cambridge, 2005, doi:10.1017/CBO9780511617539.
+% verified: https://www.cambridge.org/core/books/scattered-data-approximation/980EEC9DBC4CAA711D089187818135E3
+
+\bibitem{Wu1992}
+Z.~Wu, \emph{Hermite--{B}irkhoff interpolation of scattered data by radial basis functions}, Approx. Theory Appl. \textbf{8} (1992), no.~2, 1--10, doi:10.1007/BF02836101.
+% verified: https://link.springer.com/article/10.1007/BF02836101
+
 \end{thebibliography}
 
 \end{document}
