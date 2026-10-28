@@ -141,14 +141,19 @@ class SingularMLS:
     functionals : the data functionals (any order, any mix, any dimension).
     degree      : total degree m of the local polynomial space P_m.
     alpha       : even exponent of the singular weight |x - p|^(-alpha).
-    delta       : decay length of the Gaussian factor (None = pure power weight).
+    delta       : decay length of the Gaussian factor, or support radius of the bump
+                  (None = pure power weight).
+    weight      : "gauss" -> |x-p|^(-alpha) exp(-|x-p|^2/delta^2);
+                  "bump"  -> |x-p|^(-alpha) psi(|x-p|^2/delta^2) with the C-infinity bump
+                  psi(s) = exp(1 - 1/(1-s)) for s < 1 and 0 for s >= 1 (compact support).
     length      : derivative rows are scaled by length**order (dimensionless data);
                   this changes accuracy, never exactness at the nodes.
     cutoff      : rows whose normalised weight is below cutoff are dropped.
     """
 
     def __init__(self, functionals: Iterable[Functional], degree: int, alpha: int = 2,
-                 delta: float | None = None, length: float = 1.0, cutoff: float = 1e-30):
+                 delta: float | None = None, length: float = 1.0, cutoff: float = 1e-30,
+                 weight: str = "gauss"):
         self.fun = list(functionals)
         if alpha <= 0 or alpha % 2:
             raise ValueError("alpha must be a positive even integer (smoothness of the weight)")
@@ -156,6 +161,11 @@ class SingularMLS:
         self.degree = degree
         self.alpha = alpha
         self.delta = delta
+        if weight not in ("gauss", "bump"):
+            raise ValueError("weight must be 'gauss' or 'bump'")
+        if weight == "bump" and delta is None:
+            raise ValueError("the bump weight needs a support radius delta")
+        self.weight = weight
         self.length = length
         self.cutoff = cutoff
         self.exps = multi_indices(self.dim, degree)
@@ -186,7 +196,12 @@ class SingularMLS:
     def node_log_weights(self, x: np.ndarray, d: np.ndarray) -> np.ndarray:
         lw = -self.alpha * np.log(d)
         if self.delta is not None:
-            lw = lw - (d / self.delta) ** 2
+            s2 = (d / self.delta) ** 2
+            if self.weight == "gauss":
+                lw = lw - s2
+            else:
+                with np.errstate(divide="ignore"):
+                    lw = lw + np.where(s2 < 1, 1.0 - 1.0 / np.maximum(1.0 - s2, 1e-300), -np.inf)
         return lw
 
     def system(self, x: np.ndarray, rows: np.ndarray) -> np.ndarray:

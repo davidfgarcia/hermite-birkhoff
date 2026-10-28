@@ -95,4 +95,19 @@ for pat in [(1,), (0, 2)]:
     e = max(abs(float(mpb.value([t], yb)) - opb([[t]], yb)[0]) for t in (1e-2, 1e-4, 1e-8, 1e-12))
     ok(e < 1e-13, f"float = 100-digit reference near a gapped node {pat}, t in [1e-12, 1e-2]: err {e:.1e}")
 
+# 9. compactly supported (bump) weights: polynomial reproduction, interpolation, and
+#    agreement with 100-digit arithmetic near a node
+xs = np.linspace(0.0, 1.0, 9)
+fz = [f for q in xs for f in hb.hermite_set([q], 1)]
+opz = hb.SingularMLS(fz, degree=3, alpha=2, delta=0.4, length=0.4, weight="bump")
+cub = lambda b, p: [p[0] ** 3 - p[0], 3 * p[0] ** 2 - 1][b[0]]
+yz = opz.data_from(cub)
+Xz = np.linspace(0.01, 0.99, 37)
+ok(max(abs(opz([[t]], yz)[0] - cub((0,), [t])) for t in Xz) < 1e-12, "bump weights: P_3 reproduced")
+yr = np.random.default_rng(3).normal(size=len(fz))
+ok(abs(opz([[0.5]], yr)[0] - yr[2 * 4]) < 1e-13, "bump weights: node value interpolated")
+mpz = hb.MPSingularMLS(opz, dps=100)
+e = max(abs(float(mpz.value([0.5 + t], yr)) - opz([[0.5 + t]], yr)[0]) for t in (0.3, 1e-2, 1e-6, 1e-12))
+ok(e < 1e-13, f"bump weights: float = 100-digit reference near a node: err {e:.1e}")
+
 print(f"\n{sum(results)}/{len(results)} checks passed")

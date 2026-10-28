@@ -49,7 +49,13 @@ class MPSingularMLS:
                 d2 = sum((mp.mpf(p[j]) - x[j]) ** 2 for j in range(op.dim))
                 w = d2 ** (-(op.alpha // 2))
                 if op.delta is not None:
-                    w *= mp.exp(-d2 / mp.mpf(op.delta) ** 2)
+                    s2 = d2 / mp.mpf(op.delta) ** 2
+                    if getattr(op, "weight", "gauss") == "gauss":
+                        w *= mp.exp(-s2)
+                    elif s2 < 1:
+                        w *= mp.exp(1 - 1 / (1 - s2))
+                    else:
+                        continue                       # outside the support: zero weight
                 s = mp.sqrt(w) * mp.mpf(op.length) ** f.order
                 rows.append([s * v for v in self._row(f, x)])
                 rhs.append(s * mp.mpf(y[i]))
