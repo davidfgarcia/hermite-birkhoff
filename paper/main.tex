@@ -249,15 +249,15 @@ also~\cite{Shapiro1989}. They give an orthogonal decomposition that explains the
 operator $\Delta^{\alpha/2}$ below.
 
 \begin{remark}\label{rem:decomposition}
-For $n,\ell\in\N_0$ with $2\ell\le n$,
+For $\mu,\ell\in\N_0$ with $2\ell\le \mu$,
 \begin{equation}\label{eq:decomposition}
-  \Pi_n=\ker\bigl(\Delta^\ell\big|_{\Pi_n}\bigr)\ \oplus\ |z|^{2\ell}\,\Pi_{n-2\ell},
+  \Pi_\mu=\ker\bigl(\Delta^\ell\big|_{\Pi_\mu}\bigr)\ \oplus\ |z|^{2\ell}\,\Pi_{\mu-2\ell},
 \end{equation}
 and the sum is orthogonal for the Fischer pairing. Indeed, $\fp{q}{|z|^{2\ell}p}=\fp{\Delta^\ell q}{p}=0$
 for $\Delta^\ell q=0$ by Lemma~\ref{lem:fischer}, and the dimensions add up because
-$\Delta^\ell\colon\Pi_n\to\Pi_{n-2\ell}$ is the adjoint of the injective multiplication by
-$|z|^{2\ell}$, hence onto. Consequently, a symbol $q$ of degree at most $n$ annihilates every
-multiple $|z|^{2\ell}p$ of degree at most $n$ if and only if $\Delta^\ell q=0$. For $\ell=1$ and
+$\Delta^\ell\colon\Pi_\mu\to\Pi_{\mu-2\ell}$ is the adjoint of the injective multiplication by
+$|z|^{2\ell}$, hence onto. Consequently, a symbol $q$ of degree at most $\mu$ annihilates every
+multiple $|z|^{2\ell}p$ of degree at most $\mu$ if and only if $\Delta^\ell q=0$. For $\ell=1$ and
 homogeneous polynomials this is a classical lemma of Calder\'on and
 Zygmund~\cite[Ch.~2, Lemma~1]{CalderonZygmund1964}, and in the form ``$P$ is divisible by
 $|x-a|^2$ if and only if $q(D)P(a)=0$ for every harmonic $q$ of degree at most $\deg P$'' it is
@@ -432,10 +432,15 @@ $t(x)$, obtaining $F(x,t(x);s,n)=0$ for the map $F:U\times\R\times R\times N_i\t
 \]
 which is $C^\infty$ in all variables, including $t$ near $0$.
 
-\emph{The point $(x_i,0)$.} Here $F=0$ reads $\nabla_NB_{x_i}(p_i^*+n)=0$ and
-$s=-(2L^*L)^{-1}\nabla_RB_{x_i}(p_i^*+n)$. The restriction of $B_x$ to the affine space
-$p_i^*+N_i$ is strictly convex for every $x\in U$: its Hessian is
-$2\sum_{j\ne i}\frac{w_j(x)}{\rho_i(x)}\Lambda_j^*\Lambda_j$ restricted to $N_i$, with
+\emph{The point $(x_i,0)$.} Here $F=0$ reads
+\[
+  \nabla_NB_{x_i}(p_i^*+n)=0,\qquad s=-(2L^*L)^{-1}\nabla_RB_{x_i}(p_i^*+n).
+\] The restriction of $B_x$ to the affine space
+$p_i^*+N_i$ is strictly convex for every $x\in U$: its Hessian is the restriction to $N_i$ of
+\[
+  2\sum_{j\ne i}\frac{w_j(x)}{\rho_i(x)}\Lambda_j^*\Lambda_j ,
+\]
+with
 $w_j(x)>0$ since $x\ne x_j$; and if $n\in N_i$ satisfies $\Lambda_jn=0$ for all $j\ne i$ then
 all data functionals vanish on $n$, so $n=0$ by \ref{A3}. Hence there is exactly one solution
 $(s_0,n_0)$, and $n_0=Z(x_i)$; more generally, for every $x\in U$ the equation
@@ -613,13 +618,13 @@ $\partial_x\partial_y^2f$, since $\Delta\xi_1^3=6\xi_1=3\,\Delta(\xi_1\xi_2^2)$.
 Data given by harmonic symbols are reproduced with the smallest exponent $\alpha=2$, whatever
 their order, as soon as the symbol space at each node is D-invariant, since derivatives of
 harmonic polynomials are harmonic. Toan, Mai, Long and Manh~\cite[Theorem~4.1]{ToanMaiLongPhung2026}
-construct regular interpolation schemes of degree $n\ge2$ from such data only, for any distinct
+construct regular interpolation schemes of degree $\mu\ge2$ from such data only, for any distinct
 nodes: the $k$-th node carries
-every harmonic symbol of degree at most $n-2k+2$, for $k=1,\dots,\lfloor n/2\rfloor+1$, and the
-total number of data equals $\dim\Pi_n$. If SWIMLS is used with exactly these data and $m=n$,
+every harmonic symbol of degree at most $\mu-2k+2$, for $k=1,\dots,\lfloor \mu/2\rfloor+1$, and the
+total number of data equals $\dim\Pi_\mu$. If SWIMLS is used with exactly these data and $m=\mu$,
 it returns the polynomial interpolant, and every datum is reproduced trivially, for every
 $\alpha$. The example becomes informative with more data than $\dim\Pi_m$, for instance more
-nodes carrying such harmonic patterns, or $m<n$: then, with $\alpha=2$, every datum is reproduced
+nodes carrying such harmonic patterns, or $m<\mu$: then, with $\alpha=2$, every datum is reproduced
 by Corollary~\ref{cor:exact}, while non-harmonic data are in general not reproduced at
 $\alpha=2$.
 Section~\ref{sec:hermite-num} checks a node with all harmonic symbols of degree at most $3$.
@@ -662,14 +667,23 @@ non-zero constant, so $1\in Q_i$ by~\ref{c1}: point evaluation $\ell(p)=p(x_i)$ 
 $x_i$. It vanishes on $N_i$ and is non-zero on $\Pm$, hence non-zero on $R$.
 
 Choose $y_j=\Lambda_j(p_i^*+v)$, $j\ne i$, for some $v\in\Pm$. Then
-$B_{x_i}(p)=\langle K(p-p_i^*-v),p-p_i^*-v\rangle$ with
-$K=\sum_{j\ne i}\frac{w_j(x_i)}{\rho_i(x_i)}\Lambda_j^*\Lambda_j$, which is positive definite on
+$B_{x_i}(p)=\langle \Theta(p-p_i^*-v),p-p_i^*-v\rangle$ with
+$\Theta=\sum_{j\ne i}\frac{w_j(x_i)}{\rho_i(x_i)}\Lambda_j^*\Lambda_j$, which is positive definite on
 $\Pm$ by the additional assumption. The minimiser $n_0$ over $N_i$ is characterised by
-$K(n_0-v)\perp N_i$, i.e.\ $K(n_0-v)\in R$, so $\nabla_RB_{x_i}(p_i^*+n_0)=2K(n_0-v)$ and
-$s_0=(L^*L)^{-1}Kw$ with $w=v-n_0$. As $v$ ranges over $\Pm$, $w$ ranges over the
-$K$-orthogonal complement $W=\{w:Kw\in R\}$ of $N_i$, so $Kw$ ranges over all of $R$ and
+$\Theta(n_0-v)\perp N_i$, i.e.\ $\Theta(n_0-v)\in R$, so $\nabla_RB_{x_i}(p_i^*+n_0)=2\Theta(n_0-v)$ and
+$s_0=(L^*L)^{-1}\Theta w$ with $w=v-n_0$. As $v$ ranges over $\Pm$, $w$ ranges over the
+$\Theta$-orthogonal complement $W=\{w:\Theta w\in R\}$ of $N_i$, so $\Theta w$ ranges over all of $R$ and
 $s_0$ over all of $R$. Choosing $v$ with $\ell(s_0)\ne0$ completes the proof.
 \end{proof}
+
+\begin{remark}\label{rem:necessity-hyp}
+The extra hypothesis is used only to make the Schur complement
+$\Theta_{RR}-\Theta_{RN}\Theta_{NN}^{-1}\Theta_{NR}$ of $\Theta$, with respect to $\Pm=R\oplus N_i$, injective; $\Theta_{NN}$ is
+invertible by~\ref{A3} alone. It cannot simply be dropped. With $d=1$, $m=3$, $\alpha=2$, the
+data $f,f',f''$ at $0$ and a single value $f(1)$, the data are unisolvent and exactly $\dim\Pi_3$
+in number, so $u$ is the cubic interpolant and $f''(0)$ is reproduced, although
+$\Delta\xi^2=2\ne0$; here the Schur complement vanishes.
+\end{remark}
 
 \begin{corollary}[Sharpness]\label{cor:sharp}
 Under the hypotheses of Proposition~\ref{prop:necessity} on the other nodes, let $x_i$ carry
@@ -813,6 +827,49 @@ set. Either all of them vanish identically, or one of them, $c$, does not, and t
 $\mathcal Z=\{c=0\}$ is a proper algebraic subset outside which the error functional is non-zero.
 \end{proof}
 
+For two nodes the second alternative can be verified directly, for data of degree less than
+$2\alpha$.
+
+\begin{proposition}[Two nodes]\label{prop:twonodes}
+Let $K=2$, $\rho_1=\rho_2\equiv1$, let $Q_i$ be D-invariant, let the data at the other node $x_j$
+be unisolvent on $\Pm$ by themselves, and let $q\in Q_i$ with $\Delta^{\alpha/2}q\ne0$ and
+$\deg q<2\alpha$. Then, for every position of the two nodes, the error $\fpz{q}{u}{x_i}-y_q$ is a
+non-zero linear functional of the data.
+\end{proposition}
+
+\begin{proof}
+Translate $x_i$ to $0$ and write $a=x_j$, $s(z)=|z|^\alpha$, $c(z)=|z-a|^{-\alpha}$; fix an inner
+product on $\Pm$, and let $N=N_i$, $R=N^\perp$. Take the data $y_i=0$ and $y_j=\Lambda_jh$ for
+some $h\in R$. For $z\ne0$ near $0$, $p_z$ minimises
+$|\Lambda_ip|^2+s(z)c(z)\,|\Lambda_j(p-h)|^2$. Let $A=(\Lambda_i^*\Lambda_i)|_R$, which is positive
+definite on $R$, and $B=\Lambda_j^*\Lambda_j$, positive definite on $\Pm$ by hypothesis, with
+blocks $B_{RR},B_{RN},B_{NR},B_{NN}$; put $G=B_{NN}^{-1}B_{NR}$ and let
+$C=B_{RR}-B_{RN}G$ be the Schur complement, also positive definite. Eliminating the $N$-component
+from the normal equations gives
+\[
+  p_z=Gh+P\rho(z),\qquad P\rho:=\rho-G\rho,\qquad
+  \rho(z)=s(z)c(z)\bigl(A+s(z)c(z)C\bigr)^{-1}Ch .
+\]
+Hence $u(z)=(Gh)(z)+s(z)c(z)\,g_0(z)+s(z)^2\psi(z)$, with the polynomial $g_0=PA^{-1}Ch$ and a
+smooth function $\psi$. Now $q(D)(Gh)(0)=0$, since $Gh\in N$ and $q\in Q_i$; and by
+Lemma~\ref{lem:fischer}, as in the proof of Theorem~\ref{thm:error},
+$q(D)[s^2\psi](0)=(\Delta^\alpha q)(D)\psi(0)=0$ because $\deg q<2\alpha$. With
+$r=\Delta^{\alpha/2}q$, therefore,
+\[
+  \fpz{q}{u}{0}-y_q=\varphi(g_0),\qquad \varphi(g):=r(D)(c\,g)(0).
+\]
+The functional $\varphi$ vanishes on $N$: by the Leibniz rule,
+\[
+  \varphi(g)=\sum_\gamma\frac1{\gamma!}(D^\gamma c)(0)\,(\partial^\gamma r)(D)g(0),
+\]
+and every
+$\partial^\gamma r$ lies in $Q_i$ because $Q_i$ is D-invariant. It does not vanish on $\Pm$: if
+$g$ is the Taylor polynomial of degree $m$ of $r/c$ at $0$ (note $c(0)\ne0$), then
+$cg=r+O(|z|^{m+1})$ and $\varphi(g)=\fp{r}{r}>0$. Finally, as $h$ ranges over $R$, $g_0$ ranges
+over $W=P(R)$, and $\Pm=W\oplus N$. So $\varphi$ does not vanish on $W$, and some $h$ gives a
+non-zero error.
+\end{proof}
+
 \begin{conjecture}\label{conj:char}
 Let $\rho_j\equiv1$ for all $j$, let $Q_i$ be D-invariant, let the data at the nodes other than
 $x_i$ be unisolvent on $\Pm$ by themselves, and let $q\in Q_i$ with $\Delta^{\alpha/2}q\ne0$. Then
@@ -823,10 +880,12 @@ data outside a hyperplane, for node positions outside a proper algebraic subset.
 \begin{remark}
 By Proposition~\ref{prop:dichotomy} it suffices to find, for each data pattern, one node
 configuration where the error is non-zero. Proposition~\ref{prop:necessity} proves the conjecture
-for $\deg q=\alpha$, and the experiments of Section~\ref{sec:numerics} are consistent with it; in
-particular, with pure power weights and two nodes carrying Hermite data of order $3$, every datum
-with $\Delta q\ne0$ fails at $\alpha=2$ (Section~\ref{sec:frozen-num}), so the conjecture holds
-for that pattern. The conjecture concerns condition~(ii) only: $Q_i$ is D-invariant, so
+for $\deg q=\alpha$, and Proposition~\ref{prop:twonodes} for two nodes and $\deg q<2\alpha$, at
+every node position. The experiments of Section~\ref{sec:numerics} are consistent with it, for
+instance with two nodes carrying Hermite data of order $3$ at $\alpha=2$
+(Section~\ref{sec:frozen-num}). The open cases are three or more nodes, where the weights of the
+other nodes are no longer proportional and the frozen minimiser moves, and data of degree at
+least $2\alpha$. The conjecture concerns condition~(ii) only: $Q_i$ is D-invariant, so
 condition~(i) holds. For data that violate~(i), the configurations of
 Corollary~\ref{cor:frozen-cases} and the symmetric ones show that both alternatives of the
 dichotomy occur; characterising them beyond~\eqref{eq:firstorder} is open.
@@ -869,16 +928,17 @@ values follow by direct computation.
 
 \begin{proposition}\label{prop:kl2}
 Let $d=2$, $m=1$, $\alpha=2$, $\rho_i\equiv1$, and prescribe $f=0$ at $(0,0)$, $(2,0)$, $(0,2)$
-and $\nabla f(1,1)=(1,1)$. With $s=x_1+x_2$, $r=x_1^2+x_2^2$ and $p=x_1x_2$,
+and $\nabla f(1,1)=(1,1)$. In coordinates $z=(z_1,z_2)$, with $a=z_1+z_2$, $b=z_1^2+z_2^2$ and
+$c=z_1z_2$,
 \[
-  u=\frac{15sr^2-68r^2-64pr+128sr+16ps-128r-96p+48s}{35r^2-120sr+240r+208p-240s+144},
+  u(z)=\frac{15ab^2-68b^2-64bc+128ab+16ac-128b-96c+48a}{35b^2-120ab+240b+208c-240a+144},
 \]
 which vanishes at the three value points, while $\nabla u(1,1)=(5/9,5/9)$.
 \end{proposition}
 
 \begin{proof}
 Exact computation as in Proposition~\ref{prop:kl}, with three unknowns (script in
-\texttt{code/proofs}). The denominator tends to $+\infty$ as $|x|\to\infty$, and its
+\texttt{code/proofs}). The denominator tends to $+\infty$ as $|z|\to\infty$, and its
 minimum, attained on the diagonal near $(0.898,0.898)$, is $11.21\ldots>0$.
 \end{proof}
 
@@ -1195,7 +1255,7 @@ configuration & datum & reason & error\\
 \quad add a third node & & & $0.03$--$0.46$\\
 2D, $K=2$: $f,\partial_{xx}f$ at $x_1$; Hermite $k=2$ at $x_2$; $\alpha=4$ & $\partial_{xx}$ & Cor.~\ref{cor:frozen-cases}(a) & $\le1.1\cdot10^{-28}$\\
 \quad add a third node & & & $2.9$--$3.3$\\
-2D: $\partial_xf(0)$; others on the second coordinate axis; $m=1$, $\alpha=2$ & $\partial_x$ & Prop.~\ref{prop:firstorder} & $<10^{-37}$\\
+2D: $\partial_xf(0)$; others on the $z_2$-axis; $m=1$, $\alpha=2$ & $\partial_x$ & Prop.~\ref{prop:firstorder} & $<10^{-37}$\\
 \quad move the others by $0.05$ & & & $0.08$--$0.16$\\
 \bottomrule
 \end{tabular}
@@ -1276,7 +1336,8 @@ completing the data at the node. Together they give a simple recipe for Hermite-
 interpolation of any order in any dimension.
 
 Several questions remain open. Conjecture~\ref{conj:char} asks whether $\Delta^{\alpha/2}q\ne0$
-always causes an error in generic configurations; we proved it at leading order. Beyond the
+always causes an error in generic configurations; we proved it for data of degree $\alpha$ and,
+with two nodes, for data of degree less than $2\alpha$. Beyond the
 first-order formula~\eqref{eq:firstorder}, we do not know exactly which configurations of the
 other nodes make condition~\ref{c1} unnecessary. Theorem~\ref{thm:convergence} assumes compactly supported weights and a local
 norming condition; extending it to weights with unbounded support, and verifying the norming
@@ -1313,15 +1374,18 @@ Section~\ref{sec:main}.
 \subsection{Least squares}
  The weighted system $W^{1/2}A\,a\approx W^{1/2}b$ is solved by an
 SVD-based least-squares solver rather than through the normal equations. Close to a node $x_i$
-the rows of $x_i$ dominate the others by a factor $s^{-1}$ with $s\sim|x-x_i|^{\alpha/2}$. The
-light rows carry the information that fixes $\nu(x)$, and a standard solver resolves them only
-to relative accuracy of order $\varepsilon_{\mathrm{mach}}/s$ (and not at all through the normal
-equations once $s^2<\varepsilon_{\mathrm{mach}}$). When $s<10^{-3}$ we therefore solve an exact reformulation. Let $R$ and $L$ be
-the heavy and light rows, $Q_1$ and $Q_2$ orthonormal bases of the row space and the null space
-of $R$, and $c_0$ the least-squares solution of $RQ_1c=b_R$. Writing
-$a=Q_1(c_0+s\,d)+Q_2z$ and dividing the objective by $s^2$ gives the problem
+the rows of $x_i$ dominate the others by a factor $\theta^{-1}$ with $\theta\sim|x-x_i|^{\alpha/2}$.
+The light rows carry the information that fixes $\nu(x)$, and a standard solver resolves them only
+to relative accuracy of order $\varepsilon_{\mathrm{mach}}/\theta$ (and not at all through the
+normal equations once $\theta^2<\varepsilon_{\mathrm{mach}}$). When $\theta<10^{-3}$ we therefore
+solve an exact reformulation. Let $A_{\mathrm h}$ and $A_{\mathrm l}$ be the heavy and light weighted
+rows, with right-hand sides $b_{\mathrm h}$ and $b_{\mathrm l}$, let $U_1$ and $U_2$ be orthonormal
+bases of the row space and the null space of $A_{\mathrm h}$, and let $\hat c$ be the least-squares
+solution of $A_{\mathrm h}U_1c=b_{\mathrm h}$. Writing $a=U_1(\hat c+\theta\,e)+U_2v$ and dividing the
+objective by $\theta^2$ gives the problem
 \[
-  \min_{d,z}\ \|RQ_1d\|^2+\bigl\|LQ_1d+s^{-1}LQ_2z-s^{-1}(b_L-LQ_1c_0)\bigr\|^2,
+  \min_{e,v}\ \|A_{\mathrm h}U_1e\|^2+\bigl\|A_{\mathrm l}U_1e+\theta^{-1}A_{\mathrm l}U_2v
+  -\theta^{-1}(b_{\mathrm l}-A_{\mathrm l}U_1\hat c)\bigr\|^2,
 \]
 whose blocks are well scaled; it has the same minimiser and is the discrete counterpart of the
 decomposition~\eqref{eq:structure}.
@@ -1364,6 +1428,12 @@ Sections~\ref{sec:hermite-num}--\ref{sec:frozen-num}, the reproduced ones have e
 $6\cdot10^{-55}$ and $9\cdot10^{-25}$ at $r=10^{-6}$ (at most $9\cdot10^{-19}$ at
 $r=10^{-5}$), and their errors scale like $r^6$ or $r^8$, as the stencil error does; the
 others have errors of at least $0.01$, identical at both radii.
+
+\section*{Declaration of generative AI use}
+During the preparation of this work the author used Claude (Anthropic) to help draft and revise
+the text, implement and run the numerical experiments, search and verify the literature, check
+proofs, and suggest proof strategies. After using this tool, the author reviewed and edited the
+content as needed and takes full responsibility for the content of the article.
 
 % ===========================================================================
 \bibliographystyle{amsplain}

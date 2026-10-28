@@ -37,7 +37,8 @@ item is closed. Closed items are marked "Done <date>".
   to every datum with Δ^(α/2)q = 0 (new frozen form of the error representation), dichotomy
   proposition and precise conjecture (covering the four counterexample families of `REVIEW.md`),
   harmonic-data example made non-vacuous, Shepard comparison corrected, counts and wording.
-- [ ] **Explain the extra hypothesis of Proposition 4.6** (`prop:necessity`, "the data at the nodes
+- [x] **Explain the extra hypothesis of Proposition 4.6** (now Proposition 4.9, necessity). Done Oct 28: Remark 4.10 after the proof
+  (Schur complement; the d = 1, m = 3 example). (`prop:necessity`, "the data at the nodes
   other than x_i are unisolvent on Π_m by themselves"). From the swimls-bvps numerics session's
   resolution check of `REVIEW.md` (item G3, only partly resolved): the proof uses the
   hypothesis only to make the Schur complement S = K_RR − K_RN K_NN⁻¹ K_NR (blocks of K with
@@ -46,8 +47,24 @@ item is closed. Closed items are marked "Done <date>".
   unisolvent and dim Π_3 in number, so u is the cubic interpolant and f″(0) is reproduced
   although Δξ² = 2 ≠ 0 at α = 2 (here S = 0). Suggested: a short remark after the proof saying
   both things. Full report available from the numerics session on request.
-- [ ] **Optional polish:** notation clean-up (n, K, R/L, s, r, ℓ, h in several roles), a table for
-  the rates in §7.4, a comparison with a competing Hermite–Birkhoff method.
+- [x] **Conjecture: what to do.** Done Oct 28 (decision with David): keep it as a clearly labelled
+  open problem, do not hold the paper for a full proof. Added Proposition 4.18 (two nodes,
+  deg q < 2α, every node position), so the conjecture is proved for deg q = α and for two nodes
+  with deg q < 2α; open: three or more nodes, and deg q ≥ 2α. A general proof could be a short
+  follow-up note.
+- [x] **Declaration of generative AI use** before the references (Elsevier-style wording). Done
+  Oct 28.
+- [x] **Notation clean-up (main clashes).** Done Oct 28: operator K → Θ in Prop 4.9; degree n → μ
+  in Remark 3.2 and Example 4.8; coordinates z = (z₁, z₂) and a, b, c in Prop 5.2; Appendix A
+  rows A_h, A_l, bases U₁, U₂, scale θ. Remaining minor overloads (s, r, ℓ, h) left as they are.
+- [ ] **Practical motivation (to revisit with David).** A referee may ask what derivative data are
+  good for, since in our own test (§7.4) values alone were more accurate *per number of data*,
+  while derivative data reduced the error *on a fixed node set*. The question to settle: in which
+  situations is one node with value and derivatives cheaper than several nodes with values only
+  (e.g. adjoint or automatic-differentiation gradients, measured slopes, physical constraints),
+  and should the paper show one such example.
+- [ ] **Optional polish:** a table for the rates in §7.4; a comparison with a competing
+  Hermite–Birkhoff method.
 
 ### Literature and references
 
@@ -107,7 +124,7 @@ item is closed. Closed items are marked "Done <date>".
 
 - [ ] **Venue** (David's decision). Recommendation: J. Approx. Theory first (approximation theory
   with numerical support; Toan et al. 2026 appeared there), then Adv. Comput. Math. Constructive
-  Approximation would want more theory (a proof of Conjecture 4.17).
+  Approximation would want more theory (a proof of Conjecture 4.19).
 - [ ] **arXiv** (David submits; needs his arXiv account), then journal submission, before paper 2.
   The source package is built by `bash paper/make_arxiv.sh` → `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`
   (flat figures, verification comments stripped, compiles with pdflatex). Suggested categories:
