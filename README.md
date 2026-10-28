@@ -37,6 +37,15 @@ item is closed. Closed items are marked "Done <date>".
   to every datum with Δ^(α/2)q = 0 (new frozen form of the error representation), dichotomy
   proposition and precise conjecture (covering the four counterexample families of `REVIEW.md`),
   harmonic-data example made non-vacuous, Shepard comparison corrected, counts and wording.
+- [ ] **Explain the extra hypothesis of Proposition 4.6** (`prop:necessity`, "the data at the nodes
+  other than x_i are unisolvent on Π_m by themselves"). From the swimls-bvps numerics session's
+  resolution check of `REVIEW.md` (item G3, only partly resolved): the proof uses the
+  hypothesis only to make the Schur complement S = K_RR − K_RN K_NN⁻¹ K_NR (blocks of K with
+  respect to Π_m = R ⊕ N_i; K_NN is invertible by (A3) alone) injective. It cannot simply be
+  dropped: with d = 1, m = 3, Hermite {f, f′, f″} at 0 and a single value f(1), the data are
+  unisolvent and dim Π_3 in number, so u is the cubic interpolant and f″(0) is reproduced
+  although Δξ² = 2 ≠ 0 at α = 2 (here S = 0). Suggested: a short remark after the proof saying
+  both things. Full report available from the numerics session on request.
 - [ ] **Optional polish:** notation clean-up (n, K, R/L, s, r, ℓ, h in several roles), a table for
   the rates in §7.4, a comparison with a competing Hermite–Birkhoff method.
 
