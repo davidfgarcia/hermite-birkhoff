@@ -238,6 +238,30 @@ Multiplication by $|z|^2=\sum_jz_j\cdot z_j$ is therefore adjoint to $\sum_j\par
 and the second statement follows by induction.
 \end{proof}
 
+Fischer's pairing and this adjointness go back to~\cite{Fischer1918}; see
+also~\cite{Shapiro1989}. They give an orthogonal decomposition that explains the role of the
+operator $\Delta^{\alpha/2}$ below.
+
+\begin{remark}\label{rem:decomposition}
+For $n,\ell\in\N_0$ with $2\ell\le n$,
+\begin{equation}\label{eq:decomposition}
+  \Pi_n=\ker\bigl(\Delta^\ell\big|_{\Pi_n}\bigr)\ \oplus\ |z|^{2\ell}\,\Pi_{n-2\ell},
+\end{equation}
+and the sum is orthogonal for the Fischer pairing. Indeed, $\fp{q}{|z|^{2\ell}p}=\fp{\Delta^\ell q}{p}=0$
+for $\Delta^\ell q=0$ by Lemma~\ref{lem:fischer}, and the dimensions add up because
+$\Delta^\ell\colon\Pi_n\to\Pi_{n-2\ell}$ is the adjoint of the injective multiplication by
+$|z|^{2\ell}$, hence onto. Consequently, a symbol $q$ of degree at most $n$ annihilates every
+multiple $|z|^{2\ell}p$ of degree at most $n$ if and only if $\Delta^\ell q=0$. For $\ell=1$ and
+homogeneous polynomials this is a classical lemma of Calder\'on and
+Zygmund~\cite[Ch.~2, Lemma~1]{CalderonZygmund1964}, and in the form ``$P$ is divisible by
+$|x-a|^2$ if and only if $q(D)P(a)=0$ for every harmonic $q$ of degree at most $\deg P$'' it is
+Theorem~2.4 of~\cite{ToanMaiLongPhung2026}, which studies Hermite interpolation with conditions
+induced by harmonic polynomials. With $\ell=\alpha/2$ it is the reason for condition~(ii)
+below: the remainder of the local fit near a node is a multiple of $|z|^\alpha$
+(Theorem~\ref{thm:structure}), and the data that cannot see any such multiple are exactly the
+$(\alpha/2)$-polyharmonic symbols.
+\end{remark}
+
 \begin{lemma}[Taylor expansion of operators]\label{lem:taylor}
 Let $A=(A_1,\dots,A_d)$ and $B=(B_1,\dots,B_d)$ be commuting operators. For every symbol $q$,
 $q(A+B)=\sum_{\gamma}\frac{1}{\gamma!}A^\gamma(\partial^\gamma q)(B)$ (a finite sum).
@@ -539,7 +563,9 @@ by~\ref{c2}.
 Condition~\ref{c1} concerns the datum and the data at its own node only; it holds for every
 datum when $Q_i$ is D-invariant, the classical setting of multivariate Hermite
 interpolation~\cite{SauerXu1995,deBoor2005}. Condition~\ref{c2} holds whenever $\deg q<\alpha$,
-but also, for instance, for every harmonic symbol when $\alpha=2$. At a D-invariant node,
+but also, for instance, for every harmonic symbol when $\alpha=2$. By
+Remark~\ref{rem:decomposition} it is exactly the condition under which the last term
+of~\eqref{eq:error} vanishes for every possible remainder $\tau$. At a D-invariant node,
 \eqref{eq:dinv-error} says more: the error is a \emph{linear functional} of the datum, which
 only sees $\Delta^{\alpha/2}q$.
 
@@ -573,6 +599,17 @@ have the same error $\fpz{2}{\tau}{x_i}=2\tau(x_i)$, so their difference
 $\partial_x^2f-\partial_y^2f$ is reproduced. With third derivatives ($k=3$, $\alpha=2$) the
 same argument gives, e.g., that the error in $\partial_x^3f$ is three times the error in
 $\partial_x\partial_y^2f$, since $\Delta\xi_1^3=6\xi_1=3\,\Delta(\xi_1\xi_2^2)$.
+\end{example}
+
+\begin{example}\label{ex:harmonic}
+Data given by harmonic symbols are reproduced with the smallest exponent $\alpha=2$, whatever
+their order, as soon as the symbol space at each node is D-invariant, since derivatives of
+harmonic polynomials are harmonic. Toan, Mai, Long and Phung~\cite[Theorem~4.1]{ToanMaiLongPhung2026}
+construct regular interpolation schemes of degree $n$ from such data only: the $k$-th node carries
+every harmonic symbol of degree at most $n-2k+2$, for $k=1,\dots,\lfloor n/2\rfloor+1$, and the
+total number of data equals $\dim\Pi_n$. With $m=n$ and $\alpha=2$, SWIMLS on nodes carrying
+such data reproduces every datum, by Corollary~\ref{cor:exact}; Section~\ref{sec:hermite-num}
+checks a node with all harmonic symbols of degree at most $3$.
 \end{example}
 
 Corollary~\ref{cor:hermite}(b) proves the conjecture of~\cite[\S3]{KomargodskiLevin2006} that
@@ -1181,6 +1218,13 @@ Finally, the values added by completion affect the accuracy, not the exactness, 
 ways of estimating them would reduce the accuracy penalty observed in
 Section~\ref{sec:numerics}.
 
+The exactness rule also applies to data whose values come from an equation rather than from
+measurements: a second derivative $y''(x_i)$, or a Laplacian $\Delta u(x_i)$ given by a
+differential equation, is a Hermite--Birkhoff datum like any other, reproduced (together with
+the lower-order data that condition~(i) requires) once $\alpha=4$, since
+$\Delta|\xi|^2\ne0$. This is the starting point of an application of SWIMLS to boundary value
+problems, which we will present separately.
+
 % ===========================================================================
 \appendix
 
@@ -1278,6 +1322,11 @@ doi:10.1016/j.amc.2012.03.002.
 \bibitem{Coman1998}
 Gh.~Coman, \emph{Shepard operators of {B}irkhoff type}, Calcolo \textbf{35} (1998), 197--203.
 % from the reference list of DellAccioDiTommasoSurvey; not checked against the journal
+
+\bibitem{CalderonZygmund1964}
+A.~P. Calder\'on and A.~Zygmund, \emph{On higher gradients of harmonic functions}, Studia Math.
+\textbf{24} (1964), 211--226.
+% TO VERIFY (title, pages)
 
 \bibitem{deBoor2005}
 C.~de Boor, \emph{Ideal interpolation}, Approximation Theory XI: Gatlinburg 2004 (C.~K. Chui, M.~Neamtu, and L.~L. Schumaker, eds.), Nashboro Press, Brentwood, TN, 2005, pp.~59--91.
@@ -1382,6 +1431,11 @@ D.~Shepard, \emph{A two-dimensional interpolation function for irregularly-space
 T.~Sonar, \emph{Difference operators from interpolating moving least squares and their deviation
 from optimality}, ESAIM Math. Model. Numer. Anal. \textbf{39} (2005), 883--908,
 doi:10.1051/m2an:2005039.
+
+\bibitem{ToanMaiLongPhung2026}
+Toan, Mai, Long, and Phung, \emph{Multivariate {H}ermite interpolation with interpolation
+conditions induced by harmonic polynomials}, J. Approx. Theory \textbf{318} (2026), 106303.
+% TO VERIFY (full author names, DOI)
 
 \bibitem{Wendland2005}
 H.~Wendland, \emph{Scattered Data Approximation}, Cambridge Monographs on Applied and Computational Mathematics, vol.~17, Cambridge University Press, Cambridge, 2005, doi:10.1017/CBO9780511617539.

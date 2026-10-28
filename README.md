@@ -4,7 +4,9 @@ Research code, experiments and paper draft for **SWIMLS** (singular-weight inter
 moving least squares) with derivative data of arbitrary order in any dimension.
 
 - `code/hbmls/` – reference implementation (numerically stable float evaluator with the
-  exact singular limit at the nodes, plus a high-precision mpmath reference)
+  exact singular limit at the nodes, plus a high-precision mpmath reference); Gaussian or
+  compactly supported C∞ ("bump") weights; `SWIMLS1D` gives exact u′ and u″ of the 1-D
+  interpolant (projector form, leverage-aware cutoff), the evaluator used by swimls-bvps
 - `code/tests/` – correctness checks: `cd code && python3 -m tests.test_core`
 - `code/experiments/` – the numerical experiments behind the paper (E1–E8); summary in `RESULTS.md`
 - `results/`, `figures/` – their outputs
@@ -72,8 +74,10 @@ item is closed. Closed items are marked "Done <date>".
 
 ### Code
 
-- [ ] **Derivative evaluator from swimls-bvps.** Move the projector form of φ′ and φ″ and the
-  leverage-aware cutoff (`swimls_bvp/swimls1d.py`) into `hbmls`, with tests.
+- [x] **Derivative evaluator from swimls-bvps.** Done Oct 28: `hbmls.SWIMLS1D` (same API as
+  `swimls_bvp/swimls1d.py`, plus `weight="bump"`), with tests against `SingularMLS`, polynomial
+  reproduction and high-precision derivatives. swimls-bvps can now import it from the submodule
+  and drop its own copy.
 - [ ] **Tag a release** of hermite-birkhoff; swimls-bvps pins its submodule to that tag.
 
 ### Before and after submission

@@ -110,4 +110,31 @@ mpz = hb.MPSingularMLS(opz, dps=100)
 e = max(abs(float(mpz.value([0.5 + t], yr)) - opz([[0.5 + t]], yr)[0]) for t in (0.3, 1e-2, 1e-6, 1e-12))
 ok(e < 1e-13, f"bump weights: float = 100-digit reference near a node: err {e:.1e}")
 
+# 10. SWIMLS1D (exact u', u'' of the approximant; moved here from swimls-bvps):
+#     u agrees with SingularMLS, P_m is reproduced with its derivatives, and u', u''
+#     agree with high-precision derivatives of the interpolant, for both weights
+xs = np.sort(np.random.default_rng(5).random(12)) * 2.0
+for wname in ("gauss", "bump"):
+    delta = 0.6 if wname == "gauss" else 0.9
+    s1 = hb.SWIMLS1D(xs, orders=(0, 1, 2), degree=4, alpha=4, delta=delta, weight=wname)
+    fz = [hb.derivative_1d(q, r) for q in xs for r in (0, 1, 2)]
+    ref = hb.SingularMLS(fz, degree=4, alpha=4, delta=delta, length=delta, weight=wname)
+    yr = np.random.default_rng(6).normal(size=len(fz))
+    X = [0.37, 0.91, 1.43]
+    u0 = s1.evaluate(X, yr)[0]
+    ok(np.max(np.abs(u0 - ref(np.array(X)[:, None], yr))) < 1e-11, f"SWIMLS1D ({wname}): u = SingularMLS u")
+    q4 = lambda b, p: [p[0]**4 - p[0], 4*p[0]**3 - 1, 12*p[0]**2][b[0]]
+    yq = ref.data_from(q4)
+    u, d1, d2 = s1.evaluate(X, yq)
+    t = np.array(X)
+    ok(max(np.max(np.abs(u - (t**4 - t))), np.max(np.abs(d1 - (4*t**3 - 1))), np.max(np.abs(d2 - 12*t**2))) < 1e-9,
+       f"SWIMLS1D ({wname}): P_4 reproduced with u', u''")
+    mpr = hb.MPSingularMLS(ref, dps=60)
+    e = 0.0
+    for x0 in X:
+        _, d1x, d2x = s1.evaluate([x0], yr)
+        r1 = float(mpr.derivative([x0], (1,), yr, r=1e-4)); r2 = float(mpr.derivative([x0], (2,), yr, r=1e-4))
+        e = max(e, abs(d1x[0] - r1) / max(1, abs(r1)), abs(d2x[0] - r2) / max(1, abs(r2)))
+    ok(e < 1e-9, f"SWIMLS1D ({wname}): u', u'' = high-precision derivatives (rel err {e:.1e})")
+
 print(f"\n{sum(results)}/{len(results)} checks passed")
