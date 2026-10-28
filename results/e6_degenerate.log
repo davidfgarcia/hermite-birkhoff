@@ -1,0 +1,35 @@
+(a) degenerate configurations: condition (i) fails at the checked data
+  1D interpolatory: f'(0), f(1), f'(2.5)               seed 1  Dx at (0.0,)           Theory: exact            err 6.2e-55 / 6.2e-39  -> exact
+  1D interpolatory: f'(0), f(1), f'(2.5)               seed 1  Dx at (2.5,)           Theory: exact            err 6.2e-55 / 6.2e-39  -> exact
+  1D interpolatory: f'(0), f(1), f'(2.5)               seed 2  Dx at (0.0,)           Theory: exact            err 2.5e-53 / 2.5e-37  -> exact
+  1D interpolatory: f'(0), f(1), f'(2.5)               seed 2  Dx at (2.5,)           Theory: exact            err 2.5e-53 / 2.5e-37  -> exact
+    + value f(4)                                       seed 1  Dx at (0.0,)           Theory: generic          err 2.6e-01 / 2.6e-01  -> not exact
+    + value f(4)                                       seed 1  Dx at (2.5,)           Theory: generic          err 2.1e+00 / 2.1e+00  -> not exact
+    + value f(4)                                       seed 2  Dx at (0.0,)           Theory: generic          err 2.1e-01 / 2.1e-01  -> not exact
+    + value f(4)                                       seed 2  Dx at (2.5,)           Theory: generic          err 4.5e-01 / 4.5e-01  -> not exact
+  2D, K=2: grad at x0; Hermite k=2 at x1               seed 1  Dx at (0.2, 0.3)       Theory: exact            err 3.0e-48 / 3.0e-32  -> exact
+  2D, K=2: grad at x0; Hermite k=2 at x1               seed 1  Dy at (0.2, 0.3)       Theory: exact            err 1.6e-48 / 1.6e-32  -> exact
+  2D, K=2: grad at x0; Hermite k=2 at x1               seed 2  Dx at (0.2, 0.3)       Theory: exact            err 4.3e-48 / 4.3e-32  -> exact
+  2D, K=2: grad at x0; Hermite k=2 at x1               seed 2  Dy at (0.2, 0.3)       Theory: exact            err 7.0e-48 / 7.0e-32  -> exact
+    + Hermite k=2 at a third node                      seed 1  Dx at (0.2, 0.3)       Theory: generic          err 4.4e-02 / 4.4e-02  -> not exact
+    + Hermite k=2 at a third node                      seed 1  Dy at (0.2, 0.3)       Theory: generic          err 2.8e-02 / 2.8e-02  -> not exact
+    + Hermite k=2 at a third node                      seed 2  Dx at (0.2, 0.3)       Theory: generic          err 4.6e-01 / 4.6e-01  -> not exact
+    + Hermite k=2 at a third node                      seed 2  Dy at (0.2, 0.3)       Theory: generic          err 2.9e-01 / 2.9e-01  -> not exact
+  2D, K=2: f, Dxx at x0; Hermite k=2 at x1 (alpha=4)   seed 1  Dxx at (0.2, 0.3)      Theory: exact            err 1.1e-34 / 1.1e-22  -> exact
+  2D, K=2: f, Dxx at x0; Hermite k=2 at x1 (alpha=4)   seed 2  Dxx at (0.2, 0.3)      Theory: exact            err 8.4e-35 / 8.4e-23  -> exact
+    + Hermite k=2 at a third node (alpha=4)            seed 1  f at (0.2, 0.3)        Theory: generic          err 1.9e-36 / 1.9e-24  -> exact
+    + Hermite k=2 at a third node (alpha=4)            seed 1  Dxx at (0.2, 0.3)      Theory: generic          err 3.3e+00 / 3.3e+00  -> not exact
+    + Hermite k=2 at a third node (alpha=4)            seed 2  f at (0.2, 0.3)        Theory: generic          err 4.6e-37 / 4.6e-25  -> exact
+    + Hermite k=2 at a third node (alpha=4)            seed 2  Dxx at (0.2, 0.3)      Theory: generic          err 2.9e+00 / 2.9e+00  -> not exact
+  2D symmetric: Dx at 0; Hermite k=1 on the x2-axis    seed 1  Dx at (0.0, 0.0)       Theory: exact (Prop4.11)  err 1.5e-47 / 1.5e-31  -> exact
+  2D symmetric: Dx at 0; Hermite k=1 on the x2-axis    seed 2  Dx at (0.0, 0.0)       Theory: exact (Prop4.11)  err 1.3e-46 / 1.3e-30  -> exact
+    nodes moved 0.05 off the axis                      seed 1  Dx at (0.0, 0.0)       Theory: generic          err 7.8e-02 / 7.8e-02  -> not exact
+    nodes moved 0.05 off the axis                      seed 2  Dx at (0.0, 0.0)       Theory: generic          err 1.6e-01 / 1.6e-01  -> not exact
+
+(b) error identities, Hermite k=3 node in 2D, alpha=2 (signed errors)
+  r=1e-06: Dxx -4.590468219628e+01  Dyy -4.590468219628e+01  Dxy -6.9e-44
+           Dxxx +5.990999930383e+02  3Dxyy +5.990999930383e+02
+           Dyyy -3.144178880369e+01  3Dxxy -3.144178880369e+01   max |err| f,Dx,Dy 5.1e-35
+  r=1e-04: Dxx -4.590468219628e+01  Dyy -4.590468219628e+01  Dxy -6.9e-28
+           Dxxx +5.990999930383e+02  3Dxyy +5.990999930383e+02
+           Dyyy -3.144178880369e+01  3Dxxy -3.144178880369e+01   max |err| f,Dx,Dy 5.1e-23

@@ -33,8 +33,8 @@ data in `results/`, figures in `figures/`.*
 2. **Komargodski–Levin §3 claim fails.** With values at some points and gradients at *other*
    points (2D), the gradients are not reproduced: errors 0.07–4.4 (E2, α = 2, degree 2,
    Gaussian decay). Re-checked in their exact setting – pure power weights ‖x − z‖^(−α), the
-   minimal basis {1, x, y} and also degree 2, α = 2 and 4: errors 0.06–4.2
-   (`results/e2_kl_faithful.log`). With values and gradients at the same points the gradients
+   minimal basis {1, x, y} and also degree 2, α = 2 and 4: errors 0.06–4.5 (24/24 gradient components; `e2c_kl_faithful.py`)
+   (`results/e2c_kl_faithful.log`). With values and gradients at the same points the gradients
    are exact, as they prove. Both behaviours are predicted by condition (i).
 
 3. **Completion repairs Birkhoff data (E2b).** Adding the missing functionals (a basis of the
@@ -127,6 +127,21 @@ distance of the Halton set).
 Worst error vs a 120-digit reference along x = 2 + t, t = 10⁻¹ … 10⁻¹⁴: stable evaluator
 4.4e-16 (k = 1) and 4.7e-15 (k = 2); normal equations ε = 10⁻¹⁰: 9.1e-11 and 1.6e-10;
 ε = 10⁻¹⁶: 6.1e-15 and 3.8e-12, singular at t = 10⁻¹¹, 10⁻¹⁴ (k = 1) and 10⁻⁶ (k = 2).
+
+### E6 – degenerate configurations and error identities (`e6_degenerate.py`)
+
+Condition (i) fails, yet the datum is reproduced (Theorem 4.8 / Prop. 4.11 of the paper);
+a small perturbation then breaks it:
+
+| configuration | reproduced? | perturbed |
+|---|---|---|
+| 1D f'(0), f(1), f'(5/2), m=1, α=2 (interpolatory restriction) | yes (<1e-36) | + f(4): errors 0.21–2.1 |
+| 2D K=2, gradient-only node, α=2 (single scale) | yes | + third node: 0.03–0.46 |
+| 2D K=2, {f, Dxx} node, α=4 | yes | + third node: 2.9–3.3 |
+| 2D Dx at 0, other nodes on the x2-axis (symmetric) | yes | moved 0.05: 0.08–0.16 |
+
+Error identities at a Hermite k=3 node, α=2 (signed, 12 digits): e(Dxx)=e(Dyy),
+e(Dxxx)=3e(Dxyy), e(Dyyy)=3e(Dxxy).
 
 ## Open questions
 
