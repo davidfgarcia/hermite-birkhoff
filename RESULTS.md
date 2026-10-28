@@ -143,6 +143,14 @@ a small perturbation then breaks it:
 Error identities at a Hermite k=3 node, α=2 (signed, 12 digits): e(Dxx)=e(Dyy),
 e(Dxxx)=3e(Dxyy), e(Dyyy)=3e(Dxxy).
 
+### E8 – convergence with compactly supported weights (`e8_compact.py`, `e8b_periodic.py`, figure `e8_compact`)
+
+Bump weights |x-x_j|^-α ψ(|x-x_j|²/δ²), δ = c·h, derivative rows scaled by δ^r (the setting of
+the convergence theorem). Least-squares rates over N = 64…8192 (max error of u / of grad u):
+m=2 ≈ 3 / 2, m=3 ≈ 3.6–3.9 / 2.5–3.0, m=4 ≈ 5 / 4, m=5 (Hessian data) ≈ 5.8 / 4.8. Values with
+c=2 and m=3 or 5 do not converge: too few nodes in the support (norming condition fails).
+On periodically jittered grids the RMS rates are within 0.06 of m+1 (u) and m (gradient).
+
 ## Open questions
 
 - **Proof** of the rule, both directions; in particular the genericity argument for "only if".

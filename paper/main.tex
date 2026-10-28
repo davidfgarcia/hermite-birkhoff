@@ -1016,7 +1016,7 @@ $t=|z_i|^\alpha$ it gives the shape functions near $\mathcal C_0$, as $C^\infty$
 % ===========================================================================
 \section{Numerical experiments}\label{sec:numerics}
 The experiments test the theory of Sections~\ref{sec:main} and~\ref{sec:birkhoff} datum by
-datum. They use a numerically stable evaluator of SWIMLS, described in
+datum, and the convergence theorem of Section~\ref{sec:convergence-theory}. They use a numerically stable evaluator of SWIMLS, described in
 Appendix~\ref{sec:evaluation}, which stays accurate to rounding level as close to the nodes as we
 tested ($10^{-14}$). Whether a datum is reproduced is decided in high-precision arithmetic
 (Appendix~\ref{sec:verification}); the outcome is never borderline: reproduced data have errors
@@ -1088,23 +1088,37 @@ Franke's function, the maximum error is $1.2\cdot10^{-3}$ without and $3.4\cdot1
 completion, because the added values are only estimates (here from a simple least-squares fit).
 
 \subsection{Accuracy}\label{sec:convergence}
-We have no convergence theory for SWIMLS with derivative data, and report a parameter study
-instead: Halton nodes in the unit square ($N\le4096$), a smooth test function, Gaussian factors
-of width proportional to $h=N^{-1/2}$ in the weights, and $44$ combinations of the data order
-$k\le2$, the degree $m\le5$, $\alpha$ and the width. Over the last three refinements the
-root-mean-square error decays like $h^{r}$ with $|r-(m+1)|\le0.53$ in every case, the rate known
-for MLS approximation with local degree $m$~\cite{Levin1998,Wendland2005}.
-Figure~\ref{fig:convergence} shows what derivative data buy. On a fixed node set they reduce the
-error, e.g.\ for $N=4096$ and $m=5$ from $5.0\cdot10^{-9}$ to $1.1\cdot10^{-9}$ with gradients
-and Hessians. Per number of data, however, values alone were more accurate in this test:
-derivative data pay off when nodes are expensive and derivatives are cheap, as with adjoint
-gradients.
+Theorem~\ref{thm:convergence} predicts errors of order $h^{m+1}$ for $u$ and $h^m$ for its
+gradient. We tested this on $N=64,\dots,8192$ Halton points in the unit square, with the
+compactly supported weights~\eqref{eq:bump}, $\delta=ch$ for $c\in\{2,3,4\}$, $h=N^{-1/2}$,
+the scaled functional~\eqref{eq:Jdelta}, and data of order $k\le2$ from a smooth test
+function; errors are measured on a $33\times33$ grid in $[0.1,0.9]^2$, and gradients by
+fourth-order finite differences with step $h/100$. In all cases where the support contains
+enough nodes, least-squares fits of the maximum error over all resolutions give rates
+$2.8$--$3.2$ for $m=2$, $3.6$--$3.9$ for $m=3$, $5.0$--$5.1$ for $m=4$ and $5.7$--$5.9$ for
+$m=5$ with Hessian data, and gradient rates $1.9$--$2.1$, $2.5$--$3.0$, $3.9$--$4.1$ and
+$4.7$--$4.9$ (Figure~\ref{fig:convergence}). For values with $m=5$ the rates are higher
+($6.4$--$7.9$), a pre-asymptotic effect. The maximum error samples the worst local
+configuration and fluctuates from one node set to the next; on periodically jittered grids,
+where the local configurations repeat at every resolution, fits over all resolutions give
+root-mean-square rates within $0.06$ of $m+1$ for $u$ and of $m$ for the gradient, for the
+five data types and degrees tested. When the support is too small for the local
+norming condition~\ref{H3}, as for values with $m=3$ or $5$ and $c=2$, the error does not
+decrease at all, which illustrates that the condition cannot simply be dropped.
+
+A second study with Gaussian factors instead of compact support gave the same rates for the
+root-mean-square error (within $0.53$ of $m+1$, over $44$ parameter combinations). It also
+shows what derivative data buy: on a fixed node set they reduce the error, e.g.\ for $N=4096$
+and $m=5$ from $5.0\cdot10^{-9}$ (values) to $1.1\cdot10^{-9}$ (values, gradients and
+Hessians), but per number of data values alone were more accurate in that test. Derivative
+data pay off when nodes are expensive and derivatives are cheap, as with adjoint gradients.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{../figures/e7_convergence.pdf}
-  \caption{Maximum error on $[0.1,0.9]^2$ for Halton nodes, $\delta=2h$; $\alpha=2$ except for
-  Hessian data ($\alpha=4$). (a) Against the node spacing. (b) Against the total number of data.}
+  \includegraphics[width=\textwidth]{../figures/e8_compact.pdf}
+  \caption{Maximum errors for Halton nodes with compactly supported weights,
+  $\delta=2h$ ($3h$ for values); $\alpha=2$, and $\alpha=4$ with Hessian data. Dotted lines
+  have the slopes $m+1$ in (a) and $m$ in (b) predicted by Theorem~\ref{thm:convergence}.}
   \label{fig:convergence}
 \end{figure}
 
