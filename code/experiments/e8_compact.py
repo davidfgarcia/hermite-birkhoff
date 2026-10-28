@@ -24,6 +24,15 @@ GX = np.array([deriv((1, 0), p, F) for p in GRIDPTS])
 GY = np.array([deriv((0, 1), p, F) for p in GRIDPTS])
 
 
+def grad(op, y, h, j):
+    """Fourth-order central difference with step h/100 (truncation and rounding errors
+    far below the errors measured)."""
+    e = np.zeros(2)
+    e[j] = 0.01 * h
+    u = lambda t: op(GRIDPTS + t * e, y)
+    return (-u(2) + 8 * u(1) - 8 * u(-1) + u(-2)) / (12 * e[j])
+
+
 def run(args):
     k, m, alpha, c, n = args
     pts = halton(n, 2)
@@ -33,9 +42,8 @@ def run(args):
     op = hb.SingularMLS(fun, degree=m, alpha=alpha, delta=delta, length=delta, cutoff=1e-16, weight="bump")
     y = op.data_from(lambda b, p: deriv(b, p, F))
     e = op(GRIDPTS, y) - EX
-    s = 1e-4 * h
-    gx = (op(GRIDPTS + [s, 0], y) - op(GRIDPTS - [s, 0], y)) / (2 * s) - GX
-    gy = (op(GRIDPTS + [0, s], y) - op(GRIDPTS - [0, s], y)) / (2 * s) - GY
+    gx = grad(op, y, h, 0) - GX
+    gy = grad(op, y, h, 1) - GY
     return dict(k=k, degree=m, alpha=alpha, c=c, nodes=n, h=h, max_err=float(np.max(np.abs(e))),
                 rms_err=float(np.sqrt(np.mean(e ** 2))),
                 grad_max_err=float(np.max(np.hypot(gx, gy))))

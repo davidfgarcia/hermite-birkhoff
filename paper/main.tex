@@ -50,9 +50,10 @@ if and only if $\alpha>k$ (the necessity under a mild condition on the other nod
 proves a sharpened form of a conjecture of Komargodski and Levin. We also give exact
 counterexamples, in one and two dimensions, to their claim that derivatives prescribed at
 points without function values are interpolated, and a completion procedure that makes such
-data exact. A stable evaluator and experiments in one to three dimensions confirm the theory, and in a
-two-dimensional study the root-mean-square error decays at rates close to $h^{m+1}$ for local
-degree $m$.
+data exact. With compactly supported $C^\infty$ weights and local polynomials of degree $m$, the
+interpolant and its derivatives of order $|\beta|\le m$ converge at the rate
+$h^{m+1-|\beta|}$ on quasi-uniform nodes, at and near the nodes included. A stable evaluator and
+experiments in one to three dimensions confirm the theory.
 \end{abstract}
 
 \maketitle
@@ -122,13 +123,18 @@ formula for the error in each datum.
         in~\cite[\S3]{KomargodskiLevin2006} (Propositions~\ref{prop:kl}
         and~\ref{prop:kl2}), and a completion procedure that makes data with gaps exact
         (Proposition~\ref{prop:completion}).
+  \item A convergence theorem for compactly supported $C^\infty$ singular weights
+        (Theorem~\ref{thm:convergence}): $|D^\beta(u-f)|\le C\delta^{m+1-|\beta|}$ for
+        $|\beta|\le m$, under a local norming condition on the data, uniformly up to the nodes.
   \item Numerical experiments in one, two and three dimensions that confirm each of these
         statements datum by datum, based on a numerically stable evaluator of SWIMLS.
 \end{enumerate}
 
 \paragraph{Outline.} Section~\ref{sec:example} shows the method and both failure mechanisms on
 a one-dimensional example. Section~\ref{sec:setting} fixes notation, Section~\ref{sec:main}
-contains the theory, and Section~\ref{sec:birkhoff} treats derivatives at points without values.
+contains the exactness theory,
+Section~\ref{sec:birkhoff} treats derivatives at points without values, and
+Section~\ref{sec:convergence-theory} proves convergence for compactly supported weights.
 Section~\ref{sec:numerics} reports the experiments and Section~\ref{sec:conclusions} lists open
 problems. Appendices~\ref{sec:evaluation} and~\ref{sec:verification} describe the numerical
 evaluator and how exactness was verified.
@@ -811,8 +817,13 @@ Section~\ref{sec:main} apply verbatim once $U$ is chosen so small that $\rho_i>0
 every $\rho_j$ that is positive at $x_i$ is positive on $U$: the only place where positivity
 of the other weights is used, the strict convexity of the frozen problem, then follows
 from~(A3$'$) at $x=x_i$. In Proposition~\ref{prop:necessity}, ``the other nodes'' are those
-with $\rho_j(x_i)>0$. All results of Sections~\ref{sec:main} and~\ref{sec:birkhoff} therefore
-hold for the weights~\eqref{eq:bump}.
+with $\rho_j(x_i)>0$, and in Corollary~\ref{cor:frozen-cases}(a) the condition is required only
+for the $j$ with $w_j\not\equiv0$ near $x_i$. With these readings, the general results of
+Sections~\ref{sec:main} and~\ref{sec:birkhoff} (Theorems~\ref{thm:structure}, \ref{thm:error}
+and~\ref{thm:frozen}, their corollaries, and Propositions~\ref{prop:necessity},
+\ref{prop:firstorder} and~\ref{prop:completion}) hold for the weights~\eqref{eq:bump};
+Propositions~\ref{prop:kl} and~\ref{prop:kl2} and the statements that use analyticity concern
+pure power weights.
 
 The data are weighted according to their order. If $q_{j,s}$ is homogeneous of degree
 $r_{j,s}$, we minimise
@@ -831,16 +842,16 @@ For a ball $B$ and $f\in C^{m+1}(B)$ let
 \]
 We assume:
 \begin{enumerate}[label=(H\arabic*)]
-  \item\label{H1} \emph{separation:} $|x_i-x_j|\ge\sigma\delta$ for $i\ne j$;
+  \item\label{H1} \emph{separation:} $|x_i-x_j|\ge\vartheta\delta$ for $i\ne j$;
   \item\label{H2} \emph{data:} the symbols are homogeneous of degree at most $m$ with coefficient
         vectors of Euclidean norm one, and the tuple $(q_{j,1},\dots,q_{j,n_j})$ at each node
         belongs to a fixed compact set $\mathcal Q$ of linearly independent tuples (for
         example, a finite list of data patterns such as Hermite data of order $k\le m$);
-  \item\label{H3} \emph{local norming:} there are $\rho_0\in(0,1)$ and $C_N$ such that for every
+  \item\label{H3} \emph{local norming:} there are $c_0\in(0,1)$ and $C_N$ such that for every
         $x\in\Omega$ and every $p\in\Pm$
         \[
           \max_{|z|\le1}|p(x+\delta z)|\le C_N\max\bigl\{\delta^{r_{j,s}}|\lambda_{j,s}(p)|:\
-          |x_j-x|\le\rho_0\delta\bigr\}.
+          |x_j-x|\le c_0\delta\bigr\}.
         \]
 \end{enumerate}
 Condition~\ref{H3} is a quantitative form of~(A3$'$): the data near $x$ determine a polynomial,
@@ -849,24 +860,33 @@ with a constant that does not depend on $x$ or $\delta$.
 \begin{theorem}[Convergence]\label{thm:convergence}
 Let $u$ be the SWIMLS interpolant with the weights~\eqref{eq:bump} and the
 functional~\eqref{eq:Jdelta}, for data $y_{j,s}=\lambda_{j,s}(f)$ of a function $f$, and assume
-\ref{H1}--\ref{H3}. There is a constant $C$, depending only on $d$, $m$, $\alpha$, $\psi$,
-$\sigma$, $\rho_0$, $C_N$ and $\mathcal Q$, such that
+\ref{H1}--\ref{H3} (which imply (A1$'$) and (A3$'$)). There is a constant $C$, depending only on $d$, $m$, $\alpha$, $\psi$,
+$\vartheta$, $c_0$, $C_N$ and $\mathcal Q$, such that
 \begin{equation}\label{eq:convergence}
   |D^\beta(u-f)(x)|\le C\,\delta^{m+1-|\beta|}\,|f|_{m+1,B(x,\delta)}
 \end{equation}
-for every $x\in\Omega$, every $|\beta|\le m$ and every $f\in C^{m+1}(B(x,\delta))$, the nodes
-$x$ included. In particular, for quasi-uniform nodes and $\delta=ch$ with $h$ the fill distance,
-$\|D^\beta(u-f)\|_{L^\infty(\Omega)}=O(h^{m+1-|\beta|})$.
+for every $x\in\Omega$, the nodes included, every $|\beta|\le m$ and every $f$ whose
+restriction to $B(x,\delta)$ is in $C^{m+1}$. In particular, if a family of quasi-uniform node
+sets is used with $\delta=ch$, $h$ the fill distance, and~\ref{H3} holds with $c_0$ and $C_N$
+independent of $h$, then
+$\|D^\beta(u-f)\|_{L^\infty(\Omega)}\le C\,h^{m+1-|\beta|}|f|_{m+1,\Omega_\delta}$ with
+$\Omega_\delta=\Omega+B(0,\delta)$.
 \end{theorem}
 
 The constant comes from a compactness argument and is not explicit. The bound has the same
-order as for classical moving least squares~\cite{Levin1998,Wendland2005}, and it holds near and
-at the nodes, where the weights are singular.
+order as for classical moving least squares with value
+data~\cite{Levin1998,Wendland2005,Zuppa2003,Mirzaei2015}, and it holds near and at the nodes,
+where the weights are singular. The structure of the proof is the classical one, polynomial
+reproduction and a bound on a scaled Lebesgue function; what is new is the bound near the
+nodes, which rests on Theorem~\ref{thm:structure}, and the treatment of general differential
+data.
 
 \begin{proof}
 \emph{Step 1: shape functions and reproduction.} The minimiser of~\eqref{eq:Jdelta} is linear in
 the data, so $u(x)=\sum_{j,s}a_{j,s}(x)\,y_{j,s}$ with shape functions $a_{j,s}$, which are
-$C^\infty$ on $\Omega$ by Theorem~\ref{thm:structure} and vanish unless $|x_j-x|<\delta$. If the
+$C^\infty$ on $\Omega$ by Theorem~\ref{thm:structure}. Each $a_{j,s}$ vanishes, with all its
+derivatives, where $|x_j-x|\ge\delta$: there $w_j$ vanishes identically in a neighbourhood or,
+on the sphere $|x_j-x|=\delta$, to infinite order, since $\psi$ is flat at $1$. If the
 data come from a polynomial $p\in\Pm$, then $J_x(p)=0$, so $p_x=p$ and $u=p$. Hence
 $\sum_{j,s}a_{j,s}(x)\lambda_{j,s}(p)=p(x)$ for all $x$, and differentiating in $x$,
 \begin{equation}\label{eq:repro}
@@ -882,7 +902,8 @@ $|\beta|\le m$,
 If $|x_j-x|<\delta$ and $q_{j,s}=\sum_{|\gamma|=r}c_\gamma\xi^\gamma$ with $r=r_{j,s}$, then
 $D^\gamma T$ is the Taylor polynomial of degree $m-r$ of $D^\gamma f$ at $x$, and Taylor's
 theorem gives $|D^\gamma(f-T)(x_j)|\le C_1\delta^{m+1-r}|f|_{m+1,B(x,\delta)}$ with $C_1$
-depending only on $d$ and $m$. Since $|c_\gamma|\le1$,
+depending only on $d$ and $m$. Since $|c_\gamma|\le1$ and the number of multi-indices of order
+$r\le m$ depends only on $d$ and $m$,
 \begin{equation}\label{eq:lebesgue}
   |D^\beta(u-f)(x)|\le C_2\,\delta^{m+1-|\beta|}\,|f|_{m+1,B(x,\delta)}\,\Lambda_\beta(x),
   \qquad
@@ -900,32 +921,35 @@ with $\tilde w(z)=|z|^{-\alpha}\psi(|z|^2)$. Hence
   -\delta^{r_{j,s}}y_{j,s}\bigr)^2 .
 \]
 So $\tilde p_x$ is the SWIMLS fit, evaluated at the origin, of the \emph{configuration}
-$Z=(z_j,Q_j)_j$ with data $\delta^{r_{j,s}}y_{j,s}$, where $Q_j$ is the tuple of symbols at
-$x_j$, and $u(x)=\tilde p_x(0)$. Denote by $\tilde a_{j,s}(Z)$ the shape functions of this scaled
-problem at the origin. Then $a_{j,s}(x)=\delta^{r_{j,s}}\tilde a_{j,s}(Z(x))$, and since moving
-$x$ translates all $z_j$ at once,
+$\mathcal C=(z_j,Q_j)_j$ with data $\delta^{r_{j,s}}y_{j,s}$, where $Q_j$ is the tuple of symbols at
+$x_j$, and $u(x)=\tilde p_x(0)$. Denote by $\tilde a_{j,s}(\mathcal C)$ the shape functions of this scaled
+problem at the origin; for configurations with a point at the origin ($x\in X$) they are
+defined by continuous extension, which exists by Step~5(b). Then $a_{j,s}(x)=\delta^{r_{j,s}}\tilde a_{j,s}(\mathcal C(x))$, and since moving
+$x$ translates all $z_j$ at once (near a given $x$ we keep the points of $\mathcal C(x)$:
+points outside the closed unit ball stay outside, and points leaving it have zero weight),
 \[
-  \delta^{|\beta|-r_{j,s}}|D^\beta a_{j,s}(x)|=\bigl|(E^\beta\tilde a_{j,s})(Z(x))\bigr|,\qquad
+  \delta^{|\beta|-r_{j,s}}|D^\beta a_{j,s}(x)|=\bigl|(E^\beta\tilde a_{j,s})(\mathcal C(x))\bigr|,\qquad
   E:=\sum_l\nabla_{z_l}.
 \]
-Thus $\Lambda_\beta(x)=\tilde\Lambda_\beta(Z(x))$ with
-$\tilde\Lambda_\beta(Z):=\sum_{j,s}|E^\beta\tilde a_{j,s}(Z)|$, a function of the configuration
+Thus $\Lambda_\beta(x)=\tilde\Lambda_\beta(\mathcal C(x))$ with
+$\tilde\Lambda_\beta(\mathcal C):=\sum_{j,s}|E^\beta\tilde a_{j,s}(\mathcal C)|$, a function of the configuration
 alone, in which $\delta$ no longer appears.
 
 \emph{Step 4: the admissible configurations form a compact set.} By~\ref{H1}, a configuration has
-$n\le M(d,\sigma)$ points in the closed unit ball, at mutual distances at least $\sigma$. By~\ref{H2}
+$n\le M(d,\vartheta)$ points in the closed unit ball, at mutual distances at least $\vartheta$. By~\ref{H2}
 its symbol tuples lie in $\mathcal Q$. By~\ref{H3}, with $\tilde p$ in place of $p$,
 \begin{equation}\label{eq:scaled-norming}
-  \max_{|z|\le1}|\tilde p(z)|\le C_N\max\{|\tilde\lambda_{j,s}(\tilde p)|:\ |z_j|\le\rho_0\}
+  \max_{|z|\le1}|\tilde p(z)|\le C_N\max\{|\tilde\lambda_{j,s}(\tilde p)|:\ |z_j|\le c_0\}
   \qquad(\tilde p\in\Pm).
 \end{equation}
 Let $\mathcal K$ be the set of all configurations with these three properties. Each property is
-preserved under limits; for~\eqref{eq:scaled-norming}, a limit of points with $|z_j|\le\rho_0$
-satisfies $|z_j|\le\rho_0$, and $\tilde\lambda_{j,s}(\tilde p)$ depends continuously on $z_j$
-and $Q_j$. Hence $\mathcal K$ is compact, as a finite union, over $n\le M$, of closed and
+preserved under limits. For~\eqref{eq:scaled-norming}, pass to a subsequence with a fixed number
+of points, a fixed labelling and a fixed index set $S=\{j:|z_j|\le c_0\}$; the limit points
+with $j\in S$ again satisfy $|z_j|\le c_0$, and $\tilde\lambda_{j,s}(\tilde p)$ depends
+continuously on $z_j$ and $Q_j$, so the inequality passes to the limit. Hence $\mathcal K$ is compact, as a finite union, over $n\le M$, of closed and
 bounded sets.
 
-\emph{Step 5: continuity.} We show that every $Z_0\in\mathcal K$ has a neighbourhood, in the
+\emph{Step 5: continuity.} We show that every $\mathcal C_0\in\mathcal K$ has a neighbourhood, in the
 space of all $(z_j,Q_j)$ with independent tuples $Q_j$, on which all $\tilde a_{j,s}$ are
 $C^\infty$ functions of $(z_j,Q_j)_j$. Then $\tilde\Lambda_\beta$ is continuous on
 $\mathcal K$, hence bounded by a constant $C_\beta$, and~\eqref{eq:convergence} follows
@@ -933,29 +957,34 @@ from~\eqref{eq:lebesgue} with $C=C_2\max_{|\beta|\le m}C_\beta$. Note that $\til
 $C^\infty$ on $\R^d\setminus\{0\}$, including the sphere $|z|=1$, because $\psi$ is flat at $1$;
 points with $|z_j|\ge1$ have zero weight and can be added or removed freely.
 
-\emph{(a) No point at the origin.} Let $\ell_{j,s}(Z)\in\R^{\dim\Pm}$ represent
+\emph{(a) No point at the origin.} This is the non-singular case of classical moving least
+squares~\cite{Wendland2005,Mirzaei2015}. Let $\ell_{j,s}(\mathcal C)\in\R^{\dim\Pm}$ represent
 $\tilde\lambda_{j,s}$ in a fixed basis of $\Pm$; it is polynomial in $z_j$ and linear in $Q_j$. The
-Gram matrix $G(Z)=\sum_j\tilde w(z_j)\sum_s\ell_{j,s}\ell_{j,s}^{\mathsf T}$ is $C^\infty$ near
-$Z_0$, and it is positive definite at $Z_0$: a polynomial annihilated by all data with
-$\tilde w(z_j)>0$ is annihilated by those with $|z_j|\le\rho_0$, hence vanishes
+Gram matrix $G(\mathcal C)=\sum_j\tilde w(z_j)\sum_s\ell_{j,s}\ell_{j,s}^{\mathsf T}$ is $C^\infty$ near
+$\mathcal C_0$, and it is positive definite at $\mathcal C_0$: a polynomial annihilated by all data with
+$\tilde w(z_j)>0$ is annihilated by those with $|z_j|\le c_0$, hence vanishes
 by~\eqref{eq:scaled-norming}. So $G^{-1}$, and with it the shape functions
 $\tilde a_{j,s}=e^{\mathsf T}G^{-1}\tilde w(z_j)\ell_{j,s}$ (with $e$ the evaluation at $0$),
-are $C^\infty$ near $Z_0$.
+are $C^\infty$ near $\mathcal C_0$.
 
 \emph{(b) A point at the origin.} By~\ref{H1}, at most one point, say $z_i$, is near the origin.
 We repeat the proof of Theorem~\ref{thm:structure} with the configuration as the parameter in
 place of $x$. Write $\tilde p(z)=P(z-z_i)$, so that the data at $z_i$ become $q_{i,s}(D)P(0)$
 and do not depend on $z_i$, while all other data and the evaluation $\tilde p(0)=P(-z_i)$ depend
 polynomially on the configuration. Dividing the scaled functional by $\tilde w(z_i)$ gives
-$|\Lambda_iP-\tilde y_i|^2+t\,B_Z(P)$ with $t=|z_i|^\alpha$, a polynomial in $z_i$, and $B_Z$
-smooth in $Z$ near $Z_0$. The kernel $N_i$ of $\Lambda_i$ depends on $Q_i$, but since $\Lambda_i$
+$|\Lambda_iP-\tilde y_i|^2+t\,B_{\mathcal C}(P)$ with $t=|z_i|^\alpha$, a polynomial in $z_i$, and $B_{\mathcal C}$
+smooth in $\mathcal C$ near $\mathcal C_0$. The kernel $N_i$ of $\Lambda_i$ depends on $Q_i$, but since $\Lambda_i$
 has full rank it can be written, near $Q_{i}^0$, as the graph of a linear map from a fixed
 space that depends rationally on $Q_i$. The implicit function theorem then applies as in the
 proof of Theorem~\ref{thm:structure}: the first diagonal block of the Jacobian is invertible
 because $Q_i$ is independent, and the second, the Hessian of the frozen problem on $N_i$, is
 positive definite by~\eqref{eq:scaled-norming}, which involves the point $z_i=0$. It yields a
-$C^\infty$ function of $(Z,t)$ that coincides with the minimiser whenever $t>0$; composed with
-$t=|z_i|^\alpha$ it gives the shape functions near $Z_0$, as $C^\infty$ functions of $Z$.
+$C^\infty$ function of $(\mathcal C,t)$. This function is the minimiser whenever $t>0$: the
+map $F$ is affine in the unknowns, its linear part is invertible near $(\mathcal C_0,0)$, and
+for $t>0$ the substitution $r=ts$ maps its zeros bijectively onto the critical points of the
+scaled functional; a positive semidefinite quadratic with exactly one critical point has a
+nonsingular, hence positive definite, Hessian, and that point is its unique minimiser; composed with
+$t=|z_i|^\alpha$ it gives the shape functions near $\mathcal C_0$, as $C^\infty$ functions of $\mathcal C$.
 \end{proof}
 
 \begin{remark}\label{rem:convergence}
@@ -976,7 +1005,8 @@ $t=|z_i|^\alpha$ it gives the shape functions near $Z_0$, as $C^\infty$ function
         sufficiently large multiple of the fill distance~\cite[Chapters~3 and~4]{Wendland2005}.
   \item \emph{Gaps and completion.} The theorem applies to any data satisfying
         \ref{H1}--\ref{H3}, with or without gaps, and so to completed data
-        (Proposition~\ref{prop:completion}) as well. If the added values are only estimates,
+        (Proposition~\ref{prop:completion}) as well; the added symbols can be taken homogeneous,
+        since derivatives of homogeneous symbols are homogeneous. If the added values are only estimates,
         with errors $\eta$, then $u$ changes by $\sum a_{j,s}\eta_{j,s}$, which by Step~3 is at
         most $\tilde\Lambda_0\max_{j,s}\delta^{r_{j,s}}|\eta_{j,s}|$ in absolute value, where
         $\tilde\Lambda_0\le C_0$ is the bound of Step~5.
@@ -1094,9 +1124,9 @@ interpolation of any order in any dimension.
 Several questions remain open. Conjecture~\ref{conj:char} asks whether $\Delta^{\alpha/2}q\ne0$
 always causes an error in generic configurations; we proved it at leading order. Beyond the
 first-order formula~\eqref{eq:firstorder}, we do not know exactly which configurations of the
-other nodes make condition~\ref{c1} unnecessary. The convergence orders observed in
-Section~\ref{sec:convergence} call for an error analysis in the spirit
-of~\cite{Levin1998,Wendland2005} that accounts for derivative data and singular weights.
+other nodes make condition~\ref{c1} unnecessary. Theorem~\ref{thm:convergence} assumes compactly supported weights and a local
+norming condition; extending it to weights with unbounded support, and verifying the norming
+condition for Hermite--Birkhoff data without function values, are natural next steps.
 Finally, the values added by completion affect the accuracy, not the exactness, and better
 ways of estimating them would reduce the accuracy penalty observed in
 Section~\ref{sec:numerics}.
@@ -1238,6 +1268,11 @@ D.~H. McLain, \emph{Drawing contours from arbitrary data points}, Comput. J. \te
 D.~H. McLain, \emph{Two dimensional interpolation from random data}, Comput. J. \textbf{19} (1976), no.~2, 178--181, doi:10.1093/comjnl/19.2.178.
 % verified: zbMATH 0321.65009
 
+\bibitem{Mirzaei2015}
+D.~Mirzaei, \emph{Analysis of moving least squares approximation revisited}, J. Comput. Appl.
+Math. (2015); preprint arXiv:1501.04969.
+% verified: arXiv abstract page and CORE record (journal, year); volume and pages not verified
+
 \bibitem{MirzaeiSchabackDehghan2012}
 D.~Mirzaei, R.~Schaback, and M.~Dehghan, \emph{On generalized moving least squares and diffuse derivatives}, IMA J. Numer. Anal. \textbf{32} (2012), no.~3, 983--1000, doi:10.1093/imanum/drr030.
 % verified: https://academic.oup.com/imajna/article-abstract/32/3/983/675168
@@ -1273,6 +1308,11 @@ H.~Wendland, \emph{Scattered Data Approximation}, Cambridge Monographs on Applie
 \bibitem{Wu1992}
 Z.~Wu, \emph{Hermite--{B}irkhoff interpolation of scattered data by radial basis functions}, Approx. Theory Appl. \textbf{8} (1992), no.~2, 1--10, doi:10.1007/BF02836101.
 % verified: https://link.springer.com/article/10.1007/BF02836101
+
+\bibitem{Zuppa2003}
+C.~Zuppa, \emph{Error estimates for moving least square approximations}, Bull. Braz. Math.
+Soc. (N.S.) \textbf{34} (2003), no.~2, 231--249, doi:10.1007/s00574-003-0010-7.
+% verified: https://link.springer.com/article/10.1007/s00574-003-0010-7
 
 \end{thebibliography}
 
