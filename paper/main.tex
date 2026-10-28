@@ -86,6 +86,16 @@ derivatives $\alpha=2$ is not enough while $\alpha=4$ works. They conjectured th
 suffices for derivatives up to order $k$, and stated that the method also interpolates
 directional derivatives prescribed at points that carry no function value.
 
+For Shepard's method, the case of local constants, derivative data have a longer history:
+Farwig's Shepard--Taylor operator interpolates derivatives up to order $r$ when the exponent of
+the weights is at least $r+1$~\cite{Farwig1986}, Coman~\cite{Coman1998} treats Birkhoff-type
+data, and Allasia and Bracco~\cite{AllasiaBracco2012} and Dell'Accio and Di
+Tommaso~\cite{DellAccioDiTommaso2016} construct Hermite--Birkhoff interpolants under
+completeness conditions on the data at each node; see the survey~\cite{DellAccioDiTommasoSurvey}.
+For interpolating MLS with function values, the derivatives of the interpolant at the nodes
+were computed by Sonar~\cite{Sonar2005} and Netuzhylov, Sonar and
+Yomsatieankul~\cite{NetuzhylovSonarYomsatieankul2007}.
+
 Polynomial Hermite--Birkhoff interpolation in several variables is notoriously delicate: whether
 a data pattern is poised depends on the pattern and on the geometry of the
 nodes~\cite{LorentzJetterRiemenschneider1983,GascaSauer2000,Lorentz2000}; the natural class
@@ -570,7 +580,10 @@ $\alpha=2k$ suffices for data up to order $k$ (they also observed that $\alpha=2
 $\alpha=4$ works for $k=2$). Their conjecture refers to ``an appropriate definition of the
 inner product'', which they do not specify; we read it as the same singular weight for all data
 at a node, as in their one-dimensional construction. For $k\ge3$ Corollary~\ref{cor:hermite}(b) is a strict improvement, e.g.\ $\alpha=4$ suffices
-for $k=3$.
+for $k=3$. For Shepard--Taylor interpolation, where the local polynomials are fixed Taylor
+polynomials, the analogous condition is that the exponent exceeds the order of the
+data~\cite{Farwig1986,Coman1998}; in SWIMLS the local polynomial is fitted, and the finer
+condition $\Delta^{\alpha/2}q=0$ shows that some data of higher order are reproduced as well.
 
 \subsection{Is condition (ii) necessary?}\label{sec:necessity}
 The next result shows that condition~\ref{c2} cannot be dropped, at least for data of degree
@@ -798,6 +811,12 @@ unchanged, because its representation in the augmented basis is unique. Every
 $q\in Q_i\subset\overline{Q}_i$ satisfies~\ref{c1} with respect to the D-invariant space
 $\overline{Q}_i$, and Corollary~\ref{cor:exact} applies.
 \end{proof}
+
+The same defect, a loss of exactness when the function value is missing at a node, was
+observed for Shepard-type Hermite--Birkhoff operators~\cite{DellAccioDiTommasoSurvey}, where it
+is avoided by completeness conditions on the data~\cite{DellAccioDiTommaso2016}. Condition~\ref{c1}
+and the completion $\overline Q_i$ are the corresponding notions for SWIMLS: D-invariance asks for
+all derivatives of the given symbols, not only for all derivatives of a given order.
 
 The values $\tilde y_{i,l}$ influence the accuracy, not the exactness. In the experiments they
 are estimated by a smooth (non-singular) moving least-squares fit of the given data.
@@ -1251,6 +1270,15 @@ S.~N. Atluri, J.~Y. Cho, and H.-G. Kim, \emph{Analysis of thin beams, using the 
 L.~Bos and K.~\v{S}alkauskas, \emph{Moving least-squares are {B}ackus--{G}ilbert optimal}, J. Approx. Theory \textbf{59} (1989), no.~3, 267--275.
 % verified: https://iris.univr.it/handle/11562/429372
 
+\bibitem{AllasiaBracco2012}
+G.~Allasia and C.~Bracco, \emph{Multivariate {H}ermite--{B}irkhoff interpolation by a class of
+cardinal basis functions}, Appl. Math. Comput. \textbf{218} (2012), 9248--9260,
+doi:10.1016/j.amc.2012.03.002.
+
+\bibitem{Coman1998}
+Gh.~Coman, \emph{Shepard operators of {B}irkhoff type}, Calcolo \textbf{35} (1998), 197--203.
+% from the reference list of DellAccioDiTommasoSurvey; not checked against the journal
+
 \bibitem{deBoor2005}
 C.~de Boor, \emph{Ideal interpolation}, Approximation Theory XI: Gatlinburg 2004 (C.~K. Chui, M.~Neamtu, and L.~L. Schumaker, eds.), Nashboro Press, Brentwood, TN, 2005, pp.~59--91.
 % verified: https://ftp1.cs.wisc.edu/Approx/texasxi.pdf
@@ -1258,6 +1286,19 @@ C.~de Boor, \emph{Ideal interpolation}, Approximation Theory XI: Gatlinburg 2004
 \bibitem{deBoorRon1990}
 C.~de Boor and A.~Ron, \emph{On multivariate polynomial interpolation}, Constr. Approx. \textbf{6} (1990), no.~3, 287--302, doi:10.1007/BF01890412.
 % verified: https://rd.springer.com/article/10.1007/BF01890412
+
+\bibitem{DellAccioDiTommaso2016}
+F.~Dell'Accio and F.~Di Tommaso, \emph{Complete {H}ermite--{B}irkhoff interpolation on scattered
+data by combined {S}hepard operators}, J. Comput. Appl. Math. \textbf{300} (2016), 192--206,
+doi:10.1016/j.cam.2015.12.016.
+
+\bibitem{DellAccioDiTommasoSurvey}
+F.~Dell'Accio and F.~Di Tommaso, \emph{Scattered data interpolation by {S}hepard's like methods:
+classical results and recent advances}, Dolomites Res. Notes Approx. \textbf{9} (2016), 32--44.
+
+\bibitem{Farwig1986}
+R.~Farwig, \emph{Rate of convergence of {S}hepard's global interpolation formula}, Math. Comp.
+\textbf{46} (1986), 577--590.
 
 \bibitem{Fasshauer2007}
 G.~E. Fasshauer, \emph{Meshfree Approximation Methods with {MATLAB}}, Interdisciplinary Mathematical Sciences, vol.~6, World Scientific, Singapore, 2007, doi:10.1142/6437.
@@ -1312,6 +1353,11 @@ D.~Mirzaei, R.~Schaback, and M.~Dehghan, \emph{On generalized moving least squar
 T.~Most and C.~Bucher, \emph{A moving least squares weighting function for the element-free {G}alerkin method which almost fulfills essential boundary conditions}, Struct. Eng. Mech. \textbf{21} (2005), no.~3, 315--332, doi:10.12989/sem.2005.21.3.315.
 % verified: https://koreascience.kr/article/JAKO200521349891864.do
 
+\bibitem{NetuzhylovSonarYomsatieankul2007}
+H.~Netuzhylov, T.~Sonar, and W.~Yomsatieankul, \emph{Finite difference operators from moving
+least squares interpolation}, ESAIM Math. Model. Numer. Anal. \textbf{41} (2007), 959--974,
+doi:10.1051/m2an:2007042.
+
 \bibitem{NarcowichWard1994}
 F.~J. Narcowich and J.~D. Ward, \emph{Generalized {H}ermite interpolation via matrix-valued conditionally positive definite functions}, Math. Comp. \textbf{63} (1994), no.~208, 661--687, doi:10.1090/S0025-5718-1994-1254147-6.
 % verified: https://www.ams.org/mcom/1994-63-208/S0025-5718-1994-1254147-6/
@@ -1331,6 +1377,11 @@ B.~Shekhtman, \emph{Ideal interpolation: translations to and from algebraic geom
 \bibitem{Shepard1968}
 D.~Shepard, \emph{A two-dimensional interpolation function for irregularly-spaced data}, Proceedings of the 1968 23rd ACM National Conference, ACM, New York, 1968, pp.~517--524, doi:10.1145/800186.810616.
 % DOI not checked against the ACM page (unreachable)
+
+\bibitem{Sonar2005}
+T.~Sonar, \emph{Difference operators from interpolating moving least squares and their deviation
+from optimality}, ESAIM Math. Model. Numer. Anal. \textbf{39} (2005), 883--908,
+doi:10.1051/m2an:2005039.
 
 \bibitem{Wendland2005}
 H.~Wendland, \emph{Scattered Data Approximation}, Cambridge Monographs on Applied and Computational Mathematics, vol.~17, Cambridge University Press, Cambridge, 2005, doi:10.1017/CBO9780511617539.
