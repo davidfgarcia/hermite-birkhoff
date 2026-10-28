@@ -137,4 +137,48 @@ for wname in ("gauss", "bump"):
         e = max(e, abs(d1x[0] - r1) / max(1, abs(r1)), abs(d2x[0] - r2) / max(1, abs(r2)))
     ok(e < 1e-9, f"SWIMLS1D ({wname}): u', u'' = high-precision derivatives (rel err {e:.1e})")
 
+# 11. SWIMLS2D (exact gradient and Hessian in 2-D; moved here from swimls-bvps): u agrees
+#     with SingularMLS, P_m is reproduced with gradient and Hessian, and gradient/Hessian
+#     agree with high-precision derivatives of the interpolant, for both weights
+tg = np.linspace(0, 1, 6)
+XX, YY = np.meshgrid(tg, tg, indexing="ij")
+nodes2 = np.c_[XX.ravel(), YY.ravel()]
+hstep = tg[1] - tg[0]
+fmap = {"u": hb.value, "dx": lambda q: hb.partial(q, (1, 0)),
+        "dy": lambda q: hb.partial(q, (0, 1)), "lap": hb.laplacian}
+for syms, a2, m2 in ((("u", "dx", "dy"), 2, 3), (("u", "dx", "dy", "lap"), 4, 4)):
+    for wname in ("gauss", "bump"):
+        delta = 1.2 * hstep if wname == "gauss" else 2.5 * hstep
+        s2 = hb.SWIMLS2D(nodes2, syms, m2, a2, delta, cutoff=0.0, weight=wname)
+        fz = [fmap[sy](q) for q in nodes2 for sy in syms]
+        ref = hb.SingularMLS(fz, degree=m2, alpha=a2, delta=delta, length=delta, weight=wname)
+        yr = np.random.default_rng(7).normal(size=len(fz))
+        P = np.array([[0.437, 0.561], [0.13, 0.82]])
+        u0, g0, H0 = s2.evaluate(P, yr)
+        tag = f"SWIMLS2D ({'+'.join(syms)}, alpha={a2}, {wname})"
+        ok(np.max(np.abs(u0 - ref(P, yr))) < 1e-11, f"{tag}: u = SingularMLS u")
+        c = np.random.default_rng(8).normal(size=s2.M)
+        def pq(beta, p, c=c, E=s2.exps):
+            tot = 0.0
+            for ci, (i, j) in zip(c, E):
+                if i >= beta[0] and j >= beta[1]:
+                    tot += (ci * np.prod(np.arange(i - beta[0] + 1, i + 1)) * np.prod(np.arange(j - beta[1] + 1, j + 1))
+                            * p[0] ** (i - beta[0]) * p[1] ** (j - beta[1]))
+            return tot
+        yq = ref.data_from(pq)
+        u, g, H = s2.evaluate(P, yq)
+        err = max(max(abs(u[k] - pq((0, 0), p)),
+                      np.max(np.abs(g[k] - [pq((1, 0), p), pq((0, 1), p)])),
+                      np.max(np.abs(H[k] - [pq((2, 0), p), pq((1, 1), p), pq((0, 2), p)])))
+                  for k, p in enumerate(P))
+        ok(err < 1e-8, f"{tag}: P_{m2} reproduced with gradient and Hessian (err {err:.1e})")
+        mpr = hb.MPSingularMLS(ref, dps=50)
+        e = 0.0
+        for k, p in enumerate(P):
+            for beta, val in (((1, 0), g0[k][0]), ((0, 1), g0[k][1]), ((2, 0), H0[k][0]),
+                              ((1, 1), H0[k][1]), ((0, 2), H0[k][2])):
+                rr = float(mpr.derivative(p, beta, yr, r=1e-4))
+                e = max(e, abs(val - rr) / max(1, abs(rr)))
+        ok(e < 1e-8, f"{tag}: gradient, Hessian = high-precision derivatives (rel err {e:.1e})")
+
 print(f"\n{sum(results)}/{len(results)} checks passed")

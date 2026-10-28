@@ -6,14 +6,32 @@ moving least squares) with derivative data of arbitrary order in any dimension.
 - `code/hbmls/` – reference implementation (numerically stable float evaluator with the
   exact singular limit at the nodes, plus a high-precision mpmath reference); Gaussian or
   compactly supported C∞ ("bump") weights; `SWIMLS1D` gives exact u′ and u″ of the 1-D
-  interpolant (projector form, leverage-aware cutoff), the evaluator used by swimls-bvps
-- `code/tests/` – correctness checks: `cd code && python3 -m tests.test_core`
+  interpolant (projector form, leverage-aware cutoff), and `SWIMLS2D` the exact gradient and
+  Hessian in 2-D (data u, ∂x, ∂y, Δ); both are the evaluators used by swimls-bvps
+- `code/tests/` – correctness checks: `cd code && python3 -m tests.test_core` (or `PYTHONPATH=. python3 tests/test_core.py`)
 - `code/experiments/` – the numerical experiments behind the paper (E1–E8); summary in `RESULTS.md`
 - `results/`, `figures/` – their outputs
 - `paper/` – the LaTeX source and PDF of the draft (`main.tex`, `main.pdf`); it opens in LyX via
   File → Import → LaTeX
 
-Requirements: Python ≥ 3.10, numpy, mpmath, matplotlib, sympy.
+Requirements: Python ≥ 3.10, numpy, scipy (for `SWIMLS2D`), mpmath, matplotlib, sympy.
+
+## Results cited by paper 2 (keep stable)
+
+Paper 2 (`swimls-bvps`) cites these results of paper 1. Their LaTeX labels must not change; if
+their numbers change, record the old and new numbers here.
+
+| Result | Label | Number |
+|---|---|---|
+| Fischer adjointness lemma | `lem:fischer` | Lemma 3.1 |
+| Exactness rule (sufficient condition), conditions (i)–(ii) | `cor:exact`, `c1`, `c2` | Corollary 4.5 (i)–(ii) |
+| Hermite data | `cor:hermite` | Corollary 4.6 |
+| Convergence theorem | `thm:convergence` | Theorem 6.1 |
+
+Renumbering log: none since the arXiv package of Oct 28. (Before that, Proposition 4.6 in
+swimls-bvps notes is now Proposition 4.9, `prop:necessity`.)
+
+arXiv number of paper 1: *not yet posted* (to be filled in here when it is).
 
 ## Action items
 
@@ -119,6 +137,15 @@ item is closed. Closed items are marked "Done <date>".
   and drop its own copy.
 - [x] **Tag a release** of hermite-birkhoff; swimls-bvps pins its submodule to that tag. Done
   Oct 28: tag `v0.1.0` (commit 9c75392) is on GitHub.
+- [x] **2-D evaluator from swimls-bvps** (request from paper 2, Oct 28). Decision: it belongs in
+  `hbmls` (the 2-D companion of `SWIMLS1D`, one copy for both projects). Done Oct 28:
+  `hbmls.SWIMLS2D`, same API as `swimls_bvp/swimls2d.py` plus `weight="bump"` (agrees with that
+  file to rounding for Gaussian weights); 12 new checks (agreement with `SingularMLS`, P_m
+  reproduction with gradient and Hessian, high-precision derivatives, both weights, data
+  {u, ∂x, ∂y} at α = 2 and {u, ∂x, ∂y, Δ} at α = 4). New dependency: scipy.
+- [ ] **Tag `v0.2.0`** (contains `SWIMLS2D`), so swimls-bvps can move its pin from v0.1.0 and drop
+  its own copy. The tag is created on David's Mac clone; David pushes it
+  (`git push origin v0.2.0`), since this cloud session cannot push tags.
 
 ### Before and after submission
 
@@ -126,6 +153,7 @@ item is closed. Closed items are marked "Done <date>".
   with numerical support; Toan et al. 2026 appeared there), then Adv. Comput. Math. Constructive
   Approximation would want more theory (a proof of Conjecture 4.19).
 - [ ] **arXiv** (David submits; needs his arXiv account), then journal submission, before paper 2.
+  When posted, write the arXiv number in "Results cited by paper 2" above, for paper 2 to cite.
   The source package is built by `bash paper/make_arxiv.sh` → `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`
   (flat figures, verification comments stripped, compiles with pdflatex). Suggested categories:
   math.NA (primary), math.CA. Before posting, replace "Draft of \today" handling if a fixed date
