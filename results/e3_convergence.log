@@ -1,0 +1,9 @@
+smooth  values, m = 2                            max err [1.9e-02 5.2e-03 2.3e-03 7.0e-04 2.0e-04 8.5e-05 3.4e-05]  rate(last 3) h^2.56
+smooth  values, m = 3                            max err [5.8e-03 2.5e-03 6.0e-04 1.7e-04 4.3e-05 1.4e-05 3.5e-06]  rate(last 3) h^3.62
+smooth  values + gradients, m = 3                max err [2.8e-03 1.1e-03 3.6e-04 1.1e-04 3.4e-05 1.0e-05 2.1e-06]  rate(last 3) h^4.04
+smooth  values + gradients + Hessians, m = 4     max err [2.8e-04 1.1e-04 2.4e-05 2.9e-06 4.7e-07 1.0e-07 2.8e-08]  rate(last 3) h^4.08
+franke  values, m = 2                            max err [0.1 0.1 0.  0.  0.  0.  0. ]  rate(last 3) h^2.67
+franke  values, m = 3                            max err [0.1 0.  0.  0.  0.  0.  0. ]  rate(last 3) h^3.29
+franke  values + gradients, m = 3                max err [0. 0. 0. 0. 0. 0. 0.]  rate(last 3) h^3.42
+franke  values + gradients + Hessians, m = 4     max err [3.1e-02 1.5e-02 6.7e-03 2.1e-03 2.9e-04 5.2e-05 1.1e-05]  rate(last 3) h^4.75
+75s

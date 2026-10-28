@@ -5,3 +5,4 @@ from .mpref import MPSingularMLS
 
 __all__ = ["Functional", "SingularMLS", "MPSingularMLS", "compositions", "multi_indices",
            "value", "partial", "derivative_1d", "directional", "laplacian", "hermite_set"]
+from .birkhoff import complete, missing_functionals

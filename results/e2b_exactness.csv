@@ -1,0 +1,18 @@
+dim,pattern,added,datum,err
+1,{1},f,Dx,0.0
+1,{2},"Dx, f",Dxx,0.0
+1,"{0,2}",-1Dx,f,0.0
+1,"{0,2}",-1Dx,Dxx,0.0
+1,"{1,2}",f,Dx,0.0
+1,"{1,2}",f,Dxx,0.0
+1,"{0,1,3}",-1Dxx,f,0.0
+1,"{0,1,3}",-1Dxx,Dx,0.0
+1,"{0,1,3}",-1Dxx,Dxxx,0.0
+2,Dx only,f,Dx,0.0
+2,"f, Dxx",-1Dx,f,0.0
+2,"f, Dxx",-1Dx,Dxx,0.0
+2,"f, Dx, Dxy",Dy,f,0.0
+2,"f, Dx, Dxy",Dy,Dx,0.0
+2,"f, Dx, Dxy",Dy,Dxy,0.0
+2,"f, Laplacian","-1Dx, -1Dy",f,0.0
+2,"f, Laplacian","-1Dx, -1Dy",Dxx + Dyy,2.7755575615628914e-17

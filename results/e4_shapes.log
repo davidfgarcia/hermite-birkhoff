@@ -1,0 +1,3 @@
+1D example: slopes at x=1, 3  prescribed [np.float64(0.3061), np.float64(-0.1162)]  plain [np.float64(0.235), np.float64(-0.1137)]  completed [np.float64(0.3061), np.float64(-0.1162)]
+alpha=2: u''(1) = 1.0518 (prescribed -3.0372)
+alpha=4: u''(1) = -3.0370 (prescribed -3.0372)
