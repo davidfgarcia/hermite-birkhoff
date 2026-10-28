@@ -25,7 +25,6 @@
 \newcommand{\Pm}{\Pi_m}
 \newcommand{\fp}[2]{\bigl[#1,#2\bigr]}          % Fischer pairing at the origin
 \newcommand{\fpz}[3]{\bigl[#1,#2\bigr]_{#3}}     % shifted pairing
-\newcommand{\todo}[1]{\textcolor{red}{[\textbf{TODO:} #1]}}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \setlength{\emergencystretch}{2em}
 
@@ -44,15 +43,16 @@ representation of the error in every datum, and deduce that a datum is reproduce
 (i) every derivative of its symbol $q$ lies in the span of the symbols prescribed at that node
 and (ii) $\Delta^{\alpha/2}q=0$, where $\alpha$ is the (even) order of the weight singularity.
 Condition (ii) cannot be dropped. Whether condition (i) is needed depends on how the fit to the
-other nodes moves near $x_i$: we identify configurations in which it is not needed, and give the
-error explicitly when (i) fails only at first order. For classical Hermite data of order $k$, all data are reproduced
+other nodes moves near $x_i$: when it does not move, every datum with $\Delta^{\alpha/2}q=0$ is
+reproduced, and when (i) fails only at first order the error is given explicitly. For classical Hermite data of order $k$, all data are reproduced
 if and only if $\alpha>k$ (the necessity under a mild condition on the other nodes), which
 proves a sharpened form of a conjecture of Komargodski and Levin. We also give exact
 counterexamples, in one and two dimensions, to their claim that derivatives prescribed at
 points without function values are interpolated, and a completion procedure that makes such
-data exact. With compactly supported $C^\infty$ weights and local polynomials of degree $m$, the
-interpolant and its derivatives of order $|\beta|\le m$ converge at the rate
-$h^{m+1-|\beta|}$ on quasi-uniform nodes, at and near the nodes included. A stable evaluator and
+data exact. With compactly supported $C^\infty$ weights, local polynomials of degree $m$ and a
+local norming condition on the data, the interpolant and its derivatives of order
+$|\beta|\le m$ converge at the rate $h^{m+1-|\beta|}$ on quasi-uniform nodes, at and near the
+nodes included. A stable evaluator and
 experiments in one to three dimensions confirm the theory.
 \end{abstract}
 
@@ -113,26 +113,32 @@ formula for the error in each datum.
 
 \paragraph{Contributions.}
 \begin{enumerate}[label=(\arabic*)]
-  \item A structure theorem for SWIMLS near a node (Theorem~\ref{thm:structure}): the
-        interpolant is $C^\infty$, and an exact representation of the error in any differential
-        datum (Theorem~\ref{thm:error}).
+  \item A structure theorem for SWIMLS near a node (Theorem~\ref{thm:structure}), which splits
+        the local fit into the part the data at the node see, the part they do not see, and a
+        remainder of order $|x-x_i|^\alpha$; and an exact representation of the error in any
+        differential datum (Theorems~\ref{thm:error} and~\ref{thm:error-frozen}). That the
+        interpolant is $C^\infty$ also follows from Levin's Backus--Gilbert argument
+        (Remark~\ref{rem:bg}).
   \item A sufficient condition for exact reproduction of a datum $q(D)f(x_i)$: closure of the
         symbol under differentiation and $\Delta^{\alpha/2}q=0$ (Corollary~\ref{cor:exact}).
         The second condition cannot be dropped: it is necessary at leading order
         (Proposition~\ref{prop:necessity}).
-  \item The role of the first condition: it is not needed when the minimiser of the
-        ``frozen'' problem at the other nodes does not move near $x_i$ (Theorem~\ref{thm:frozen}),
-        e.g.\ for a single other node or locally proportional weights; when it fails only at
-        first order, the error is given explicitly by Proposition~\ref{prop:firstorder}.
+  \item The role of the first condition: when the minimiser of the ``frozen'' problem at the
+        other nodes does not move near $x_i$, every datum with $\Delta^{\alpha/2}q=0$ is
+        reproduced, whether or not the first condition holds (Theorem~\ref{thm:frozen}), e.g.\
+        for a single other node or locally proportional weights; when the first condition fails
+        only at first order, the error is given explicitly by Proposition~\ref{prop:firstorder};
+        and for pure power weights a datum is either always reproduced or not reproduced for
+        generic node positions (Proposition~\ref{prop:dichotomy}).
   \item For classical Hermite data of order $k$: all data are reproduced when $\alpha>k$, and
         this is sharp (Corollaries~\ref{cor:hermite} and~\ref{cor:sharp}); when $\alpha\le k$
         the error is the linear functional $q\mapsto\fpz{\Delta^{\alpha/2}q}{\tau}{x_i}$ of the
-        datum. This proves, for $k\ge3$ in a sharper form, the conjecture
-        of~\cite[\S3]{KomargodskiLevin2006} that $\alpha=2k$ suffices.
+        datum. This proves the conjecture of~\cite[\S3]{KomargodskiLevin2006} that $\alpha=2k$
+        suffices, and sharpens it for $k\ge3$.
   \item Exact counterexamples in one and two dimensions to the extension claimed
         in~\cite[\S3]{KomargodskiLevin2006} (Propositions~\ref{prop:kl}
-        and~\ref{prop:kl2}), and a completion procedure that makes data with gaps exact
-        (Proposition~\ref{prop:completion}).
+        and~\ref{prop:kl2}), and a completion procedure that makes every datum with $\Delta^{\alpha/2}q=0$ exact, gaps or
+        not (Proposition~\ref{prop:completion}).
   \item A convergence theorem for compactly supported $C^\infty$ singular weights
         (Theorem~\ref{thm:convergence}): $|D^\beta(u-f)|\le C\delta^{m+1-|\beta|}$ for
         $|\beta|\le m$, under a local norming condition on the data, uniformly up to the nodes.
@@ -191,7 +197,7 @@ component $\nu_0(x)$ of $p_x$ along the constants is then chosen by the other no
 derivative $\nu_0'(1)$ adds to $u'(1)$. The prescribed slope $0.306$ comes out as
 $0.235$. Adding an estimate of the missing values $f(1)$ and $f(3)$ to the data, by any
 method, restores exactness (Proposition~\ref{prop:completion}); the slopes are then reproduced
-to the accuracy of finite differences.
+exactly (to the accuracy of the finite differences used to check this).
 
 \begin{figure}[t]
   \centering
@@ -256,9 +262,11 @@ homogeneous polynomials this is a classical lemma of Calder\'on and
 Zygmund~\cite[Ch.~2, Lemma~1]{CalderonZygmund1964}, and in the form ``$P$ is divisible by
 $|x-a|^2$ if and only if $q(D)P(a)=0$ for every harmonic $q$ of degree at most $\deg P$'' it is
 Theorem~2.4 of~\cite{ToanMaiLongPhung2026}, which studies Hermite interpolation with conditions
-induced by harmonic polynomials. With $\ell=\alpha/2$ it is the reason for condition~(ii)
-below: the remainder of the local fit near a node is a multiple of $|z|^\alpha$
-(Theorem~\ref{thm:structure}), and the data that cannot see any such multiple are exactly the
+induced by harmonic polynomials; see also~\cite[Ch.~IV]{SteinWeiss1971} for the decomposition
+into harmonic polynomials, and~\cite{deBoorRon1992} for the role of this pairing in polynomial
+interpolation. With $\ell=\alpha/2$ it is the reason for condition~(ii)
+below: along the diagonal, the remainder of the local fit near a node is a multiple of
+$|z-x_i|^\alpha$ (Theorems~\ref{thm:structure} and~\ref{thm:error}), and the data that cannot see any such multiple are exactly the
 $(\alpha/2)$-polyharmonic symbols.
 \end{remark}
 
@@ -469,8 +477,8 @@ squares~\cite[Proposition~1]{Levin1998}, in which the coefficients of the data m
 $\sum w_{j}(x)^{-1}a_{j,s}^2$ subject to polynomial reproduction; the singular weights then enter
 through the smooth functions $w_j^{-1}=\rho_j^{-1}|x-x_j|^\alpha$. The augmented matrix
 $\bigl(\begin{smallmatrix}D&E\\E^{\mathsf T}&0\end{smallmatrix}\bigr)$ of this problem, with
-$D=2\operatorname{diag}(w_j^{-1})$, remains invertible at $x=x_i$ exactly when the data at $x_i$
-are linearly independent on $\Pm$, i.e.\ under~\ref{A2}; for function values this is Levin's
+$D=2\operatorname{diag}(w_j^{-1})$, remains invertible at $x=x_i$, given~\ref{A3}, exactly when the data at
+$x_i$ are linearly independent on $\Pm$, i.e.\ under~\ref{A2}; for function values this is Levin's
 argument~\cite[Proposition~2 and Theorem~3]{Levin1998}. Theorem~\ref{thm:structure} gives
 more: the decomposition~\eqref{eq:structure}, on which the error analysis rests.
 \end{remark}
@@ -608,9 +616,13 @@ harmonic polynomials are harmonic. Toan, Mai, Long and Manh~\cite[Theorem~4.1]{T
 construct regular interpolation schemes of degree $n\ge2$ from such data only, for any distinct
 nodes: the $k$-th node carries
 every harmonic symbol of degree at most $n-2k+2$, for $k=1,\dots,\lfloor n/2\rfloor+1$, and the
-total number of data equals $\dim\Pi_n$. With $m=n$ and $\alpha=2$, SWIMLS on nodes carrying
-such data reproduces every datum, by Corollary~\ref{cor:exact}; Section~\ref{sec:hermite-num}
-checks a node with all harmonic symbols of degree at most $3$.
+total number of data equals $\dim\Pi_n$. If SWIMLS is used with exactly these data and $m=n$,
+it returns the polynomial interpolant, and every datum is reproduced trivially, for every
+$\alpha$. The example becomes informative with more data than $\dim\Pi_m$, for instance more
+nodes carrying such harmonic patterns, or $m<n$: then, with $\alpha=2$, every datum is reproduced
+by Corollary~\ref{cor:exact}, while non-harmonic data are in general not reproduced at
+$\alpha=2$.
+Section~\ref{sec:hermite-num} checks a node with all harmonic symbols of degree at most $3$.
 \end{example}
 
 Corollary~\ref{cor:hermite}(b) proves the conjecture of~\cite[\S3]{KomargodskiLevin2006} that
@@ -620,8 +632,12 @@ inner product'', which they do not specify; we read it as the same singular weig
 at a node, as in their one-dimensional construction. For $k\ge3$ Corollary~\ref{cor:hermite}(b) is a strict improvement, e.g.\ $\alpha=4$ suffices
 for $k=3$. For Shepard--Taylor interpolation, where the local polynomials are fixed Taylor
 polynomials, the analogous condition is that the exponent exceeds the order of the
-data~\cite{Farwig1986,Coman1998}; in SWIMLS the local polynomial is fitted, and the finer
-condition $\Delta^{\alpha/2}q=0$ shows that some data of higher order are reproduced as well.
+data~\cite{GordonWixom1978,Farwig1986,Coman1998}. The finer condition $\Delta^{\alpha/2}q=0$ is
+not specific to fitting: for Shepard--Taylor interpolation with an even exponent $\alpha$, the
+interpolant near $x_i$ is the Taylor polynomial at $x_i$ plus $|x-x_i|^\alpha$ times a smooth
+function, and the argument of Theorem~\ref{thm:error} applies verbatim. What fitting adds is the
+part $\nu$ of the local polynomial that the data at $x_i$ do not see, and with it
+condition~(i).
 
 \subsection{Is condition (ii) necessary?}\label{sec:necessity}
 The next result shows that condition~\ref{c2} cannot be dropped, at least for data of degree
@@ -670,38 +686,51 @@ $\Delta^{\alpha/2}\xi_1^\alpha=\alpha!\ne0$.
 \subsection{When is condition (i) needed?}\label{sec:role-i}
 
 When~\ref{c1} fails, the middle term of~\eqref{eq:error} involves derivatives of $\nu$, that is,
-it depends on how the fit to the \emph{other} nodes moves as $x$ approaches $x_i$. If it does not
-move at all, condition~\ref{c1} is not needed; if it moves, a failure of~\ref{c1} at first order
-produces an explicit error.
+it depends on how the fit to the \emph{other} nodes moves as $x$ approaches $x_i$. The cleanest
+way to see this is to separate from $\nu$ its value at $t=0$, the frozen minimiser $Z(x)=n(x,0)$
+of~\eqref{eq:frozen}. Since $n$ is smooth,
+\[
+  \nu(x)=n(x,t(x))=Z(x)+t(x)\,g(x),\qquad g(x):=\int_0^1\partial_tn\bigl(x,\theta t(x)\bigr)\,d\theta,
+\]
+with $g\colon U\to N_i$ smooth, and the part $t\,g$ can be moved into the remainder.
 
-\begin{theorem}[Frozen minimiser]\label{thm:frozen}
-Let Assumption~\ref{ass:main} hold and suppose that the frozen minimiser $Z$
-of~\eqref{eq:frozen} is constant near $x_i$. Then every $q\in Q_i$ with $\deg q\le\alpha$
-satisfies
-\begin{equation}\label{eq:frozen-error}
-  \fpz{q}{u}{x_i}-y_q=\fpz{\Delta^{\alpha/2}q}{\partial_tn(x_i,0)+\tau}{x_i},
+\begin{theorem}[Error representation, frozen form]\label{thm:error-frozen}
+With the notation of Theorem~\ref{thm:structure}, let $\eta(z):=\bigl(g(z)+\sigma(z)\bigr)(z)$ for
+$z\in U$. For every symbol $q$,
+\begin{equation}\label{eq:error-frozen}
+  \fpz{q}{u}{x_i}
+  =\fpz{q}{p_i^*}{x_i}
+  +\sum_{\gamma}\frac{1}{\gamma!}\,D^\gamma\Bigl[x\mapsto\fpz{\partial^\gamma q}{Z(x)}{x_i}\Bigr](x_i)
+  +\fpz{\Delta^{\alpha/2}q}{\eta}{x_i}.
 \end{equation}
-where $\Delta^{\alpha/2}q$ is a constant. In particular every $q\in Q_i$ with $\deg q<\alpha$, or
-with $\deg q=\alpha$ and $\Delta^{\alpha/2}q=0$, is reproduced, whether or not~\ref{c1} holds.
 \end{theorem}
 
 \begin{proof}
-By Theorem~\ref{thm:structure}, $\nu(x)=n(x,t(x))$ with $n(x,0)=Z(x)$ constant, so
-$\nu(x)=Z(x_i)+t(x)\,g(x)$ with $g(x)=\int_0^1\partial_tn(x,\theta t(x))\,d\theta$ smooth and
-$g(x_i)=\partial_tn(x_i,0)$. Since $t$ vanishes at $x_i$ to order $\alpha$,
-$D^\gamma[t\,g](x_i)=0$ for $|\gamma|<\alpha$ and $D^\gamma[t\,g](x_i)=(D^\gamma t)(x_i)\,g(x_i)$
-for $|\gamma|=\alpha$. In the middle term of~\eqref{eq:error}: the $\gamma=0$ term is
-$\fpz{q}{\nu(x_i)}{x_i}=0$ because $q\in Q_i$ and $\nu(x_i)\in N_i$; the terms with
-$0<|\gamma|<\alpha$ vanish because the constant $Z(x_i)$ is killed by $D^\gamma$ and $t\,g$ has
-vanishing derivatives of these orders; the terms with $|\gamma|>\alpha$ vanish because
-$\partial^\gamma q=0$; and the terms with $|\gamma|=\alpha$, in which $\partial^\gamma q$ is a
-constant, add up by Lemma~\ref{lem:normpower} to
-\[
-  \sum_{|\gamma|=\alpha}\frac{1}{\gamma!}(D^\gamma t)(x_i)\,\fpz{\partial^\gamma q}{g(x_i)}{x_i}
-  =\fpz{\Delta^{\alpha/2}q}{\partial_tn(x_i,0)}{x_i}.
-\]
-Together with $\fpz{q}{p_i^*}{x_i}=y_q$ and the last term of~\eqref{eq:error} this
-gives~\eqref{eq:frozen-error}.
+Repeat the proof of Theorem~\ref{thm:error} with
+$\Phi(x,y)=p_i^*(y)+Z(x)(y)+t(x)\bigl(g(x)+\sigma(x)\bigr)(y)$, which is the same function: the
+second part now involves $Z$ in place of $\nu$, and the third part is $t(x)$ times a smooth
+function of $(x,y)$, polynomial in $y$, whose restriction to the diagonal is $\eta$.
+\end{proof}
+
+For $q\in Q_i$ the first term of~\eqref{eq:error-frozen} is $y_q$ and the term with $\gamma=0$ in
+the sum vanishes, since $Z(x_i)\in N_i$. The error in a datum is therefore the sum of two
+contributions: the motion of the frozen minimiser, which pairs the derivatives of $Z$ with
+those derivatives of $q$ that are not data at $x_i$, and the remainder, which only sees
+$\Delta^{\alpha/2}q$. If the frozen minimiser does not move, only the second is left.
+
+\begin{theorem}[Frozen minimiser]\label{thm:frozen}
+Let Assumption~\ref{ass:main} hold and suppose that the frozen minimiser $Z$
+of~\eqref{eq:frozen} is constant near $x_i$. Then every $q\in Q_i$ satisfies
+\begin{equation}\label{eq:frozen-error}
+  \fpz{q}{u}{x_i}-y_q=\fpz{\Delta^{\alpha/2}q}{\eta}{x_i}.
+\end{equation}
+In particular every $q\in Q_i$ with $\Delta^{\alpha/2}q=0$ is reproduced, whatever its degree and
+whether or not~\ref{c1} holds.
+\end{theorem}
+
+\begin{proof}
+In~\eqref{eq:error-frozen}, the terms with $\gamma\ne0$ vanish because $Z$ is constant, and the
+term with $\gamma=0$ vanishes because $q\in Q_i$ and $Z(x_i)\in N_i$.
 \end{proof}
 
 \begin{corollary}\label{cor:frozen-cases}
@@ -710,7 +739,8 @@ of the following cases:
 \begin{enumerate}[label=(\alph*)]
   \item \emph{single scale:} $w_j(x)/\rho_i(x)=c(x)\kappa_j$ near $x_i$ for all $j\ne i$, with a
         positive function $c$ and constants $\kappa_j>0$; this includes the case of a single
-        other node ($K=2$) and weights whose germs at $x_i$ are proportional;
+        other node ($K=2$), weights whose germs at $x_i$ are proportional, and weights that are
+        constant near $x_i$ for all $j\ne i$;
   \item \emph{interpolatory restriction:} the functionals $\lambda_{j,s}$, $j\ne i$, that do not
         vanish identically on $N_i$ restrict to a basis of the dual of $N_i$ (so that the frozen
         problem can fit them exactly whatever the weights).
@@ -737,8 +767,8 @@ In general the frozen minimiser moves. When condition~\ref{c1} fails only at fir
 error is then given explicitly by the following result.
 
 \begin{proposition}[First-order error]\label{prop:firstorder}
-Let Assumption~\ref{ass:main} hold and let $q\in Q_i$ with $\deg q<\alpha$, such that
-$\partial^\gamma q\in Q_i$ for all $|\gamma|\ge2$. Then
+Let Assumption~\ref{ass:main} hold and let $q\in Q_i$ with $\Delta^{\alpha/2}q=0$ (for instance
+$\deg q<\alpha$), such that $\partial^\gamma q\in Q_i$ for all $|\gamma|\ge2$. Then
 \begin{equation}\label{eq:firstorder}
   \fpz{q}{u}{x_i}-y_q=\sum_{j=1}^d\fpz{\partial_jq}{\partial_{x_j}Z(x_i)}{x_i},\qquad
   \partial_{x_j}Z(x_i)=-H^{-1}\,\partial_{x_j}\bigl[\nabla_NB_x\bigr](p_i^*+Z(x_i))\Big|_{x=x_i},
@@ -747,33 +777,59 @@ where $H$ is the Hessian of $B_{x_i}$ restricted to $N_i$.
 \end{proposition}
 
 \begin{proof}
-In~\eqref{eq:error} the last term vanishes because $\deg q<\alpha$, and the middle terms with
-$\gamma=0$ or $|\gamma|\ge2$ vanish as in Corollary~\ref{cor:exact}. For $|\gamma|=1$,
-$D_j\fpz{\partial_jq}{\nu(x)}{x_i}=\fpz{\partial_jq}{\partial_{x_j}\nu(x_i)}{x_i}$ and
-$\partial_{x_j}\nu(x_i)=\partial_{x_j}n(x_i,0)+\partial_tn(x_i,0)\,\partial_jt(x_i)
-=\partial_{x_j}Z(x_i)$ since $\alpha\ge2$. Differentiating $\nabla_NB_x(p_i^*+Z(x))=0$ gives the
-formula for $\partial_{x_j}Z$.
+In~\eqref{eq:error-frozen} the last term vanishes because $\Delta^{\alpha/2}q=0$, the term with
+$\gamma=0$ because $q\in Q_i$, and the terms with $|\gamma|\ge2$ because $\partial^\gamma q\in Q_i$
+and $Z(x)\in N_i$ for all $x$. Differentiating $\nabla_NB_x(p_i^*+Z(x))=0$ gives the formula for
+$\partial_{x_j}Z$.
 \end{proof}
 
-The right-hand side of~\eqref{eq:firstorder} is an explicit linear functional of the data; for
-pure power weights ($\rho\equiv1$) it is a rational function of the node positions. It
-vanishes in the cases of Corollary~\ref{cor:frozen-cases} and for symmetric configurations (e.g.\
-$\partial_{x_1}w_j(x_i)=0$ for all $j$), but it is non-zero in the explicit examples of
-Section~\ref{sec:birkhoff}, and therefore, by analyticity, for node positions in an open dense
-set for those data patterns.
+The right-hand side of~\eqref{eq:firstorder} is an explicit linear functional of the data. It
+vanishes in the cases of Corollary~\ref{cor:frozen-cases} and for symmetric configurations,
+e.g.\ for $q=\xi_1$ when $\partial_{x_1}(w_j/\rho_i)(x_i)=0$ for all $j\ne i$, but it is non-zero
+in the explicit examples of Section~\ref{sec:birkhoff}. For pure power weights, a dichotomy
+makes ``generic'' precise.
+
+\begin{proposition}[Dichotomy]\label{prop:dichotomy}
+Let $\rho_j\equiv1$ for all $j$, and fix $d$, $m$, $\alpha$, the number $K$ of nodes, the symbol
+spaces $Q_1,\dots,Q_K$, a node index $i$ and a datum $q\in Q_i$. Let $\mathcal A\subset(\R^d)^K$ be
+the set of node positions for which~\ref{A3} holds. Then either $q$ is reproduced for all node
+positions in $\mathcal A$ and all data, or there is a proper algebraic subset $\mathcal Z$ such that
+for all node positions in $\mathcal A\setminus\mathcal Z$ the error $\fpz{q}{u}{x_i}-y_q$ is a
+non-zero linear functional of the data, so that $q$ is reproduced only for data in a hyperplane.
+\end{proposition}
+
+\begin{proof}
+Write polynomials in the variable $y-x_i$, so that $\Lambda_i$, $N_i$ and $R$ do not depend on
+the node positions. With $\rho\equiv1$ and $\alpha$ even, every weight $w_j(x)/w_i(x)$ is a
+rational function of $x$ and the node positions, so the map $F$ in the proof of
+Theorem~\ref{thm:structure} is rational in $(x,t)$, the node positions and the data, and linear
+in the data. The derivatives at $(x_i,0)$ of the implicit solution $(s,n)$ are obtained by
+differentiating $F=0$; they are polynomials in derivatives of $F$ divided by powers of the
+Jacobian determinant, hence rational in the node positions and linear in the data. By
+Theorem~\ref{thm:error} the error is a finite linear combination of such derivatives (those of
+$\nu=n(\cdot,t(\cdot))$ and $\tau=s(\cdot,t(\cdot))(\cdot)$, with $t$ a polynomial). Its
+coefficients are therefore rational functions on $\mathcal A$, the complement of an algebraic
+set. Either all of them vanish identically, or one of them, $c$, does not, and then
+$\mathcal Z=\{c=0\}$ is a proper algebraic subset outside which the error functional is non-zero.
+\end{proof}
 
 \begin{conjecture}\label{conj:char}
-Let $\rho\equiv1$, let $Q_i$ be D-invariant and the other nodes unisolvent by themselves. If
-$\Delta^{\alpha/2}q\ne0$ then, for node positions outside a proper algebraic subset, $q$ is not
-reproduced for data outside a hyperplane.
+Let $\rho_j\equiv1$ for all $j$, let $Q_i$ be D-invariant, let the data at the nodes other than
+$x_i$ be unisolvent on $\Pm$ by themselves, and let $q\in Q_i$ with $\Delta^{\alpha/2}q\ne0$. Then
+the second alternative of Proposition~\ref{prop:dichotomy} holds: $q$ is not reproduced, for
+data outside a hyperplane, for node positions outside a proper algebraic subset.
 \end{conjecture}
 
 \begin{remark}
-Proposition~\ref{prop:necessity} proves the conjecture for $\deg q=\alpha$. It is consistent with
-all experiments of Section~\ref{sec:numerics}, including one with pure power weights and only
-two nodes, where every datum with $\Delta q\ne0$ fails at $\alpha=2$
-(Section~\ref{sec:frozen-num}). Characterising the node configurations for which a failure of~\ref{c1}
-causes an error, beyond the first-order formula~\eqref{eq:firstorder}, is open.
+By Proposition~\ref{prop:dichotomy} it suffices to find, for each data pattern, one node
+configuration where the error is non-zero. Proposition~\ref{prop:necessity} proves the conjecture
+for $\deg q=\alpha$, and the experiments of Section~\ref{sec:numerics} are consistent with it; in
+particular, with pure power weights and two nodes carrying Hermite data of order $3$, every datum
+with $\Delta q\ne0$ fails at $\alpha=2$ (Section~\ref{sec:frozen-num}), so the conjecture holds
+for that pattern. The conjecture concerns condition~(ii) only: $Q_i$ is D-invariant, so
+condition~(i) holds. For data that violate~(i), the configurations of
+Corollary~\ref{cor:frozen-cases} and the symmetric ones show that both alternatives of the
+dichotomy occur; characterising them beyond~\eqref{eq:firstorder} is open.
 \end{remark}
 
 % ===========================================================================
@@ -857,7 +913,7 @@ and the completion $\overline Q_i$ are the corresponding notions for SWIMLS: D-i
 all derivatives of the given symbols, not only for all derivatives of a given order.
 
 The values $\tilde y_{i,l}$ influence the accuracy, not the exactness. In the experiments they
-are estimated by a smooth (non-singular) moving least-squares fit of the given data.
+are estimated by a Gaussian-weighted (non-singular) moving least-squares fit of the given data.
 
 % ===========================================================================
 \section{Convergence}\label{sec:convergence-theory}
@@ -952,7 +1008,8 @@ the local configuration, and invariance under scaling, for compactly supported $
 weights and separated nodes. Theorem~\ref{thm:convergence} extends it to every even $\alpha$,
 to Hermite--Birkhoff data (where the scaling of the derivative data in~\eqref{eq:Jdelta} is
 essential), and to the derivatives of the interpolant up to order $m$; for non-interpolating
-moving least squares with values, bounds of this type are in~\cite{Wendland2005,Zuppa2003,Mirzaei2015}.
+moving least squares with values, bounds of this type are
+in~\cite{Wendland2001,Armentano2001,Wendland2005,Zuppa2003,Mirzaei2015}.
 
 \begin{proof}
 \emph{Step 1: shape functions and reproduction.} The minimiser of~\eqref{eq:Jdelta} is linear in
@@ -1083,7 +1140,7 @@ $t=|z_i|^\alpha$ it gives the shape functions near $\mathcal C_0$, as $C^\infty$
         since derivatives of homogeneous symbols are homogeneous. If the added values are only estimates,
         with errors $\eta$, then $u$ changes by $\sum a_{j,s}\eta_{j,s}$, which by Step~3 is at
         most $\tilde\Lambda_0\max_{j,s}\delta^{r_{j,s}}|\eta_{j,s}|$ in absolute value, where
-        $\tilde\Lambda_0\le C_0$ is the bound of Step~5.
+        $\tilde\Lambda_0\le C_\beta$ with $\beta=0$ is the bound of Step~5.
 \end{enumerate}
 \end{remark}
 
@@ -1097,10 +1154,11 @@ tested ($10^{-14}$). Whether a datum is reproduced is decided in high-precision 
 below $10^{-18}$, the others above $10^{-2}$. Unless stated otherwise, nodes are random, the weights include a
 Gaussian factor (Appendix~\ref{sec:evaluation}), the data values are random numbers (exactness does not depend on them being samples of a function),
 and every node other than the one under study carries Hermite data. Scripts, logs and data are
-in the accompanying repository.
+in the accompanying repository, \url{https://github.com/davidfgarcia/hermite-birkhoff}
+(release v0.1.0).
 
 \subsection{Hermite and Hermite--Birkhoff data}\label{sec:hermite-num}
-We first checked every datum at a node with classical Hermite data, of orders $k=2$ to $7$ in
+We first checked every datum at a node with classical Hermite data, of orders $k\in\{2,3,4,5,7\}$ in
 one, two and three dimensions and with $\alpha$ from $2$ to $6$, and at a node carrying the
 harmonic symbols of degree at most $3$: $92$ data in all. A datum is reproduced exactly when
 $\Delta^{\alpha/2}q=0$ and not otherwise, as Corollary~\ref{cor:hermite} predicts for the
@@ -1135,9 +1193,9 @@ configuration & datum & reason & error\\
 \quad add $f(4)$ & & & $0.21$--$2.1$\\
 2D, $K=2$: $\nabla f(x_1)$; $f,\nabla f,\nabla^2f$ at $x_2$; $m=2$, $\alpha=2$ & $\partial_x,\partial_y$ & Cor.~\ref{cor:frozen-cases}(a) & $<10^{-39}$\\
 \quad add a third node & & & $0.03$--$0.46$\\
-2D, $K=2$: $f,\partial_{xx}f$ at $x_1$; Hermite $k=2$ at $x_2$; $\alpha=4$ & $\partial_{xx}$ & Cor.~\ref{cor:frozen-cases}(a) & $<10^{-28}$\\
+2D, $K=2$: $f,\partial_{xx}f$ at $x_1$; Hermite $k=2$ at $x_2$; $\alpha=4$ & $\partial_{xx}$ & Cor.~\ref{cor:frozen-cases}(a) & $\le1.1\cdot10^{-28}$\\
 \quad add a third node & & & $2.9$--$3.3$\\
-2D: $\partial_xf(0)$; others on the $x_2$-axis; $m=1$, $\alpha=2$ & $\partial_x$ & Prop.~\ref{prop:firstorder} & $<10^{-37}$\\
+2D: $\partial_xf(0)$; others on the second coordinate axis; $m=1$, $\alpha=2$ & $\partial_x$ & Prop.~\ref{prop:firstorder} & $<10^{-37}$\\
 \quad move the others by $0.05$ & & & $0.08$--$0.16$\\
 \bottomrule
 \end{tabular}
@@ -1145,21 +1203,25 @@ configuration & datum & reason & error\\
 \smallskip
 
 \noindent In the symmetric configuration (last two rows) the weights of the other nodes are even
-in $x_1$, so $\partial_{x_1}Z(x_i)=0$ and the first-order error~\eqref{eq:firstorder} vanishes
-for $q=\xi_1$. The restriction $\deg q\le\alpha$ in Theorem~\ref{thm:frozen} also matters: with
-two nodes carrying Hermite data of order $3$ and $\alpha=2$, every datum with $\Delta q\ne0$
-fails, with errors between $4.9$ and $83$.
+in the first coordinate, so $\partial_{x_1}Z(x_i)=0$ and the first-order error~\eqref{eq:firstorder} vanishes
+for $q=\xi_1$. The configurations of this subsection use pure power weights. Conversely, with
+two nodes carrying Hermite data of order $3$ and $\alpha=2$ (pure power weights), where the
+frozen minimiser is constant and condition~(i) holds, every datum with $\Delta q\ne0$ fails,
+with errors between $4.9$ and $83$, as Theorem~\ref{thm:frozen} allows and
+Conjecture~\ref{conj:char} predicts.
 
 \subsection{Derivatives at points without values}\label{sec:kl-num}
 In the setting of~\cite[\S3]{KomargodskiLevin2006}, eight random points carry values, eight
-other points carry gradients, the weights are $|x-x_i|^{-\alpha}$ and the local space is
+other points carry gradients, the weights are pure powers $|x-x_i|^{-\alpha}$ and the local space is
 $\Pi_1$ or $\Pi_2$. For $m\in\{1,2\}$ and $\alpha\in\{2,4\}$, none of the $24$ gradient
 components checked is reproduced; the errors lie between $0.06$ and $4.5$. After completion
-(Proposition~\ref{prop:completion}) they are, and completion also repairs all $13$
-non-reproduced data of the patterns of Section~\ref{sec:hermite-num}. Exactness is not free in
+(Proposition~\ref{prop:completion}) they are, and completion also repairs all $13$ data of the
+patterns of Section~\ref{sec:hermite-num} that fail because of condition~(i); the two that fail
+because of condition~(ii) cannot be repaired by completion. Exactness is not free in
 accuracy, though: with values at $1024$ Halton points and gradients at $1024$ others for
 Franke's function, the maximum error is $1.2\cdot10^{-3}$ without and $3.4\cdot10^{-3}$ with
-completion, because the added values are only estimates (here from a simple least-squares fit).
+completion, because the added values are only estimates (here from a Gaussian-weighted moving
+least-squares fit of the given data).
 
 \subsection{Accuracy}\label{sec:convergence}
 Theorem~\ref{thm:convergence} predicts errors of order $h^{m+1}$ for $u$ and $h^m$ for its
@@ -1172,13 +1234,17 @@ enough nodes, least-squares fits of the maximum error over all resolutions give 
 $2.8$--$3.2$ for $m=2$, $3.6$--$3.9$ for $m=3$, $5.0$--$5.1$ for $m=4$ and $5.7$--$5.9$ for
 $m=5$ with Hessian data, and gradient rates $1.9$--$2.1$, $2.5$--$3.0$, $3.9$--$4.1$ and
 $4.7$--$4.9$ (Figure~\ref{fig:convergence}). For values with $m=5$ the rates are higher
-($6.4$--$7.9$), a pre-asymptotic effect. The maximum error samples the worst local
-configuration and fluctuates from one node set to the next; on periodically jittered grids,
+($6.8$--$7.9$ for $u$, $6.4$ for the gradient), a pre-asymptotic effect. The Halton points are
+not uniformly separated (their separation, relative to $h$, falls from $0.56$ to $0.14$ over
+this range), so they do not satisfy~\ref{H1} with a fixed constant. The maximum error samples the worst local
+configuration and fluctuates from one node set to the next. On periodically jittered grids, which
+satisfy~\ref{H1} with a fixed constant and
 where the local configurations repeat at every resolution, fits over all resolutions give
 root-mean-square rates within $0.06$ of $m+1$ for $u$ and of $m$ for the gradient, for the
 five data types and degrees tested. When the support is too small for the local
 norming condition~\ref{H3}, as for values with $m=3$ or $5$ and $c=2$, the error does not
-decrease at all, which illustrates that the condition cannot simply be dropped.
+converge at the predicted rate (fitted rates $1.2$ and $0.4$), which illustrates that the
+condition cannot simply be dropped.
 
 A second study with Gaussian factors instead of compact support gave the same rates for the
 root-mean-square error (within $0.53$ of $m+1$, over $44$ parameter combinations). It also
@@ -1219,12 +1285,8 @@ Finally, the values added by completion affect the accuracy, not the exactness, 
 ways of estimating them would reduce the accuracy penalty observed in
 Section~\ref{sec:numerics}.
 
-The exactness rule also applies to data whose values come from an equation rather than from
-measurements: a second derivative $y''(x_i)$, or a Laplacian $\Delta u(x_i)$ given by a
-differential equation, is a Hermite--Birkhoff datum like any other, reproduced (together with
-the lower-order data that condition~(i) requires) once $\alpha=4$, since
-$\Delta|\xi|^2\ne0$. This is the starting point of an application of SWIMLS to boundary value
-problems, which we will present separately.
+Data given by a differential equation, such as $\Delta u(x_i)$, are Hermite--Birkhoff data like
+any other; the application of SWIMLS to boundary value problems will be presented separately.
 
 % ===========================================================================
 \appendix
@@ -1294,7 +1356,7 @@ by computing $\fpz{q}{u}{x_i}$ in high-precision arithmetic (\texttt{mpmath}). T
 is evaluated from the normal equations at a working precision of
 $40+(2\alpha+|\beta|+5)\,|\log_{10}r|$ digits, and $D^\beta u(x_i)$ is taken with a
 tensor-product Chebyshev stencil of radius $r$ in the variables with $\beta_j>0$, which is
-exact for polynomials of degree at least $\beta_j+5$ in each of them and never samples the
+exact for polynomials of degree up to (at least) $\beta_j+5$ in each of them and never samples the
 node itself. A datum is called reproduced if $|\fpz{q}{u}{x_i}-y_q|\le10^{-12}\max(1,|y_q|)$
 for both $r=10^{-6}$ and $r=10^{-5}$, and not reproduced if the inequality fails for both.
 Mixed outcomes never occurred, with a wide margin: over the $221$ data of
@@ -1306,6 +1368,12 @@ others have errors of at least $0.01$, identical at both radii.
 % ===========================================================================
 \bibliographystyle{amsplain}
 \begin{thebibliography}{99}
+
+\bibitem{Armentano2001}
+M.~G. Armentano, \emph{Error estimates in {S}obolev spaces for moving least square
+approximations}, SIAM J. Numer. Anal. \textbf{39} (2001), no.~1, 38--51,
+doi:10.1137/S0036142999361608.
+% verified: UBA digital library record (DOI, pages); year as in Mirzaei2015's references
 
 \bibitem{AtluriChoKim1999}
 S.~N. Atluri, J.~Y. Cho, and H.-G. Kim, \emph{Analysis of thin beams, using the meshless local {P}etrov--{G}alerkin method, with generalized moving least squares interpolations}, Comput. Mech. \textbf{24} (1999), no.~5, 334--347, doi:10.1007/s004660050456.
@@ -1334,6 +1402,11 @@ A.~P. Calder\'on and A.~Zygmund, \emph{On higher gradients of harmonic functions
 C.~de Boor, \emph{Ideal interpolation}, Approximation Theory XI: Gatlinburg 2004 (C.~K. Chui, M.~Neamtu, and L.~L. Schumaker, eds.), Nashboro Press, Brentwood, TN, 2005, pp.~59--91.
 % verified: https://ftp1.cs.wisc.edu/Approx/texasxi.pdf
 
+\bibitem{deBoorRon1992}
+C.~de Boor and A.~Ron, \emph{The least solution for the polynomial interpolation problem}, Math.
+Z. \textbf{210} (1992), 347--378, doi:10.1007/BF02571803.
+% verified: https://link.springer.com/doi/10.1007/BF02571803
+
 \bibitem{deBoorRon1990}
 C.~de Boor and A.~Ron, \emph{On multivariate polynomial interpolation}, Constr. Approx. \textbf{6} (1990), no.~3, 287--302, doi:10.1007/BF01890412.
 % verified: https://rd.springer.com/article/10.1007/BF01890412
@@ -1348,6 +1421,12 @@ F.~Dell'Accio and F.~Di Tommaso, \emph{Scattered data interpolation by {S}hepard
 classical results and recent advances}, Dolomites Res. Notes Approx. \textbf{9} (2016), Special
 Issue, 32--44, doi:10.14658/pupj-drna-2016-Special\_Issue-5.
 % verified: DRNA bibliography page (EMIS mirror)
+
+\bibitem{GordonWixom1978}
+W.~J. Gordon and J.~A. Wixom, \emph{Shepard's method of ``metric interpolation'' to bivariate and
+multivariate interpolation}, Math. Comp. \textbf{32} (1978), 253--264,
+doi:10.1090/S0025-5718-1978-0458027-6.
+% verified: doi.org landing page (abstract mentions partial derivative data)
 
 \bibitem{Farwig1986}
 R.~Farwig, \emph{Rate of convergence of {S}hepard's global interpolation formula}, Math. Comp.
@@ -1442,9 +1521,18 @@ interpolation conditions induced by harmonic polynomials}, J. Approx. Theory \te
 106303, doi:10.1016/j.jat.2026.106303.
 % verified: the article PDF (first page and running heads) and Elsevier metadata
 
+\bibitem{SteinWeiss1971}
+E.~M. Stein and G.~Weiss, \emph{Introduction to {F}ourier Analysis on {E}uclidean Spaces},
+Princeton University Press, Princeton, NJ, 1971.
+
 \bibitem{Wendland2005}
 H.~Wendland, \emph{Scattered Data Approximation}, Cambridge Monographs on Applied and Computational Mathematics, vol.~17, Cambridge University Press, Cambridge, 2005, doi:10.1017/CBO9780511617539.
 % verified: https://www.cambridge.org/core/books/scattered-data-approximation/980EEC9DBC4CAA711D089187818135E3
+
+\bibitem{Wendland2001}
+H.~Wendland, \emph{Local polynomial reproduction and moving least squares approximation}, IMA J.
+Numer. Anal. \textbf{21} (2001), 285--300.
+% verified: Sussex repository record; year as in Mirzaei2015's references
 
 \bibitem{Wu1992}
 Z.~Wu, \emph{Hermite--{B}irkhoff interpolation of scattered data by radial basis functions}, Approx. Theory Appl. \textbf{8} (1992), no.~2, 1--10, doi:10.1007/BF02836101.

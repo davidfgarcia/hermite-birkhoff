@@ -32,9 +32,13 @@ item is closed. Closed items are marked "Done <date>".
   differential equation (e.g. y″ or Δu at a node) is just another Hermite–Birkhoff datum, and the
   exactness rule says when it is reproduced (α = 4 for y″ in 1-D and for Δu in d-D, since
   Δ|ξ|² ≠ 0). At most one sentence of outlook; the BVP work belongs to paper 2.
-- [ ] **Full independent review of the whole draft.** `paper/REVIEW.md` covered only Sections 3–5,
-  when Sections 1, 2 and 6–8 were placeholders. Re-check that the revised conjecture addresses
-  all four kinds of counterexample in that review.
+- [x] **Full independent review of the whole draft.** Done Oct 28: `paper/REVIEW2.md` (minor
+  revision, no false theorem). All must-fix items applied: frozen-minimiser theorem generalised
+  to every datum with Δ^(α/2)q = 0 (new frozen form of the error representation), dichotomy
+  proposition and precise conjecture (covering the four counterexample families of `REVIEW.md`),
+  harmonic-data example made non-vacuous, Shepard comparison corrected, counts and wording.
+- [ ] **Optional polish:** notation clean-up (n, K, R/L, s, r, ℓ, h in several roles), a table for
+  the rates in §7.4, a comparison with a competing Hermite–Birkhoff method.
 
 ### Literature and references
 
