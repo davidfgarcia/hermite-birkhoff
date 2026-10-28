@@ -1,0 +1,518 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Pm}{\Pi_m}
+\newcommand{\fp}[2]{\bigl[#1,#2\bigr]}          % Fischer pairing at the origin
+\newcommand{\fpz}[3]{\bigl[#1,#2\bigr]_{#3}}     % shifted pairing
+\newcommand{\todo}[1]{\textcolor{red}{[\textbf{TODO:} #1]}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\title[Hermite--Birkhoff interpolation by singular-weight MLS]{Generalized Hermite--Birkhoff
+interpolation of arbitrary order in any dimension via singular-weight moving least squares}
+\author{David Figueiras Garcia}
+\date{Draft of \today}
+
+\begin{document}
+
+\begin{abstract}
+\todo{write last.}
+Singular-weight interpolating moving least squares (SWIMLS) reproduces function values at
+scattered nodes. We study the method when each node carries an arbitrary finite set of
+linear differential data $q(D)f(x_i)$. We prove that a datum is reproduced exactly if (i)
+every derivative of its symbol $q$ lies in the span of the symbols prescribed at that node
+and (ii) $\Delta^{\alpha/2}q=0$, where $\alpha$ is the (even) order of the weight
+singularity, and that (ii) cannot be dropped. For classical Hermite data of order $k$ this
+shows that $\alpha>k$ suffices, sharpening a conjecture of Komargodski and Levin; we also give
+an exact counterexample to their claim that derivative data at points without function values
+are interpolated, and a completion procedure that makes arbitrary Birkhoff data exact.
+\end{abstract}
+
+\maketitle
+
+% ===========================================================================
+\section{Introduction}\label{sec:intro}
+\todo{Context: MLS (McLain, Lancaster--\v{S}alkauskas), interpolating MLS with singular
+weights, Shepard; Hermite data in meshless methods; multivariate Hermite--Birkhoff
+interpolation and poisedness (Gasca--Sauer); Komargodski--Levin. Contributions as a list.
+Outline.}
+
+\paragraph{Contributions.}
+\begin{enumerate}[label=(\arabic*)]
+  \item A structure theorem for SWIMLS near a node (Theorem~\ref{thm:structure}) and an exact
+        representation of the error in any differential datum (Theorem~\ref{thm:error}).
+  \item A sufficient condition for exact reproduction of a datum $q(D)f(x_i)$: closure of the
+        symbol under differentiation and $\Delta^{\alpha/2}q=0$ (Corollary~\ref{cor:exact});
+        the second condition is necessary (Proposition~\ref{prop:necessity}).
+  \item For classical Hermite data of order $k$: exactness iff $\alpha>k$ for the full data
+        set, and an explicit description of which individual derivatives are reproduced
+        when $\alpha\le k$ (Corollary~\ref{cor:hermite}); this proves a sharpened form of the
+        conjecture of~\cite{KomargodskiLevin2006}.
+  \item An exact counterexample to the extension claimed in~\cite[\S3]{KomargodskiLevin2006}
+        (Proposition~\ref{prop:kl}), and a completion procedure that makes arbitrary
+        Birkhoff data exact (Proposition~\ref{prop:completion}).
+  \item A numerically stable evaluation of SWIMLS, including the closed-form limit at the
+        nodes, and numerical experiments in one, two and three dimensions.
+\end{enumerate}
+
+% ===========================================================================
+\section{A one-dimensional example}\label{sec:example}
+\todo{About one page: nodes $0,1,2,3$, values and slopes, $\alpha=2$, local quadratics;
+shape functions $\varphi_0,\psi_0$ with the Hermite cardinal property; second derivatives
+need $\alpha=4$; slopes at points without values are not reproduced and completion repairs
+them. Figure~\ref{fig:1d}.}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\textwidth]{../figures/fig1_one_dimensional_example.pdf}
+  \caption{The one-dimensional example. (a) Shape functions for the value and the slope at
+  $x=0$ (nodes $0,1,2,3$, $m=2$, $\alpha=2$). (b) Data $f,f',f''$ at the nodes: $u''$ near the
+  node $x=1$ for $\alpha=2$ and $\alpha=4$; only $\alpha=4$ reproduces $f''(1)$
+  (Corollary~\ref{cor:hermite}). (c) Values at $0,2$ and slopes at $1,3$: the slopes are not
+  reproduced (Proposition~\ref{prop:kl}) until the data are completed
+  (Proposition~\ref{prop:completion}).}
+  \label{fig:1d}
+\end{figure}
+
+% ===========================================================================
+\section{Setting and notation}\label{sec:setting}
+
+\subsection{Polynomials, symbols and the Fischer pairing}
+For $d\ge1$ and $m\ge0$ let $\Pm=\Pi_m(\R^d)$ be the real polynomials of total degree at most
+$m$. Multi-indices are $\beta\in\N_0^d$, with $|\beta|=\sum_j\beta_j$, $\beta!=\prod_j\beta_j!$,
+$D^\beta=\partial^{|\beta|}/\partial x_1^{\beta_1}\cdots\partial x_d^{\beta_d}$. A polynomial
+$q(\xi)=\sum_\beta q_\beta\xi^\beta$, called a \emph{symbol}, defines the differential operator
+$q(D)=\sum_\beta q_\beta D^\beta$. We write $\partial^\gamma q$ for derivatives of a symbol with
+respect to $\xi$, and $\Delta q=\sum_j\partial_j^2q$.
+
+For a symbol $q$, a smooth function $g$ and a point $z$ we set
+\begin{equation}\label{eq:pairing}
+  \fpz{q}{g}{z} := \bigl(q(D)g\bigr)(z), \qquad \fp{q}{g}:=\fpz{q}{g}{0}.
+\end{equation}
+For polynomials $q,p$, $\fp{q}{p}=\sum_\beta\beta!\,q_\beta p_\beta$ is the \emph{Fischer inner
+product}; it is positive definite on $\Pm$. Two elementary facts will be used repeatedly.
+
+\begin{lemma}[Fischer adjointness]\label{lem:fischer}
+For symbols $q$ and polynomials $p$, $\fp{q}{z_jp}=\fp{\partial_jq}{p}$. Consequently
+$\fp{q}{|z|^{2\ell}p}=\fp{\Delta^\ell q}{p}$ for every $\ell\in\N_0$, where
+$|z|^2=\sum_jz_j^2$.
+\end{lemma}
+
+\begin{proof}
+With $e_j$ the $j$-th unit multi-index,
+$\fp{q}{z_jp}=\sum_\kappa\kappa!\,q_\kappa p_{\kappa-e_j}
+=\sum_\lambda(\lambda+e_j)!\,q_{\lambda+e_j}p_\lambda
+=\sum_\lambda\lambda!\,(\lambda_j+1)q_{\lambda+e_j}p_\lambda=\fp{\partial_jq}{p}$.
+Multiplication by $|z|^2=\sum_jz_j\cdot z_j$ is therefore adjoint to $\sum_j\partial_j^2=\Delta$,
+and the second statement follows by induction.
+\end{proof}
+
+\begin{lemma}[Taylor expansion of operators]\label{lem:taylor}
+Let $A=(A_1,\dots,A_d)$ and $B=(B_1,\dots,B_d)$ be commuting operators. For every symbol $q$,
+$q(A+B)=\sum_{\gamma}\frac{1}{\gamma!}A^\gamma(\partial^\gamma q)(B)$ (a finite sum).
+\end{lemma}
+
+\begin{proof}
+This is Taylor's formula $q(a+b)=\sum_\gamma\frac{a^\gamma}{\gamma!}(\partial^\gamma q)(b)$ for
+the polynomial $q$, an identity in the commutative polynomial ring in $a,b$.
+\end{proof}
+
+\begin{lemma}\label{lem:harmonic-monomial}
+Let $\ell\in\N_0$ and $\beta\in\N_0^d$. Then $\Delta^\ell\xi^\beta=0$ if and only if
+$\sum_j\lfloor\beta_j/2\rfloor<\ell$.
+\end{lemma}
+
+\begin{proof}
+By the multinomial formula,
+$\Delta^\ell\xi^\beta=\sum_{|\kappa|=\ell}\frac{\ell!}{\kappa!}\,\partial^{2\kappa}\xi^\beta$,
+and $\partial^{2\kappa}\xi^\beta=\frac{\beta!}{(\beta-2\kappa)!}\xi^{\beta-2\kappa}$ if
+$2\kappa\le\beta$ and $0$ otherwise. Distinct $\kappa$ give distinct monomials and all
+coefficients are positive, so $\Delta^\ell\xi^\beta\ne0$ if and only if some $\kappa$ with
+$|\kappa|=\ell$ satisfies $2\kappa\le\beta$, i.e.\ $\sum_j\lfloor\beta_j/2\rfloor\ge\ell$.
+\end{proof}
+
+\subsection{Data}
+Let $\Omega\subset\R^d$ be open and $X=\{x_1,\dots,x_K\}\subset\Omega$ distinct nodes. Node
+$x_i$ carries symbols $q_{i,1},\dots,q_{i,n_i}$ of degree at most $m$ and values
+$y_{i,1},\dots,y_{i,n_i}\in\R$, i.e.\ the interpolation conditions
+\begin{equation}\label{eq:data}
+  \lambda_{i,s}(f):=\fpz{q_{i,s}}{f}{x_i}=\bigl(q_{i,s}(D)f\bigr)(x_i)=y_{i,s},
+  \qquad s=1,\dots,n_i,\ i=1,\dots,K.
+\end{equation}
+We write $Q_i=\operatorname{span}\{q_{i,1},\dots,q_{i,n_i}\}$ for the space of symbols at
+$x_i$. Every $q=\sum_sc_sq_{i,s}\in Q_i$ has a prescribed value
+$y_q:=\sum_sc_sy_{i,s}$; we say that the datum $q$ is \emph{reproduced} by a function $u$ if
+$\fpz{q}{u}{x_i}=y_q$. Classical Hermite data of order $k$ correspond to
+$Q_i=\operatorname{span}\{\xi^\beta:|\beta|\le k\}$; any other choice will be called
+Hermite--Birkhoff data.
+
+\begin{assumption}\label{ass:main}
+\begin{enumerate}[label=(A\arabic*)]
+  \item\label{A1} $\alpha\in2\N$ is even, and $w_i(x)=\rho_i(x)\,|x-x_i|^{-\alpha}$ with
+        $\rho_i\in C^\infty(\Omega)$, $\rho_i>0$.
+  \item\label{A2} For every $i$ the symbols $q_{i,1},\dots,q_{i,n_i}$ are linearly
+        independent.
+  \item\label{A3} (Unisolvency) If $p\in\Pm$ and $\lambda_{i,s}(p)=0$ for all $i,s$, then
+        $p=0$.
+\end{enumerate}
+\end{assumption}
+
+Since $\fpz{\cdot}{\cdot}{x_i}$ is non-degenerate on $\Pm$ (it is the Fischer pairing after
+translation) and $\deg q_{i,s}\le m$, \ref{A2} is equivalent to the linear independence of the
+functionals $\lambda_{i,1},\dots,\lambda_{i,n_i}$ on $\Pm$.
+
+\begin{definition}[SWIMLS]\label{def:swimls}
+For $x\in\Omega\setminus X$ let
+\begin{equation}\label{eq:functional}
+  J_x(p)=\sum_{i=1}^Kw_i(x)\sum_{s=1}^{n_i}\bigl(\lambda_{i,s}(p)-y_{i,s}\bigr)^2,
+  \qquad p_x:=\argmin_{p\in\Pm}J_x(p),
+\end{equation}
+and define the interpolant $u(x):=p_x(x)$.
+\end{definition}
+
+By \ref{A1} and \ref{A3}, $J_x$ is a strictly convex quadratic on $\Pm$ for every
+$x\notin X$, so $p_x$ is unique; it depends smoothly on $x\in\Omega\setminus X$ because the
+coefficients of $J_x$ do and its Hessian is positive definite. Hence $u\in
+C^\infty(\Omega\setminus X)$. The behaviour at the nodes is the subject of the next section.
+
+\begin{remark}
+Positive weights for the individual functionals of a node, or a weight that is singular only
+for some of them, can be included without change in the arguments below, as long as all data
+at $x_i$ share the same singular factor $|x-x_i|^{-\alpha}$. \todo{decide whether to state the
+theory in this generality.}
+\end{remark}
+
+% ===========================================================================
+\section{Main results}\label{sec:main}
+
+Throughout this section we fix a node $x_i$ and write
+\[
+  N_i=\{p\in\Pm:\lambda_{i,s}(p)=0,\ s=1,\dots,n_i\}=\{p\in\Pm:\fpz{q}{p}{x_i}=0\ \forall q\in Q_i\}
+\]
+for the polynomials that the data at $x_i$ do not see.
+
+\subsection{Structure near a node}
+
+\begin{theorem}[Structure near a node]\label{thm:structure}
+Under Assumption~\ref{ass:main} there are a neighbourhood $U\subset\Omega$ of $x_i$ with
+$U\cap X=\{x_i\}$, a polynomial $p_i^*\in\Pm$ with $\lambda_{i,s}(p_i^*)=y_{i,s}$ for all $s$,
+and $C^\infty$ maps $\nu:U\to N_i$ and $\sigma:U\to\Pm$ such that
+\begin{equation}\label{eq:structure}
+  p_x=p_i^*+\nu(x)+|x-x_i|^{\alpha}\,\sigma(x)\qquad\text{for all }x\in U\setminus\{x_i\}.
+\end{equation}
+In particular $u$ extends to a function in $C^\infty(\Omega)$, with node value
+$u(x_i)=\bigl(p_i^*+\nu(x_i)\bigr)(x_i)$, where
+\begin{equation}\label{eq:nodevalue}
+  \nu(x_i)=\argmin_{n\in N_i}\ \sum_{j\ne i}w_j(x_i)\sum_{s=1}^{n_j}
+  \bigl(\lambda_{j,s}(p_i^*+n)-y_{j,s}\bigr)^2 .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Fix an inner product $\langle\cdot,\cdot\rangle$ on $\Pm$, let $R=N_i^\perp$, and write
+$\Lambda_i:\Pm\to\R^{n_i}$, $p\mapsto(\lambda_{i,s}(p))_s$ and $\Lambda_j$ likewise. By
+\ref{A2} $\Lambda_i$ is surjective with kernel $N_i$, so $L:=\Lambda_i|_R:R\to\R^{n_i}$ is
+bijective; put $p_i^*:=L^{-1}y_i\in R$. Every $p\in\Pm$ is uniquely $p=p_i^*+r+n$ with $r\in
+R$, $n\in N_i$, and then $\Lambda_ip-y_i=Lr$.
+
+Choose a neighbourhood $U$ of $x_i$ whose closure lies in $\Omega$ and contains no other node.
+For $x\in U\setminus\{x_i\}$ divide $J_x$ by $w_i(x)>0$:
+\[
+  \frac{J_x(p)}{w_i(x)}=|Lr|^2+t(x)\,B_x(p),\qquad
+  t(x):=|x-x_i|^{\alpha},\quad
+  B_x(p):=\sum_{j\ne i}\frac{w_j(x)}{\rho_i(x)}\,|\Lambda_jp-y_j|^2 .
+\]
+Since $\alpha$ is even, $t(x)=\bigl(\sum_k(x_k-x_{i,k})^2\bigr)^{\alpha/2}$ is a polynomial in
+$x$; and $x\mapsto B_x$ is a $C^\infty$ family of convex quadratics on $U$ because $U$ contains
+no node other than $x_i$. A polynomial $p=p_i^*+r+n$ minimises $J_x$ if and only if the
+gradient vanishes (the problem is convex), that is
+\[
+  2L^*Lr+t(x)\nabla_RB_x(p)=0,\qquad t(x)\nabla_NB_x(p)=0,
+\]
+where $\nabla_R,\nabla_N$ denote the components of the gradient in $R$ and $N_i$ and $L^*$ is
+the adjoint of $L$. Since $t(x)>0$ for $x\ne x_i$ we may substitute $r=t(x)\,s$ and divide by
+$t(x)$, obtaining $F(x,t(x);s,n)=0$ for the map $F:U\times\R\times R\times N_i\to R\times N_i$,
+\[
+  F(x,t;s,n):=\Bigl(2L^*Ls+\nabla_RB_x(p_i^*+ts+n),\ \nabla_NB_x(p_i^*+ts+n)\Bigr),
+\]
+which is $C^\infty$ in all variables, including $t$ near $0$.
+
+\emph{The point $(x_i,0)$.} Here $F=0$ reads $\nabla_NB_{x_i}(p_i^*+n)=0$ and
+$s=-(2L^*L)^{-1}\nabla_RB_{x_i}(p_i^*+n)$. The restriction of $B_{x_i}$ to the affine space
+$p_i^*+N_i$ is strictly convex: its Hessian is
+$2\sum_{j\ne i}\frac{w_j(x_i)}{\rho_i(x_i)}\Lambda_j^*\Lambda_j$ restricted to $N_i$, and if
+$n\in N_i$ satisfies $\Lambda_jn=0$ for all $j\ne i$ then all data functionals vanish on $n$,
+so $n=0$ by \ref{A3}. Hence there is exactly one solution $(s_0,n_0)$, and $n_0$ is the
+minimiser in~\eqref{eq:nodevalue}.
+
+\emph{Implicit function theorem.} At $(x_i,0;s_0,n_0)$ the derivative of $F$ with respect to
+$(s,n)$ is block triangular,
+\[
+  \frac{\partial F}{\partial(s,n)}=
+  \begin{pmatrix} 2L^*L & \bigl(\nabla^2B_{x_i}\bigr)_{RN}\\[2pt] 0 & \bigl(\nabla^2B_{x_i}\bigr)_{NN}\end{pmatrix},
+\]
+because every derivative with respect to $s$ of a $B$-term carries the factor $t=0$. Both
+diagonal blocks are invertible ($L$ is injective; the second block is the Hessian above).
+By the implicit function theorem there are a neighbourhood $U'\times(-\tau,\tau)$ of
+$(x_i,0)$ and a $C^\infty$ map $(x,t)\mapsto(s(x,t),n(x,t))$ with $F(x,t;s(x,t),n(x,t))=0$.
+Shrinking $U$ to $U'\cap\{t(x)<\tau\}$, for $x\in U\setminus\{x_i\}$ the polynomial
+$p_i^*+t(x)s(x,t(x))+n(x,t(x))$ satisfies the gradient equations of the strictly convex
+function $J_x$, hence it equals $p_x$. Setting $\nu(x):=n(x,t(x))\in N_i$ and
+$\sigma(x):=s(x,t(x))$ gives~\eqref{eq:structure}; both maps are $C^\infty$ because $t$ is a
+polynomial. Finally $u(x)=p_x(x)$ is, by~\eqref{eq:structure}, the restriction to
+$U\setminus\{x_i\}$ of the $C^\infty$ function
+$x\mapsto(p_i^*+\nu(x)+t(x)\sigma(x))(x)$, whose value at $x_i$ is
+$(p_i^*+\nu(x_i))(x_i)$.
+\end{proof}
+
+\begin{remark}\label{rem:odd}
+Evenness of $\alpha$ is used exactly once: to make $t(x)=|x-x_i|^\alpha$ smooth at $x_i$. For
+odd $\alpha$ the same argument gives \eqref{eq:structure} with $\nu,\sigma$ smooth functions of
+$(x,|x-x_i|^\alpha)$, and $u$ is in general only finitely smooth at the nodes. If the $\rho_i$
+are real analytic, the analytic implicit function theorem shows that $u$ is real analytic.
+\end{remark}
+
+\subsection{An exact error representation}
+
+\begin{theorem}[Error representation]\label{thm:error}
+With the notation of Theorem~\ref{thm:structure}, let $\tau(z):=\sigma(z)(z)$ for $z\in U$
+(a $C^\infty$ scalar function). For every symbol $q$,
+\begin{equation}\label{eq:error}
+  \fpz{q}{u}{x_i}
+  =\fpz{q}{p_i^*}{x_i}
+  +\sum_{\gamma}\frac{1}{\gamma!}\,D^\gamma\Bigl[x\mapsto\fpz{\partial^\gamma q}{\nu(x)}{x_i}\Bigr](x_i)
+  +\fpz{\Delta^{\alpha/2}q}{\tau}{x_i}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+On $U\times\R^d$ consider the $C^\infty$ function
+$\Phi(x,y)=p_i^*(y)+\nu(x)(y)+t(x)\,\sigma(x)(y)=:\Phi_1+\Phi_2+\Phi_3$, which is a
+polynomial in $y$ and satisfies $u(z)=\Phi(z,z)$ for $z\in U$ by
+Theorem~\ref{thm:structure}. By the chain rule along the diagonal,
+$D_z^\beta[\Phi(z,z)]=\bigl[(D_x+D_y)^\beta\Phi\bigr](z,z)$, hence
+$\fpz{q}{u}{x_i}=\bigl[q(D_x+D_y)\Phi\bigr](x_i,x_i)$. We treat the three parts.
+
+$\Phi_1$ does not depend on $x$, so it contributes $(q(D)p_i^*)(x_i)=\fpz{q}{p_i^*}{x_i}$.
+
+For $\Phi_2$, Lemma~\ref{lem:taylor} with $A=D_x$, $B=D_y$ gives
+$q(D_x+D_y)\Phi_2=\sum_\gamma\frac{1}{\gamma!}D_x^\gamma\,(\partial^\gamma q)(D_y)\Phi_2$.
+Evaluating at $y=x_i$ commutes with $D_x$, and $\bigl((\partial^\gamma q)(D_y)\Phi_2\bigr)(x,x_i)
+=\fpz{\partial^\gamma q}{\nu(x)}{x_i}$; evaluating at $x=x_i$ gives the middle term
+of~\eqref{eq:error}.
+
+For $\Phi_3$ we use the diagonal again: its contribution is
+$\fpz{q}{t\,\tau}{x_i}=\bigl(q(D)[\,|z-x_i|^\alpha\tau(z)]\bigr)(x_i)$. Translate $x_i$ to $0$
+and let $T\tau$ be the Taylor polynomial of $\tau$ at $0$ of degree $\deg q$. Since
+$|z|^\alpha(\tau-T\tau)$ vanishes at $0$ to order larger than $\deg q$, it is annihilated by
+$q(D)$ at $0$, and by Lemma~\ref{lem:fischer}
+\[
+  \fp{q}{|z|^\alpha\tau}=\fp{q}{|z|^\alpha T\tau}=\fp{\Delta^{\alpha/2}q}{T\tau}
+  =\fp{\Delta^{\alpha/2}q}{\tau},
+\]
+the last equality because $\deg\Delta^{\alpha/2}q\le\deg q$.
+\end{proof}
+
+\subsection{Exact reproduction}
+
+\begin{corollary}[Sufficient condition]\label{cor:exact}
+Let Assumption~\ref{ass:main} hold and let $q\in Q_i$. If
+\begin{enumerate}[label=(\roman*)]
+  \item\label{c1} $\partial^\gamma q\in Q_i$ for every multi-index $\gamma$, and
+  \item\label{c2} $\Delta^{\alpha/2}q=0$,
+\end{enumerate}
+then the datum $q$ is reproduced: $\fpz{q}{u}{x_i}=y_q$.
+\end{corollary}
+
+\begin{proof}
+In~\eqref{eq:error}, $\fpz{q}{p_i^*}{x_i}=\sum_sc_s\lambda_{i,s}(p_i^*)=y_q$. By~\ref{c1},
+every $\partial^\gamma q$ (including $\gamma=0$) lies in $Q_i$, and $\nu(x)\in N_i$, so
+$\fpz{\partial^\gamma q}{\nu(x)}{x_i}=0$ for all $x\in U$: the middle term vanishes. The last
+term vanishes by~\ref{c2}.
+\end{proof}
+
+Condition~\ref{c1} concerns the datum and the data at its own node only; it holds for every
+datum when $Q_i$ is \emph{D-invariant} (closed under differentiation), the classical
+setting of multivariate Hermite interpolation~\todo{cite de Boor--Ron, Sauer}. Condition~\ref{c2}
+holds whenever $\deg q<\alpha$, but also, for instance, for every harmonic symbol when
+$\alpha=2$.
+
+\begin{corollary}[Hermite data]\label{cor:hermite}
+Let $x_i$ carry classical Hermite data of order $k\le m$, i.e.\
+$Q_i=\operatorname{span}\{\xi^\beta:|\beta|\le k\}$. Then the derivative datum $D^\beta f(x_i)$
+is reproduced whenever $\sum_j\lfloor\beta_j/2\rfloor<\alpha/2$. In particular
+\begin{enumerate}[label=(\alph*)]
+  \item all data at $x_i$ are reproduced if $\alpha>k$; the smallest admissible weight
+        exponent is the smallest even integer exceeding $k$;
+  \item for $\alpha=2$, exactly the multilinear derivatives ($\beta_j\le1$ for all $j$, e.g.\
+        $\partial_x\partial_y$, $\partial_x\partial_y\partial_z$) are covered, whatever their order.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+$Q_i$ is D-invariant, so~\ref{c1} holds, and~\ref{c2} is Lemma~\ref{lem:harmonic-monomial}
+with $\ell=\alpha/2$. If $|\beta|\le k<\alpha$ then
+$\sum_j\lfloor\beta_j/2\rfloor\le|\beta|/2<\alpha/2$.
+\end{proof}
+
+Corollary~\ref{cor:hermite}(a) proves, in a sharper form, the conjecture
+of~\cite[\S3]{KomargodskiLevin2006} that $\alpha=2k$ suffices for data up to order $k$: already
+$\alpha=k+1$ (or $k+2$, to make it even) suffices. The next result shows that it cannot be
+improved: condition~\ref{c2} is necessary.
+
+\begin{proposition}[Necessity of \ref{c2}, leading order]\label{prop:necessity}
+In addition to Assumption~\ref{ass:main}, assume that the data at the nodes other than $x_i$
+are unisolvent on $\Pm$ by themselves. Let $q\in Q_i$ satisfy~\ref{c1}, with $\deg q=\alpha$
+and $\Delta^{\alpha/2}q\ne0$. Then for every choice of the data at $x_i$ there are data at the
+other nodes for which $\fpz{q}{u}{x_i}\ne y_q$.
+\end{proposition}
+
+\begin{proof}
+By~\ref{c1} the middle term of~\eqref{eq:error} vanishes, and $\Delta^{\alpha/2}q=c$ is a
+non-zero constant, so the error is $c\,\tau(x_i)=c\,\sigma(x_i)(x_i)=c\,s_0(x_i)$ with $s_0$
+from the proof of Theorem~\ref{thm:structure}. We show that $s_0(x_i)\ne0$ for suitable data.
+
+Since $\deg q=\alpha\ge2$, some derivative $\partial^\gamma q$ with $|\gamma|=\alpha$ is a
+non-zero constant, so $1\in Q_i$ by~\ref{c1}: point evaluation $\ell(p)=p(x_i)$ is a datum at
+$x_i$. It vanishes on $N_i$ and is non-zero on $\Pm$, hence non-zero on $R$.
+
+Keep $y_i$ fixed and choose $y_j=\Lambda_j(p_i^*+v)$, $j\ne i$, for some $v\in\Pm$. Then
+$B_{x_i}(p)=\langle K(p-p_i^*-v),p-p_i^*-v\rangle$ with
+$K=\sum_{j\ne i}\frac{w_j(x_i)}{\rho_i(x_i)}\Lambda_j^*\Lambda_j$, which is positive definite on
+$\Pm$ by the additional assumption. The minimiser $n_0$ over $N_i$ is characterised by
+$K(n_0-v)\perp N_i$, i.e.\ $K(n_0-v)\in R$, so $\nabla_RB_{x_i}(p_i^*+n_0)=2K(n_0-v)$ and
+$s_0=(L^*L)^{-1}Kw$ with $w=v-n_0$. As $v$ ranges over $\Pm$, $w$ ranges over the
+$K$-orthogonal complement $W=\{w:Kw\in R\}$ of $N_i$, so $Kw$ ranges over all of $R$ and
+$s_0$ over all of $R$. Choosing $v$ with $\ell(s_0)\ne0$ completes the proof.
+\end{proof}
+
+\begin{conjecture}[Characterisation]\label{conj:char}
+Under Assumption~\ref{ass:main}, and for data in general position, a datum $q\in Q_i$ is
+reproduced if and only if~\ref{c1} and~\ref{c2} hold.
+\end{conjecture}
+
+\begin{remark}
+The conjecture is supported by the experiments of Section~\ref{sec:numerics}: the predicted
+verdict agreed with the computed one for all $175$ data tested (classical Hermite nodes of
+orders up to $7$ in one, up to $4$ in two and up to $3$ in three dimensions with
+$\alpha\in\{2,4,6\}$, a node carrying the harmonic symbols of degree $\le3$, and Birkhoff
+patterns). The missing parts of a proof are necessity of~\ref{c2} when $\deg q>\alpha$, which
+requires control of derivatives of $\tau$ at $x_i$, and necessity of~\ref{c1}, which involves
+the derivatives of $\nu$ and hence of the weights of the other nodes.
+\todo{attempt both; at least necessity of (i) for first-order failures.}
+\end{remark}
+
+% ===========================================================================
+\section{Derivative data without function values}\label{sec:birkhoff}
+
+\subsection{A counterexample}
+Komargodski and Levin~\cite[\S3]{KomargodskiLevin2006} state that their Hermite MLS, with
+weights $|x-z|^{-\alpha}$, also interpolates directional derivatives prescribed at points
+$z'_j$ that differ from the points carrying function values, the proof being ``straightforward
+\dots\ by slight modifications'' of the case of co-located data. Condition~\ref{c1} fails for
+such data: the symbol of a first derivative differentiates to the constant $1$, which is not
+in $Q_i$ when no value is prescribed at the node. The following exact computation shows that
+the claim is indeed false.
+
+\begin{proposition}\label{prop:kl}
+Let $d=1$, $m=1$ (local polynomials $a+by$, the smallest space allowed
+in~\cite{KomargodskiLevin2006}), $\alpha=2$, $\rho_i\equiv1$, and prescribe
+$f(0)=f(2)=0$ and $f'(1)=f'(3)=1$. Then
+\[
+  u(x)=\frac{x\,(x-1)(x-2)\,(x^2-4x+5)}{2x^4-14x^3+37x^2-42x+19},
+\]
+which satisfies $u(0)=u(2)=0$ but $u'(1)=-1$ and $u'(3)=31/25$.
+\end{proposition}
+
+\begin{proof}
+The normal equations of~\eqref{eq:functional} for the two coefficients are a $2\times2$ linear
+system with rational coefficients in $x$; solving it and evaluating $a+bx$ gives the stated
+$u$ (the denominator has no real zeros). The values and derivatives follow by direct
+computation. \todo{display the normal equations; script \texttt{code/proofs/kl\_counterexample.py}
+reproduces the computation in exact arithmetic.}
+\end{proof}
+
+The same failure occurs in two dimensions, with gradients at points without values, for local
+polynomial degrees $1$ and $2$ and $\alpha\in\{2,4\}$ (Section~\ref{sec:numerics}).
+
+\subsection{Completion}
+Given data at $x_i$ with symbol space $Q_i$, let $\overline{Q}_i$ be the smallest D-invariant
+space containing $Q_i$, and choose a basis $\tilde q_{i,1},\dots,\tilde q_{i,r}$ of a complement
+of $Q_i$ in $\overline{Q}_i$.
+
+\begin{proposition}[Completion]\label{prop:completion}
+Augment the data at $x_i$ by the functionals $\tilde q_{i,l}(D)f(x_i)$ with arbitrary values
+$\tilde y_{i,l}$. If Assumption~\ref{ass:main} holds for the original data and
+$\deg\overline{Q}_i\le m$, it holds for the augmented data, and every original datum $q\in Q_i$
+with $\Delta^{\alpha/2}q=0$ is reproduced by the augmented interpolant, whatever the values
+$\tilde y_{i,l}$.
+\end{proposition}
+
+\begin{proof}
+The augmented symbols at $x_i$ form a basis of $\overline{Q}_i$, so~\ref{A2} holds;
+\ref{A3} is preserved by adding data. Every $q\in Q_i\subset\overline{Q}_i$
+satisfies~\ref{c1} with respect to the D-invariant space $\overline{Q}_i$, and
+Corollary~\ref{cor:exact} applies.
+\end{proof}
+
+The values $\tilde y_{i,l}$ influence the accuracy, not the exactness. In the experiments they
+are estimated by a smooth (non-singular) moving least-squares fit of the given data.
+
+% ===========================================================================
+\section{Numerical evaluation}\label{sec:evaluation}
+\todo{centred, scaled basis; log-normalised weights; SVD least squares; the two-block
+reformulation near a node; closed-form node value~\eqref{eq:nodevalue}; comparison with
+$\varepsilon$-regularised normal equations (Figure: e5\_stability).}
+
+% ===========================================================================
+\section{Numerical experiments}\label{sec:numerics}
+\todo{exactness experiments (verification method: high-precision stencils at two radii);
+Birkhoff patterns; completion; convergence (state only what the parameter study supports).}
+
+% ===========================================================================
+\section{Conclusions}\label{sec:conclusions}
+\todo{summary; open problems: Conjecture~\ref{conj:char}; convergence orders; better estimators
+for completion.}
+
+% ===========================================================================
+\bibliographystyle{amsplain}
+\begin{thebibliography}{99}
+\bibitem{KomargodskiLevin2006}
+Z.~Komargodski and D.~Levin, \emph{Hermite type moving-least-squares approximations},
+Comput. Math. Appl. \textbf{51} (2006), 1223--1232.
+\bibitem{LancasterSalkauskas1981}
+P.~Lancaster and K.~\v{S}alkauskas, \emph{Surfaces generated by moving least squares methods},
+Math. Comp. \textbf{37} (1981), 141--158.
+\bibitem{Levin1998}
+D.~Levin, \emph{The approximation power of moving least-squares}, Math. Comp. \textbf{67}
+(1998), 1517--1531.
+\bibitem{Shepard1968}
+D.~Shepard, \emph{A two-dimensional interpolation function for irregularly-spaced data},
+Proc. 23rd ACM National Conference, 1968, 517--524.
+\bibitem{Wendland2005}
+H.~Wendland, \emph{Scattered Data Approximation}, Cambridge University Press, 2005.
+\bibitem{GascaSauer2000}
+M.~Gasca and T.~Sauer, \emph{Polynomial interpolation in several variables}, Adv. Comput.
+Math. \textbf{12} (2000), 377--410. \todo{verify}
+\end{thebibliography}
+
+\end{document}

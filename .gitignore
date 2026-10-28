@@ -4,3 +4,9 @@ __pycache__/
 *.lyx~
 *.aux
 *.log.tex
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fls
+paper/*.fdb_latexmk
+paper/build.log
