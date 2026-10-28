@@ -15,34 +15,7 @@ from multiprocessing import Pool
 import numpy as np
 
 import hbmls as hb
-from experiments.common import EXACT, check_node, describe, symbol
-from hbmls.core import multi_indices
-
-
-def predicted(f, node_funs):
-    """True if every (iterated) derivative of f's symbol lies in span of node symbols."""
-    dim = len(f.point)
-    top = max(g.order for g in node_funs)
-    exps = [tuple(e) for e in multi_indices(dim, top)]
-    vec = lambda q: np.array([q.get(e, 0.0) for e in exps])
-    S = np.array([vec(symbol(g)) for g in node_funs]).T
-    frontier = [symbol(f)]
-    while frontier:
-        q = frontier.pop()
-        for j in range(dim):
-            dq = {}
-            for e, c in q.items():
-                if e[j] > 0:
-                    e2 = list(e)
-                    e2[j] -= 1
-                    dq[tuple(e2)] = dq.get(tuple(e2), 0.0) + c * e[j]
-            if not dq:
-                continue
-            v = vec(dq)
-            if np.linalg.norm(v - S @ np.linalg.lstsq(S, v, rcond=None)[0]) > 1e-9 * np.linalg.norm(v):
-                return False
-            frontier.append(dq)
-    return True
+from experiments.common import check_node, describe, predicted
 
 
 def pattern_1d(p, orders):
@@ -75,8 +48,8 @@ def run_1d(name):
     op = hb.SingularMLS(fun, degree=5, alpha=8, delta=2.0)
     y = np.random.default_rng(7).normal(size=len(fun))
     node_funs = [f for f in fun if f.point == (0.0,)]
-    return [dict(dim=1, pattern=name, datum=describe(f), predicted=predicted(f, node_funs),
-                 err=err) for f, *_, err in check_node(op, y, 0)]
+    return [dict(dim=1, pattern=name, datum=describe(f), predicted=predicted(f, node_funs, op.alpha),
+                 err=e1, err_r1e4=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
 
 
 def run_2d(name):
@@ -86,8 +59,28 @@ def run_2d(name):
     op = hb.SingularMLS(fun, degree=3, alpha=6, delta=1.0)
     y = rng.normal(size=len(fun))
     node_funs = P2[name](pts[0])
-    return [dict(dim=2, pattern=name, datum=describe(f), predicted=predicted(f, node_funs),
-                 err=err) for f, *_, err in check_node(op, y, 0)]
+    return [dict(dim=2, pattern=name, datum=describe(f), predicted=predicted(f, node_funs, op.alpha),
+                 err=e1, err_r1e4=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
+
+
+P2_ALPHA2 = {
+    "a2: f, Dx, Dy, Dxy": lambda p: [hb.value(p), hb.partial(p, (1, 0)), hb.partial(p, (0, 1)), hb.partial(p, (1, 1))],
+    "a2: f, Dx, Dy, Dxx": lambda p: [hb.value(p), hb.partial(p, (1, 0)), hb.partial(p, (0, 1)), hb.partial(p, (2, 0))],
+    "a2: f, Dx, Dy, Dxx-Dyy": lambda p: [hb.value(p), hb.partial(p, (1, 0)), hb.partial(p, (0, 1)),
+                                        hb.Functional(tuple(p), ((1.0, (2, 0)), (-1.0, (0, 2))))],
+    "a2: f, Dx, Dy, Laplacian": lambda p: [hb.value(p), hb.partial(p, (1, 0)), hb.partial(p, (0, 1)), hb.laplacian(p)],
+}
+
+
+def run_2d_alpha2(name):
+    rng = np.random.default_rng(13)
+    pts = rng.random((8, 2))
+    node_funs = P2_ALPHA2[name](pts[0])
+    fun = node_funs + [f for q in pts[1:] for f in hb.hermite_set(q, 2)]
+    op = hb.SingularMLS(fun, degree=3, alpha=2, delta=1.0)
+    y = rng.normal(size=len(fun))
+    return [dict(dim=2, pattern=name, datum=describe(f), predicted=predicted(f, node_funs, op.alpha),
+                 err=e1, err_r1e4=e2, verdict=v) for f, e1, e2, v in check_node(op, y, 0)]
 
 
 def run_kl(same_points):
@@ -103,32 +96,33 @@ def run_kl(same_points):
     check = (0, 1, 2) if same_points else (0, 1, 8, 9, 10)     # nodes 8.. carry gradients only
     for node in check:
         node_funs = [f for f in fun if f.point == tuple(op.nodes[node])]
-        for f, *_, err in check_node(op, y, node):
+        for f, e1, e2, v in check_node(op, y, node):
             out.append(dict(dim=2, pattern=tag, datum=f"node {node}: {describe(f)}",
-                            predicted=predicted(f, node_funs), err=err))
+                            predicted=predicted(f, node_funs, op.alpha), err=e1, err_r1e4=e2, verdict=v))
     return out
 
 
 def job(spec):
     kind, name = spec
-    return {"1d": run_1d, "2d": run_2d, "kl": run_kl}[kind](name)
+    return {"1d": run_1d, "2d": run_2d, "2da2": run_2d_alpha2, "kl": run_kl}[kind](name)
 
 
 if __name__ == "__main__":
     t0 = time.time()
-    jobs = [("1d", n) for n in P1] + [("2d", n) for n in P2] + [("kl", True), ("kl", False)]
+    jobs = ([("1d", n) for n in P1] + [("2d", n) for n in P2] + [("2da2", n) for n in P2_ALPHA2]
+            + [("kl", True), ("kl", False)])
     with Pool(2) as pool:
         out = pool.map(job, jobs)
     rows = [r for block in out for r in block]
     agree = 0
     for r in rows:
-        obs = r["err"] < EXACT
-        agree += obs == r["predicted"]
-        r["observed"] = obs
-        print(f"{r['dim']}D {r['pattern']:<42} {r['datum']:<22} err={r['err']:.1e}  "
-              f"reproduced={'yes' if obs else 'NO ':<3}  predicted={'yes' if r['predicted'] else 'NO'}"
-              f"{'' if obs == r['predicted'] else '   <-- MISMATCH'}")
-    print(f"\nprediction agrees with observation for {agree}/{len(rows)} data;  {time.time() - t0:.0f}s")
+        r["predicted"] = "exact" if r["predicted"] else "not exact"
+        ok = r["verdict"] == r["predicted"]
+        agree += ok
+        print(f"{r['dim']}D {r['pattern']:<42} {r['datum']:<22} err={r['err']:.1e}/{r['err_r1e4']:.1e}  "
+              f"{r['verdict']:<10} predicted {r['predicted']:<10}{'' if ok else '   <-- MISMATCH'}")
+    print(f"\nprediction agrees with observation for {agree}/{len(rows)} data; "
+          f"unstable: {sum(r['verdict'] == 'UNSTABLE' for r in rows)};  {time.time() - t0:.0f}s")
     with open("../results/e2_birkhoff.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0]))
         w.writeheader()

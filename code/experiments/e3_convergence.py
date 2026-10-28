@@ -51,10 +51,10 @@ def halton(n, dim, skip=31):
 
 # label, Hermite order k, local degree m, alpha
 CONFIGS = [
-    ("values, m = 2", 0, 2, 2),
-    ("values, m = 3", 0, 3, 2),
-    ("values + gradients, m = 3", 1, 3, 2),
-    ("values + gradients + Hessians, m = 4", 2, 4, 4),
+    ("values (1 datum/node), m = 2, α = 2", 0, 2, 2),
+    ("values (1 datum/node), m = 3, α = 2", 0, 3, 2),
+    ("values + gradients (3/node), m = 3, α = 2", 1, 3, 2),
+    ("values + gradients + Hessians (6/node), m = 4, α = 4", 2, 4, 4),
 ]
 NS = [64, 128, 256, 512, 1024, 2048, 4096]
 G = np.linspace(0.1, 0.9, 33)

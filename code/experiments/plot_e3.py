@@ -11,12 +11,12 @@ rows = list(csv.DictReader(open("../results/e3_convergence.csv")))
 fig, axes = plt.subplots(1, 2, figsize=(6.6, 3.1))
 for ax, fn in zip(axes, FUNCS):
     for ci, (label, k, m, alpha) in enumerate(CONFIGS):
-        rs = [r for r in rows if r["config"] == label and r["function"] == fn]
+        rs = [r for r in rows if int(r["k"]) == k and int(r["degree"]) == m and r["function"] == fn]
         hs = np.array([float(r["h"]) for r in rs])
         es = np.array([float(r["max_err"]) for r in rs])
         ax.loglog(hs, es, "o-", color=SERIES[ci], ms=3, label=label)
         rate = np.polyfit(np.log(hs[-3:]), np.log(es[-3:]), 1)[0]
-        ax.annotate(f"{rate:.1f}", (hs[-1], es[-1]), xytext=(4, 0), textcoords="offset points",
+        ax.annotate(f"{rate:.1f}", (hs[-1], es[-1]), xytext=(4, [3, 3, -4, 0][ci]), textcoords="offset points",
                     fontsize=7, color=INK2, va="center")
     ax.invert_xaxis()
     ticks = [1 / 8, 1 / 16, 1 / 32, 1 / 64]

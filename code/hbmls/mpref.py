@@ -18,9 +18,10 @@ from .core import SingularMLS
 class MPSingularMLS:
     """Same operator as SingularMLS, in arbitrary precision (evaluated off the nodes)."""
 
-    def __init__(self, op: SingularMLS, dps: int = 60):
+    def __init__(self, op: SingularMLS, dps: int = 60, solver: str = "normal"):
         self.op = op
         self.dps = dps
+        self.solver = solver          # "normal" (fast; needs ample dps) or "augmented"
 
     def _row(self, f, x):
         """The functional applied to the basis (y - x)^e, exactly, in mp."""
@@ -52,7 +53,22 @@ class MPSingularMLS:
                 s = mp.sqrt(w) * mp.mpf(op.length) ** f.order
                 rows.append([s * v for v in self._row(f, x)])
                 rhs.append(s * mp.mpf(y[i]))
-            return self._lstsq(rows, rhs)[0]
+            if self.solver == "augmented":
+                return self._lstsq(rows, rhs)[0]
+            m = len(rows[0])
+            G = mp.zeros(m, m)
+            g = mp.zeros(m, 1)
+            for r, b in zip(rows, rhs):
+                for i in range(m):
+                    if r[i] == 0:
+                        continue
+                    g[i] += r[i] * b
+                    for j in range(i, m):
+                        G[i, j] += r[i] * r[j]
+            for i in range(m):
+                for j in range(i):
+                    G[i, j] = G[j, i]
+            return mp.lu_solve(G, g)[0]
 
     @staticmethod
     def _lstsq(rows, rhs):
@@ -81,8 +97,24 @@ class MPSingularMLS:
         rhs = mp.matrix([mp.mpf(factorial(order)) if q == order else 0 for q in range(n)])
         return s, mp.lu_solve(V, rhs)
 
+    def required_dps(self, order: int, r: float, extra: int) -> int:
+        """Working precision that keeps solver and stencil rounding far below 1e-20:
+        the weights span r^(-alpha) (squared by the normal equations) and the stencil
+        divides by r^order."""
+        L = max(1, int(round(-mp.log10(r))))
+        return 40 + (2 * self.op.alpha + order + extra) * L
+
     def derivative(self, x0, beta, y, r: float = 1e-6, extra: int = 5):
-        """D^beta u(x0) from a tensor stencil of radius r around x0."""
+        """D^beta u(x0) from a tensor stencil of radius r around x0 (precision raised
+        automatically to required_dps)."""
+        dps = max(self.dps, self.required_dps(sum(beta), r, extra))
+        saved, self.dps = self.dps, dps
+        try:
+            return self._derivative(x0, beta, y, r, extra)
+        finally:
+            self.dps = saved
+
+    def _derivative(self, x0, beta, y, r, extra):
         with mp.workdps(self.dps):
             dim = self.op.dim
             active = [j for j in range(dim) if beta[j] > 0] or [0]

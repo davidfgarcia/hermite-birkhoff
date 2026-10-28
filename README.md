@@ -8,6 +8,6 @@ moving least squares) with derivative data of arbitrary order in any dimension.
 - `code/tests/` – correctness checks: `cd code && python3 -m tests.test_core`
 - `code/experiments/` – the numerical experiments behind the paper (E1–E5)
 - `results/`, `figures/` – their outputs
-- `paper/` – the LaTeX source (opens in LyX via File → Import → LaTeX)
+- `paper/` – (next step) the LaTeX source, which opens in LyX via File → Import → LaTeX
 
 Requirements: Python ≥ 3.10, numpy, mpmath, matplotlib, sympy.

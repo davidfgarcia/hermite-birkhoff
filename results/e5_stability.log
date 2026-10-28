@@ -1,0 +1,2 @@
+k=1 alpha=2: worst error  stable evaluator: 4.4e-16  normal equations, $\varepsilon=10^{-10}$: 9.1e-11  normal equations, $\varepsilon=10^{-16}$: 6.1e-15
+k=2 alpha=4: worst error  stable evaluator: 4.7e-15  normal equations, $\varepsilon=10^{-10}$: 1.6e-10  normal equations, $\varepsilon=10^{-16}$: 3.8e-12

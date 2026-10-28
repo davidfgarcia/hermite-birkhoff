@@ -1,5 +1,5 @@
 """E5 - evaluation near a node: epsilon-regularised normal equations (the usual practice,
-and the 2019 notebooks) versus the stable evaluator, against a 100-digit reference.
+and the 2019 notebooks) versus the stable evaluator, against a 120-digit reference.
 
 Run from code/:  python3 -m experiments.e5_stability
 """
@@ -44,15 +44,25 @@ if __name__ == "__main__":
                 except np.linalg.LinAlgError:
                     series[key].append(np.nan)
             rows.append(dict(k=k, alpha=alpha, t=t, **{kk: v[-1] for kk, v in series.items()}))
+        FLOOR = 1e-17
         for ci, (key, vals) in enumerate(series.items()):
-            ax.loglog(ts, np.maximum(vals, 1e-18), "o-" if ci == 0 else ".-", ms=2.5,
+            v = np.array(vals, dtype=float)
+            shown = np.where(v > 0, v, np.nan)
+            ax.loglog(ts, np.maximum(shown, FLOOR), "o-" if ci == 0 else ".-", ms=2.5,
                       color=SERIES[ci], label=key)
+            z = v == 0                                    # exact agreement: open marker on the floor
+            ax.loglog(ts[z], np.full(z.sum(), FLOOR), "o", mfc="none", ms=3.5, color=SERIES[ci])
+            bad = np.isnan(v)                             # singular normal equations
+            ax.loglog(ts[bad], np.full(bad.sum(), 3e-9), "x", ms=5, mew=1.2, color=SERIES[ci])
+        ax.set_ylim(5e-18, 1e-8)
         ax.invert_xaxis()
         ax.set_xlabel("distance to the node $x_i = 2$")
         ax.set_title(rf"$k={k}$, $\alpha={alpha}$, degree $m={m}$", fontsize=9)
         print(f"k={k} alpha={alpha}: worst error  " +
               "  ".join(f"{key.split(',')[0] if ',' not in key else key}: {np.nanmax(v):.1e}" for key, v in series.items()))
-    axes[0].set_ylabel("error vs 100-digit reference")
+    axes[0].set_ylabel("error vs 120-digit reference")
+    axes[1].annotate("x: singular matrix\no: exactly zero error", (0.98, 0.5), xycoords="axes fraction",
+                     ha="right", va="bottom", fontsize=6.5, color=INK2)
     axes[0].legend(fontsize=6.5, loc="upper left", labelcolor=INK2)
     save(fig, "e5_stability")
     with open("../results/e5_stability.csv", "w", newline="") as fh:
