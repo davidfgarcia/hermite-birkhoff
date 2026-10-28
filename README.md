@@ -23,10 +23,28 @@ Open work on the paper. This section stays here until every item is closed.
   Done Oct 28: nothing found that pre-empts the results. The closest prior work is Shepard-type
   Hermite–Birkhoff interpolation (Farwig 1986, Coman 1998, Allasia–Bracco 2012,
   Dell'Accio–Di Tommaso 2016), now cited as related work.
-- [ ] **J. Approx. Theory 2026**, "Multivariate Hermite interpolation with interpolation conditions
-  induced by harmonic polynomials" (ScienceDirect PII S0021904526000201): read it. Its
-  harmonic/Laplacian angle may touch the exactness criterion (Δ^(α/2) q = 0). It was paywalled
-  during the search.
+- [x] **J. Approx. Theory 2026**, "Multivariate Hermite interpolation with interpolation conditions
+  induced by harmonic polynomials" (Toan, Mai, Long, Phung; JAT 318, 106303). Done Oct 28 (read
+  by the theory session of swimls-bvps; David supplied the PDF). It does not pre-empt anything.
+  It is about the regularity of global polynomial interpolation: no weights, no MLS, no error
+  analysis. It uses the same tool as our Lemma (Fischer adjointness), though, and it has the
+  ℓ = 1 case of the characterization behind condition (ii).
+  - Their Thm 2.4: P ∈ Π_d is divisible by ‖x − a‖² iff q(D)P(a) = 0 for every harmonic q of
+    degree ≤ d. Its homogeneous form is Calderón–Zygmund, *Studia Math.* 24 (1964) 211–226,
+    Ch. 2, Lemma 1. Through our Fischer adjointness it is one line, and it extends to every ℓ:
+    Π_d = ker Δ^ℓ ⊕ |z|^(2ℓ)Π_(d−2ℓ), an orthogonal sum, because multiplication by |z|^(2ℓ) is
+    the adjoint of Δ^ℓ. So the data that annihilate every multiple of |z|^α are exactly the
+    (α/2)-polyharmonic symbols, i.e. condition (ii).
+  - Their Thm 4.1 gives regular schemes with harmonic data only. Node k carries every harmonic
+    symbol of degree ≤ d − 2k + 2, for k = 1..⌊d/2⌋ + 1, and the count equals dim Π_d. With
+    α = 2 these are data that SWIMLS reproduces at every node. They are candidate unisolvent
+    stencils for the "harmonic node" of E1 and for the 2-D work in swimls-bvps.
+  - Their "Taylor type polynomial" is the harmonic projection under the same apolar (Fischer)
+    inner product, and they note that this product is also called Bombieri.
+- [ ] **Cite Toan et al. (JAT 2026) and Calderón–Zygmund (1964)** next to the Fischer adjointness
+  lemma and the condition-(ii) discussion. One option is to state the decomposition above as a
+  remark: it explains why (ii) is the natural condition. *(Paper text: whoever owns
+  `paper/main.tex`.)*
 - [ ] **"Cited by" check** in Google Scholar or Scopus for Komargodski–Levin (2006) and Levin (1998).
   The citation databases were unreachable during the search.
 - [ ] **HAL hal-01007945**, "Blended Hermite MLS Approximation for Discretizing Biharmonic PDEs":
