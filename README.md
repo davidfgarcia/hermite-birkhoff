@@ -96,8 +96,14 @@ item is closed. Closed items are marked "Done <date>".
 
 ### Before and after submission
 
-- [ ] **Venue.** J. Approx. Theory, Constructive Approximation or Adv. Comput. Math.
-- [ ] **arXiv**, then journal submission (before paper 2).
+- [ ] **Venue** (David's decision). Recommendation: J. Approx. Theory first (approximation theory
+  with numerical support; Toan et al. 2026 appeared there), then Adv. Comput. Math. Constructive
+  Approximation would want more theory (a proof of Conjecture 4.17).
+- [ ] **arXiv** (David submits; needs his arXiv account), then journal submission, before paper 2.
+  The source package is built by `bash paper/make_arxiv.sh` → `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`
+  (flat figures, verification comments stripped, compiles with pdflatex). Suggested categories:
+  math.NA (primary), math.CA. Before posting, replace "Draft of \today" handling if a fixed date
+  is wanted, and decide whether the paper will use the target journal's class.
 
 - [ ] **Courtesy email to Prof. David Levin** (Tel Aviv University) once the draft is final. The
   paper corrects one of his claims and builds on two of his results, so he should hear it from us
@@ -111,4 +117,5 @@ item is closed. Closed items are marked "Done <date>".
     least-squares" (Math. Comp. 1998), and Remark 4.2 credits his Backus–Gilbert smoothness
     argument.
 
-  Attach the PDF, keep it short, and invite comments before submission.
+  Attach the PDF, keep it short, and invite comments before submission. Draft: `paper/levin_email.md`
+  (confirm his current address first).
