@@ -87,9 +87,8 @@ item is closed. Closed items are marked "Done <date>".
   `swimls_bvp/swimls1d.py`, plus `weight="bump"`), with tests against `SingularMLS`, polynomial
   reproduction and high-precision derivatives. swimls-bvps can now import it from the submodule
   and drop its own copy.
-- [ ] **Tag a release** of hermite-birkhoff; swimls-bvps pins its submodule to that tag. Tag
-  `v0.1.0` (commit 9c75392) is created in the local clone on David's Mac; the cloud session may
-  not push tags, so it still needs `git push origin v0.1.0` from ~/code/hermite-birkhoff.
+- [x] **Tag a release** of hermite-birkhoff; swimls-bvps pins its submodule to that tag. Done
+  Oct 28: tag `v0.1.0` (commit 9c75392) is on GitHub.
 
 ### Before and after submission
 
