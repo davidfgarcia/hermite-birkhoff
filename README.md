@@ -15,7 +15,23 @@ Requirements: Python ≥ 3.10, numpy, mpmath, matplotlib, sympy.
 
 ## Action items
 
-Open work on the paper. This section stays here until every item is closed.
+Open work on paper 1 (this repo: the interpolation method on its own). Paper 2, the application
+to boundary value problems, lives in `swimls-bvps` and will cite this one, so paper 1 goes to arXiv
+(and ideally to a journal) first. This is the single list for paper 1; it stays here until every
+item is closed. Closed items are marked "Done <date>".
+
+### Paper content
+
+- [ ] **Harmonic stencils (optional).** Toan et al., Thm 4.1, build regular schemes from harmonic
+  data only (node k carries every harmonic symbol of degree ≤ d − 2k + 2, k = 1..⌊d/2⌋ + 1). With
+  α = 2 SWIMLS reproduces all of them: a remark or example next to the "harmonic node" of E1.
+- [ ] **Data defined by an operator equation (optional).** A datum whose value comes from a
+  differential equation (e.g. y″ or Δu at a node) is just another Hermite–Birkhoff datum, and the
+  exactness rule says when it is reproduced (α = 4 for y″ in 1-D and for Δu in d-D, since
+  Δ|ξ|² ≠ 0). At most one sentence of outlook; the BVP work belongs to paper 2.
+- [ ] **Full independent review of the whole draft.** `paper/REVIEW.md` covered only Sections 3–5,
+  when Sections 1, 2 and 6–8 were placeholders. Re-check that the revised conjecture addresses
+  all four kinds of counterexample in that review.
 
 ### Literature and references
 
@@ -54,7 +70,16 @@ Open work on the paper. This section stays here until every item is closed.
 - [ ] **Coman (1998)**, Calcolo 35, and the Dell'Accio–Di Tommaso survey (Dolomites Res. Notes
   Approx. 9, 2016): confirm the bibliographic data against the journals.
 
+### Code
+
+- [ ] **Derivative evaluator from swimls-bvps.** Move the projector form of φ′ and φ″ and the
+  leverage-aware cutoff (`swimls_bvp/swimls1d.py`) into `hbmls`, with tests.
+- [ ] **Tag a release** of hermite-birkhoff; swimls-bvps pins its submodule to that tag.
+
 ### Before and after submission
+
+- [ ] **Venue.** J. Approx. Theory, Constructive Approximation or Adv. Comput. Math.
+- [ ] **arXiv**, then journal submission (before paper 2).
 
 - [ ] **Courtesy email to Prof. David Levin** (Tel Aviv University) once the draft is final. The
   paper corrects one of his claims and builds on two of his results, so he should hear it from us
