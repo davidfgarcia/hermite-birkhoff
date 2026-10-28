@@ -1,0 +1,39 @@
+(a) original data at the patched nodes, before -> after completion
+  1d: {0,2}                    added [-Dx]  f          exact      -> exact      (err 7.2e-38)
+  1d: {0,2}                    added [-Dx]  Dxx        not exact  -> exact      (err 7.5e-36)
+  1d: {0,3}                    added [Dx, Dxx]  f          exact      -> exact      (err 3.4e-39)
+  1d: {0,3}                    added [Dx, Dxx]  Dxxx       not exact  -> exact      (err 1.1e-45)
+  1d: {1}                      added [f]  Dx         not exact  -> exact      (err 4.2e-49)
+  1d: {2}                      added [Dx, f]  Dxx        not exact  -> exact      (err 9.3e-36)
+  1d: {1,2}                    added [f]  Dx         not exact  -> exact      (err 3.0e-49)
+  1d: {1,2}                    added [f]  Dxx        not exact  -> exact      (err 7.0e-36)
+  1d: {0,1,3}                  added [-Dxx]  f          exact      -> exact      (err 2.3e-39)
+  1d: {0,1,3}                  added [-Dxx]  Dx         exact      -> exact      (err 1.4e-48)
+  1d: {0,1,3}                  added [-Dxx]  Dxxx       not exact  -> exact      (err 3.8e-45)
+  1d: {0,2,3}                  added [-Dx]  f          exact      -> exact      (err 6.4e-39)
+  1d: {0,2,3}                  added [-Dx]  Dxx        not exact  -> exact      (err 5.9e-36)
+  1d: {0,2,3}                  added [-Dx]  Dxxx       not exact  -> exact      (err 4.8e-45)
+  2d: Dx only                  added [f]  Dx         not exact  -> exact      (err 1.9e-44)
+  2d: f, Dxx                   added [-Dx]  f          exact      -> exact      (err 5.4e-35)
+  2d: f, Dxx                   added [-Dx]  Dxx        not exact  -> exact      (err 3.1e-31)
+  2d: f, Dx, Dxy               added [Dy]  f          exact      -> exact      (err 4.8e-34)
+  2d: f, Dx, Dxy               added [Dy]  Dx         exact      -> exact      (err 3.1e-43)
+  2d: f, Dx, Dxy               added [Dy]  Dxy        not exact  -> exact      (err 7.2e-43)
+  2d: f, Laplacian             added [-Dx, -Dy]  f          exact      -> exact      (err 1.2e-35)
+  2d: f, Laplacian             added [-Dx, -Dy]  Dxx Dyy    not exact  -> exact      (err 2.3e-31)
+  kl: gradient-only nodes      added [f]  Dx         not exact  -> exact      (err 9.2e-44)
+  kl: gradient-only nodes      added [f]  Dy         not exact  -> exact      (err 2.1e-43)
+  kl: gradient-only nodes      added [f]  Dx         not exact  -> exact      (err 4.3e-42)
+  kl: gradient-only nodes      added [f]  Dy         not exact  -> exact      (err 2.9e-42)
+  kl: gradient-only nodes      added [f]  Dx         not exact  -> exact      (err 1.6e-43)
+  kl: gradient-only nodes      added [f]  Dy         not exact  -> exact      (err 2.3e-43)
+  19 data failing before; 19 of them exact after; 28/28 exact after in total
+
+(b) values at n points + gradients at n other points (Franke)
+      n  plain: max err  grad mismatch | completed: max err  grad mismatch (FD step 1e-5 / 1e-6)
+     64      4.45e-02     3.55e-01 |         5.91e-02     1.9e-07 / 2.0e-09
+    128      2.47e-02     3.81e-01 |         4.96e-02     3.7e-07 / 3.7e-09
+    256      1.65e-02     1.68e-01 |         3.13e-02     1.4e-06 / 1.4e-08
+    512      5.77e-03     1.24e-01 |         1.02e-02     5.8e-07 / 5.9e-09
+   1024      1.24e-03     4.40e-02 |         3.35e-03     1.2e-06 / 1.2e-08
+55s

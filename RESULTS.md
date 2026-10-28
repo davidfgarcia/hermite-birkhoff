@@ -15,8 +15,8 @@ data in `results/`, figures in `figures/`.*
 
    The rule agreed with the observation for **175 of 175 data**: 92 in E1 (classical Hermite
    nodes in 1D/2D/3D with α = 2, 4, 6, and a harmonic node) and 83 in E2 (Birkhoff and
-   combined functionals). No verdict changed between two stencil radii (10⁻⁶, 10⁻⁴); exact
-   cases are below 10⁻²⁵ at r = 10⁻⁶, failures are at least 1.2·10⁻² (E2) and 1.7 (E1).
+   combined functionals). No verdict changed between two stencil radii (10⁻⁶, 10⁻⁵; rerun 2026-10-28, previously 10⁻⁴); exact
+   cases are below 10⁻²⁵ at r = 10⁻⁶, failures are at least 1.2·10⁻² (E2) and 1.7 (E1). Exact cases stay below 9·10⁻¹⁹ at r = 10⁻⁵.
 
    Condition (ii) replaces the order condition "order < α" of the first report, which was
    wrong in 2D and 3D: in 1D it reduces to r < α, but in several variables it is the

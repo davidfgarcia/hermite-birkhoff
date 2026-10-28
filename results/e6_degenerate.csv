@@ -1,27 +1,47 @@
-case,seed,datum,theorem,err,err_r1e4,verdict
-"1D interpolatory: f'(0), f(1), f'(2.5)",1,"Dx at (0.0,)",exact,6.2042586650201876e-55,6.204258657079535e-39,exact
-"1D interpolatory: f'(0), f(1), f'(2.5)",1,"Dx at (2.5,)",exact,6.204258665021776e-55,6.204258672962437e-39,exact
-"1D interpolatory: f'(0), f(1), f'(2.5)",2,"Dx at (0.0,)",exact,2.46627092555919e-53,2.466270922402681e-37,exact
-"1D interpolatory: f'(0), f(1), f'(2.5)",2,"Dx at (2.5,)",exact,2.4662709255598217e-53,2.4662709287163347e-37,exact
+case,seed,datum,theorem,err,err_r1e5,verdict
+"1D interpolatory: f'(0), f(1), f'(2.5)",1,"Dx at (0.0,)",exact,6.2042586650201876e-55,6.204258664941574e-47,exact
+"1D interpolatory: f'(0), f(1), f'(2.5)",1,"Dx at (2.5,)",exact,6.204258665021776e-55,6.204258665100402e-47,exact
+"1D interpolatory: f'(0), f(1), f'(2.5)",2,"Dx at (0.0,)",exact,2.46627092555919e-53,2.4662709255279405e-45,exact
+"1D interpolatory: f'(0), f(1), f'(2.5)",2,"Dx at (2.5,)",exact,2.4662709255598217e-53,2.466270925591077e-45,exact
   + value f(4),1,"Dx at (0.0,)",generic,0.2625490340179829,0.2625490340179829,not exact
   + value f(4),1,"Dx at (2.5,)",generic,2.077391069103787,2.077391069103787,not exact
   + value f(4),2,"Dx at (0.0,)",generic,0.2064397857334013,0.2064397857334013,not exact
   + value f(4),2,"Dx at (2.5,)",generic,0.45301887398895196,0.45301887398895196,not exact
-"2D, K=2: grad at x0; Hermite k=2 at x1",1,"Dx at (0.2, 0.3)",exact,2.9900541929430576e-48,2.99005396314187e-32,exact
-"2D, K=2: grad at x0; Hermite k=2 at x1",1,"Dy at (0.2, 0.3)",exact,1.5660903925944878e-48,1.5660899261164705e-32,exact
-"2D, K=2: grad at x0; Hermite k=2 at x1",2,"Dx at (0.2, 0.3)",exact,4.326096586389117e-48,4.32609581398493e-32,exact
-"2D, K=2: grad at x0; Hermite k=2 at x1",2,"Dy at (0.2, 0.3)",exact,7.013976345546292e-48,7.013975140361928e-32,exact
+"2D, K=2: grad at x0; Hermite k=2 at x1",1,"Dx at (0.2, 0.3)",exact,2.9900541929430576e-48,2.9900541906678015e-40,exact
+"2D, K=2: grad at x0; Hermite k=2 at x1",1,"Dy at (0.2, 0.3)",exact,1.5660903925944878e-48,1.5660903879758949e-40,exact
+"2D, K=2: grad at x0; Hermite k=2 at x1",2,"Dx at (0.2, 0.3)",exact,4.326096586389117e-48,4.326096578741555e-40,exact
+"2D, K=2: grad at x0; Hermite k=2 at x1",2,"Dy at (0.2, 0.3)",exact,7.013976345546292e-48,7.013976333613781e-40,exact
   + Hermite k=2 at a third node,1,"Dx at (0.2, 0.3)",generic,0.04417204494890137,0.04417204494890137,not exact
   + Hermite k=2 at a third node,1,"Dy at (0.2, 0.3)",generic,0.028109483149300854,0.028109483149300854,not exact
   + Hermite k=2 at a third node,2,"Dx at (0.2, 0.3)",generic,0.4629921776248071,0.4629921776248071,not exact
   + Hermite k=2 at a third node,2,"Dy at (0.2, 0.3)",generic,0.2946313857612407,0.2946313857612407,not exact
-"2D, K=2: f, Dxx at x0; Hermite k=2 at x1 (alpha=4)",1,"Dxx at (0.2, 0.3)",exact,1.1051234853378701e-34,1.105123344579249e-22,exact
-"2D, K=2: f, Dxx at x0; Hermite k=2 at x1 (alpha=4)",2,"Dxx at (0.2, 0.3)",exact,8.389752379819051e-35,8.389751147707199e-23,exact
-  + Hermite k=2 at a third node (alpha=4),1,"f at (0.2, 0.3)",generic,1.940170471961514e-36,1.940170559410732e-24,exact
+"2D, K=2: f, Dxx at x0; Hermite k=2 at x1 (alpha=4)",1,"Dxx at (0.2, 0.3)",exact,1.1051234853378701e-34,1.1051234839442216e-28,exact
+"2D, K=2: f, Dxx at x0; Hermite k=2 at x1 (alpha=4)",2,"Dxx at (0.2, 0.3)",exact,8.389752379819051e-35,8.389752367619934e-29,exact
+  + Hermite k=2 at a third node (alpha=4),1,"f at (0.2, 0.3)",generic,1.940170471961514e-36,1.9401704728273493e-30,exact
   + Hermite k=2 at a third node (alpha=4),1,"Dxx at (0.2, 0.3)",generic,3.2605200497190285,3.2605200497190285,not exact
-  + Hermite k=2 at a third node (alpha=4),2,"f at (0.2, 0.3)",generic,4.601544637368734e-37,4.601545497371513e-25,exact
+  + Hermite k=2 at a third node (alpha=4),2,"f at (0.2, 0.3)",generic,4.601544637368734e-37,4.6015446458836175e-31,exact
   + Hermite k=2 at a third node (alpha=4),2,"Dxx at (0.2, 0.3)",generic,2.934989609865155,2.934989609865155,not exact
-2D symmetric: Dx at 0; Hermite k=1 on the x2-axis,1,"Dx at (0.0, 0.0)",exact (Prop4.11),1.4849406954741708e-47,1.4849402742081253e-31,exact
-2D symmetric: Dx at 0; Hermite k=1 on the x2-axis,2,"Dx at (0.0, 0.0)",exact (Prop4.11),1.2519118432739362e-46,1.251911487967772e-30,exact
+2D symmetric: Dx at 0; Hermite k=1 on the x2-axis,1,"Dx at (0.0, 0.0)",exact (Prop4.11),1.4849406954741708e-47,1.4849406913032203e-39,exact
+2D symmetric: Dx at 0; Hermite k=1 on the x2-axis,2,"Dx at (0.0, 0.0)",exact (Prop4.11),1.2519118432739362e-46,1.251911839756054e-38,exact
   nodes moved 0.05 off the axis,1,"Dx at (0.0, 0.0)",generic,0.07803950305759584,0.07803950305759584,not exact
   nodes moved 0.05 off the axis,2,"Dx at (0.0, 0.0)",generic,0.15889945157721544,0.15889945157721544,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"f at (0.2, 0.3)",conjecture,8.760336770577048e-36,8.760336751455916e-30,exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dx at (0.2, 0.3)",conjecture,7.220907299132497e-47,7.220907272087262e-39,exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dy at (0.2, 0.3)",conjecture,4.889673546606698e-47,4.889673545994783e-39,exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dxx at (0.2, 0.3)",conjecture,4.94252709106597,4.94252709106597,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dxy at (0.2, 0.3)",conjecture,5.24183899456552e-46,5.241838957684657e-38,exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dyy at (0.2, 0.3)",conjecture,4.94252709106597,4.94252709106597,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dxxx at (0.2, 0.3)",conjecture,49.81351708940911,49.81351708940911,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dxxy at (0.2, 0.3)",conjecture,20.758059188217214,20.758059188217214,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dxyy at (0.2, 0.3)",conjecture,16.604505696469705,16.604505696469705,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",1,"Dyyy at (0.2, 0.3)",conjecture,62.274177564651644,62.274177564651644,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"f at (0.2, 0.3)",conjecture,8.170245264890669e-36,8.170245266022072e-30,exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dx at (0.2, 0.3)",conjecture,3.6557324927493708e-47,3.655732498008834e-39,exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dy at (0.2, 0.3)",conjecture,1.1585489107430999e-47,1.1585489092387254e-39,exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dxx at (0.2, 0.3)",conjecture,6.6557297788031535,6.6557297788031535,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dxy at (0.2, 0.3)",conjecture,5.918133656665586e-47,5.918133522280233e-39,exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dyy at (0.2, 0.3)",conjecture,6.6557297788031535,6.6557297788031535,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dxxx at (0.2, 0.3)",conjecture,82.9159002067682,82.9159002067682,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dxxy at (0.2, 0.3)",conjecture,6.254776132651149,6.254776132651149,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dxyy at (0.2, 0.3)",conjecture,27.63863340225607,27.63863340225607,not exact
+"2D, K=2: Hermite k=3 at x0 and x1 (alpha=2)",2,"Dyyy at (0.2, 0.3)",conjecture,18.76432839795345,18.76432839795345,not exact

@@ -1,25 +1,25 @@
-m=1 alpha=2 node  0 f   err 1.2e-32 / 1.2e-20  exact
+m=1 alpha=2 node  0 f   err 1.2e-32 / 1.2e-26  exact
 m=1 alpha=2 node  8 Dx  err 9.5e-01 / 9.5e-01  not exact
 m=1 alpha=2 node  8 Dy  err 9.4e-01 / 9.4e-01  not exact
 m=1 alpha=2 node  9 Dx  err 1.1e+00 / 1.1e+00  not exact
 m=1 alpha=2 node  9 Dy  err 4.0e+00 / 4.0e+00  not exact
 m=1 alpha=2 node 10 Dx  err 2.2e+00 / 2.2e+00  not exact
 m=1 alpha=2 node 10 Dy  err 4.2e-01 / 4.2e-01  not exact
-m=1 alpha=4 node  0 f   err 2.3e-32 / 2.3e-20  exact
+m=1 alpha=4 node  0 f   err 2.3e-32 / 2.3e-26  exact
 m=1 alpha=4 node  8 Dx  err 4.9e-01 / 4.9e-01  not exact
 m=1 alpha=4 node  8 Dy  err 4.9e-01 / 4.9e-01  not exact
 m=1 alpha=4 node  9 Dx  err 8.4e-01 / 8.4e-01  not exact
 m=1 alpha=4 node  9 Dy  err 2.8e+00 / 2.8e+00  not exact
 m=1 alpha=4 node 10 Dx  err 4.5e+00 / 4.5e+00  not exact
 m=1 alpha=4 node 10 Dy  err 1.0e+00 / 1.0e+00  not exact
-m=2 alpha=2 node  0 f   err 1.2e-32 / 1.2e-20  exact
+m=2 alpha=2 node  0 f   err 1.2e-32 / 1.2e-26  exact
 m=2 alpha=2 node  8 Dx  err 6.2e-02 / 6.2e-02  not exact
 m=2 alpha=2 node  8 Dy  err 5.9e-01 / 5.9e-01  not exact
 m=2 alpha=2 node  9 Dx  err 1.5e+00 / 1.5e+00  not exact
 m=2 alpha=2 node  9 Dy  err 4.2e+00 / 4.2e+00  not exact
 m=2 alpha=2 node 10 Dx  err 1.8e+00 / 1.8e+00  not exact
 m=2 alpha=2 node 10 Dy  err 4.1e-01 / 4.1e-01  not exact
-m=2 alpha=4 node  0 f   err 1.7e-32 / 1.7e-20  exact
+m=2 alpha=4 node  0 f   err 1.7e-32 / 1.7e-26  exact
 m=2 alpha=4 node  8 Dx  err 6.4e-01 / 6.4e-01  not exact
 m=2 alpha=4 node  8 Dy  err 7.8e-01 / 7.8e-01  not exact
 m=2 alpha=4 node  9 Dx  err 1.3e+00 / 1.3e+00  not exact

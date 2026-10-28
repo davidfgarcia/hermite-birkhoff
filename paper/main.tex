@@ -647,9 +647,10 @@ reproduced for data outside a hyperplane.
 \end{conjecture}
 
 \begin{remark}
-Proposition~\ref{prop:necessity} proves the conjecture for $\deg q=\alpha$. It is supported by
-the experiments of Section~\ref{sec:numerics} (e.g.\ $\partial_x^2\partial_yf$ at $\alpha=2$ fails
-even for $K=2$). Characterising the node configurations for which a failure of~\ref{c1}
+Proposition~\ref{prop:necessity} proves the conjecture for $\deg q=\alpha$. It is consistent with
+all experiments of Section~\ref{sec:numerics}, including one with pure power weights and only
+two nodes, where every datum with $\Delta q\ne0$ fails at $\alpha=2$
+(Section~\ref{sec:frozen-num}). Characterising the node configurations for which a failure of~\ref{c1}
 causes an error, beyond the first-order formula~\eqref{eq:firstorder}, is open.
 \end{remark}
 
@@ -789,13 +790,16 @@ numerically singular at some distances.
 \paragraph{Verifying exactness.} The experiments below decide whether a datum $q$ is reproduced
 by computing $\fpz{q}{u}{x_i}$ in high-precision arithmetic (\texttt{mpmath}). The interpolant
 is evaluated from the normal equations at a working precision of
-$40+(2\alpha+|\beta|+5)\,|\log_{10}r|$ digits, and derivatives are taken with tensor-product
-Chebyshev stencils of radius $r$ that are exact for polynomials of degree
-$|\beta|+5$ in each variable and never sample the node itself. A datum is called reproduced if
-$|\fpz{q}{u}{x_i}-y_q|\le10^{-12}\max(1,|y_q|)$ for both $r=10^{-6}$ and $r=10^{-4}$, and not
-reproduced if the inequality fails for both. Mixed outcomes never occurred. In all reproduced
-cases the error scales like the stencil error $r^{6}$ (about $10^{-30}$ and $10^{-20}$), while
-in the others it is the same at both radii to the digits shown.
+$40+(2\alpha+|\beta|+5)\,|\log_{10}r|$ digits, and $D^\beta u(x_i)$ is taken with a
+tensor-product Chebyshev stencil of radius $r$ in the variables with $\beta_j>0$, which is
+exact for polynomials of degree at least $\beta_j+5$ in each of them and never samples the
+node itself. A datum is called reproduced if $|\fpz{q}{u}{x_i}-y_q|\le10^{-12}\max(1,|y_q|)$
+for both $r=10^{-6}$ and $r=10^{-5}$, and not reproduced if the inequality fails for both.
+Mixed outcomes never occurred, with a wide margin: over the $221$ data of
+Sections~\ref{sec:hermite-num}--\ref{sec:frozen-num}, the reproduced ones have errors between
+$6\cdot10^{-55}$ and $9\cdot10^{-25}$ at $r=10^{-6}$ (at most $9\cdot10^{-19}$ at
+$r=10^{-5}$), and their errors scale like $r^6$ or $r^8$, as the stencil error does; the
+others have errors of at least $0.01$, identical at both radii.
 
 % ===========================================================================
 \section{Numerical experiments}\label{sec:numerics}
@@ -806,7 +810,7 @@ include the Gaussian factor of Section~\ref{sec:evaluation}, the data values are
 depend on them being samples of a function), and every node other than the one under study
 carries Hermite data, so that the generic situation of Section~\ref{sec:main} applies.
 
-\subsection{Hermite data}
+\subsection{Hermite data}\label{sec:hermite-num}
 We checked every datum at one node for classical Hermite data of order $k$ in one, two and three
 dimensions: $(d,k,\alpha)=(1,5,4)$, $(1,7,6)$, $(2,2,2)$, $(2,3,2)$, $(2,3,4)$, $(2,4,4)$,
 $(3,2,2)$ and $(3,3,2)$, with $m=k+1$ or $k+2$; and a two-dimensional node carrying the
@@ -836,7 +840,7 @@ In all $83$ data the outcome agrees with conditions~\ref{c1} and~\ref{c2}: for e
 $\partial_{xy}f$ is not reproduced in the pattern $\{f,\partial_x,\partial_{xy}\}$, because its
 derivative $\xi_2$ is missing, and the Laplacian is not reproduced in $\{f,\Delta\}$.
 
-\subsection{Configurations of Theorem~\ref{thm:frozen}}
+\subsection{Configurations of Theorem~\ref{thm:frozen}}\label{sec:frozen-num}
 Condition~\ref{c1} fails in each of the following configurations, and yet the data are
 reproduced, as Theorem~\ref{thm:frozen} and Proposition~\ref{prop:firstorder} predict. Each
 configuration is followed by a small perturbation that destroys the special structure, after
@@ -848,13 +852,13 @@ which the datum is no longer reproduced (two random data vectors each).
 \toprule
 configuration & datum & reason & error\\
 \midrule
-1D: $f'(0)$, $f(1)$, $f'(5/2)$; $m=1$, $\alpha=2$ & $f'$ at $0$, $5/2$ & Cor.~\ref{cor:frozen-cases}(b) & $<10^{-36}$\\
+1D: $f'(0)$, $f(1)$, $f'(5/2)$; $m=1$, $\alpha=2$ & $f'$ at $0$, $5/2$ & Cor.~\ref{cor:frozen-cases}(b) & $<10^{-44}$\\
 \quad add $f(4)$ & & & $0.21$--$2.1$\\
-2D, $K=2$: $\nabla f(x_1)$; $f,\nabla f,\nabla^2f$ at $x_2$; $m=2$, $\alpha=2$ & $\partial_x,\partial_y$ & Cor.~\ref{cor:frozen-cases}(a) & $<10^{-31}$\\
+2D, $K=2$: $\nabla f(x_1)$; $f,\nabla f,\nabla^2f$ at $x_2$; $m=2$, $\alpha=2$ & $\partial_x,\partial_y$ & Cor.~\ref{cor:frozen-cases}(a) & $<10^{-39}$\\
 \quad add a third node & & & $0.03$--$0.46$\\
-2D, $K=2$: $f,\partial_{xx}f$ at $x_1$; Hermite $k=2$ at $x_2$; $\alpha=4$ & $\partial_{xx}$ & Cor.~\ref{cor:frozen-cases}(a) & $<10^{-21}$\\
+2D, $K=2$: $f,\partial_{xx}f$ at $x_1$; Hermite $k=2$ at $x_2$; $\alpha=4$ & $\partial_{xx}$ & Cor.~\ref{cor:frozen-cases}(a) & $<10^{-28}$\\
 \quad add a third node & & & $2.9$--$3.3$\\
-2D: $\partial_xf(0)$; others on the $x_2$-axis; $m=1$, $\alpha=2$ & $\partial_x$ & Prop.~\ref{prop:firstorder} & $<10^{-29}$\\
+2D: $\partial_xf(0)$; others on the $x_2$-axis; $m=1$, $\alpha=2$ & $\partial_x$ & Prop.~\ref{prop:firstorder} & $<10^{-37}$\\
 \quad move the others by $0.05$ & & & $0.08$--$0.16$\\
 \bottomrule
 \end{tabular}
@@ -865,6 +869,12 @@ configuration & datum & reason & error\\
 $\partial_{x_1}Z(x_i)=0$ and the right-hand side of~\eqref{eq:firstorder} vanishes for
 $q=\xi_1$. The experiments in the previous subsection avoid such configurations by using random
 node positions.
+
+Theorem~\ref{thm:frozen} is restricted to $\deg q\le\alpha$, and the restriction matters. With
+two nodes carrying Hermite data of order $3$, $m=3$ and $\alpha=2$ (pure power weights), the
+frozen minimiser is constant, yet every datum with $\Delta q\ne0$, namely $\partial_x^2$,
+$\partial_y^2$ and the four third derivatives, fails, with errors between $4.9$ and $83$; the
+data $f$, $\partial_xf$, $\partial_yf$ and $\partial_x\partial_yf$ are reproduced.
 
 \subsection{Derivatives at points without values}\label{sec:kl-num}
 In the setting of~\cite[\S3]{KomargodskiLevin2006}: eight random points carry values and eight
