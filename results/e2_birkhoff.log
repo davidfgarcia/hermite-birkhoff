@@ -1,0 +1,85 @@
+1D {0,1,2,3}                                  f                      err=2.1e-39/2.1e-27  exact      predicted exact     
+1D {0,1,2,3}                                  Dx                     err=9.8e-49/9.8e-33  exact      predicted exact     
+1D {0,1,2,3}                                  Dxx                    err=3.6e-36/3.6e-24  exact      predicted exact     
+1D {0,1,2,3}                                  Dxxx                   err=2.9e-45/2.9e-29  exact      predicted exact     
+1D {0,1,2}                                    f                      err=5.8e-38/5.8e-26  exact      predicted exact     
+1D {0,1,2}                                    Dx                     err=1.5e-48/1.5e-32  exact      predicted exact     
+1D {0,1,2}                                    Dxx                    err=1.2e-35/1.2e-23  exact      predicted exact     
+1D {0,2}                                      f                      err=1.3e-38/1.3e-26  exact      predicted exact     
+1D {0,2}                                      Dxx                    err=2.5e-02/2.5e-02  not exact  predicted not exact 
+1D {0,3}                                      f                      err=4.2e-38/4.2e-26  exact      predicted exact     
+1D {0,3}                                      Dxxx                   err=5.1e-01/5.1e-01  not exact  predicted not exact 
+1D {1}                                        Dx                     err=1.6e-02/1.6e-02  not exact  predicted not exact 
+1D {2}                                        Dxx                    err=1.2e-02/1.2e-02  not exact  predicted not exact 
+1D {1,2}                                      Dx                     err=3.0e-02/3.0e-02  not exact  predicted not exact 
+1D {1,2}                                      Dxx                    err=2.7e-01/2.7e-01  not exact  predicted not exact 
+1D {0,1,3}                                    f                      err=1.1e-37/1.1e-25  exact      predicted exact     
+1D {0,1,3}                                    Dx                     err=8.0e-49/8.0e-33  exact      predicted exact     
+1D {0,1,3}                                    Dxxx                   err=1.8e+00/1.8e+00  not exact  predicted not exact 
+1D {0,2,3}                                    f                      err=8.4e-38/8.4e-26  exact      predicted exact     
+1D {0,2,3}                                    Dxx                    err=7.4e-01/7.4e-01  not exact  predicted not exact 
+1D {0,2,3}                                    Dxxx                   err=2.4e+00/2.4e+00  not exact  predicted not exact 
+2D f, Dx                                      f                      err=9.0e-35/9.0e-23  exact      predicted exact     
+2D f, Dx                                      Dx                     err=5.5e-44/5.5e-28  exact      predicted exact     
+2D f, Dx, Dy                                  f                      err=5.3e-34/5.3e-22  exact      predicted exact     
+2D f, Dx, Dy                                  Dx                     err=3.1e-43/3.1e-27  exact      predicted exact     
+2D f, Dx, Dy                                  Dy                     err=6.4e-44/6.4e-28  exact      predicted exact     
+2D f, Dv (directional)                        f                      err=1.8e-37/1.8e-25  exact      predicted exact     
+2D f, Dv (directional)                        +0.6Dx +0.8Dy          err=2.0e-44/2.0e-28  exact      predicted exact     
+2D Dx only                                    Dx                     err=2.3e+00/2.3e+00  not exact  predicted not exact 
+2D f, Dxx                                     f                      err=7.6e-35/7.6e-23  exact      predicted exact     
+2D f, Dxx                                     Dxx                    err=2.4e+00/2.4e+00  not exact  predicted not exact 
+2D f, Dx, Dxy                                 f                      err=4.7e-34/4.7e-22  exact      predicted exact     
+2D f, Dx, Dxy                                 Dx                     err=3.1e-43/3.1e-27  exact      predicted exact     
+2D f, Dx, Dxy                                 Dxy                    err=5.1e+00/5.1e+00  not exact  predicted not exact 
+2D f, Dx, Dy, Dxy                             f                      err=3.6e-34/3.6e-22  exact      predicted exact     
+2D f, Dx, Dy, Dxy                             Dx                     err=2.4e-43/2.4e-27  exact      predicted exact     
+2D f, Dx, Dy, Dxy                             Dy                     err=8.0e-45/8.0e-29  exact      predicted exact     
+2D f, Dx, Dy, Dxy                             Dxy                    err=6.9e-43/6.9e-27  exact      predicted exact     
+2D f, Laplacian                               f                      err=1.9e-35/1.9e-23  exact      predicted exact     
+2D f, Laplacian                               Dxx Dyy                err=6.8e+00/6.8e+00  not exact  predicted not exact 
+2D f, Dx, Dy, Laplacian                       f                      err=2.8e-34/2.8e-22  exact      predicted exact     
+2D f, Dx, Dy, Laplacian                       Dx                     err=2.5e-43/2.5e-27  exact      predicted exact     
+2D f, Dx, Dy, Laplacian                       Dy                     err=1.3e-44/1.3e-28  exact      predicted exact     
+2D f, Dx, Dy, Laplacian                       Dxx Dyy                err=1.4e-30/1.4e-18  exact      predicted exact     
+2D full Hermite k=2                           f                      err=5.1e-34/5.1e-22  exact      predicted exact     
+2D full Hermite k=2                           Dx                     err=4.0e-43/4.0e-27  exact      predicted exact     
+2D full Hermite k=2                           Dy                     err=7.6e-44/7.6e-28  exact      predicted exact     
+2D full Hermite k=2                           Dxx                    err=2.2e-30/2.2e-18  exact      predicted exact     
+2D full Hermite k=2                           Dxy                    err=7.3e-43/7.3e-27  exact      predicted exact     
+2D full Hermite k=2                           Dyy                    err=2.7e-31/2.7e-19  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxy                         f                      err=1.5e-32/1.5e-20  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxy                         Dx                     err=7.8e-42/7.8e-26  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxy                         Dy                     err=7.7e-42/7.7e-26  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxy                         Dxy                    err=4.9e-40/4.9e-24  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxx                         f                      err=1.5e-32/1.5e-20  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxx                         Dx                     err=7.8e-42/7.8e-26  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxx                         Dy                     err=7.6e-42/7.6e-26  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxx                         Dxx                    err=8.9e+01/8.9e+01  not exact  predicted not exact 
+2D a2: f, Dx, Dy, Dxx-Dyy                     f                      err=1.5e-32/1.5e-20  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxx-Dyy                     Dx                     err=7.7e-42/7.7e-26  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxx-Dyy                     Dy                     err=7.6e-42/7.6e-26  exact      predicted exact     
+2D a2: f, Dx, Dy, Dxx-Dyy                     Dxx -Dyy               err=1.6e-30/1.6e-18  exact      predicted exact     
+2D a2: f, Dx, Dy, Laplacian                   f                      err=1.5e-32/1.5e-20  exact      predicted exact     
+2D a2: f, Dx, Dy, Laplacian                   Dx                     err=7.7e-42/7.7e-26  exact      predicted exact     
+2D a2: f, Dx, Dy, Laplacian                   Dy                     err=7.6e-42/7.6e-26  exact      predicted exact     
+2D a2: f, Dx, Dy, Laplacian                   Dxx Dyy                err=1.8e+02/1.8e+02  not exact  predicted not exact 
+2D KL: values + gradients at the SAME points  node 0: f              err=6.3e-32/6.3e-20  exact      predicted exact     
+2D KL: values + gradients at the SAME points  node 0: Dx             err=7.5e-42/7.5e-26  exact      predicted exact     
+2D KL: values + gradients at the SAME points  node 0: Dy             err=3.6e-41/3.6e-25  exact      predicted exact     
+2D KL: values + gradients at the SAME points  node 1: f              err=1.5e-34/1.5e-22  exact      predicted exact     
+2D KL: values + gradients at the SAME points  node 1: Dx             err=7.9e-45/7.9e-29  exact      predicted exact     
+2D KL: values + gradients at the SAME points  node 1: Dy             err=7.4e-44/7.4e-28  exact      predicted exact     
+2D KL: values + gradients at the SAME points  node 2: f              err=1.9e-34/1.9e-22  exact      predicted exact     
+2D KL: values + gradients at the SAME points  node 2: Dx             err=1.7e-44/1.7e-28  exact      predicted exact     
+2D KL: values + gradients at the SAME points  node 2: Dy             err=1.1e-44/1.1e-28  exact      predicted exact     
+2D KL: gradients at points WITHOUT values     node 0: f              err=1.7e-32/1.7e-20  exact      predicted exact     
+2D KL: gradients at points WITHOUT values     node 1: f              err=3.0e-34/3.0e-22  exact      predicted exact     
+2D KL: gradients at points WITHOUT values     node 8: Dx             err=7.3e-02/7.3e-02  not exact  predicted not exact 
+2D KL: gradients at points WITHOUT values     node 8: Dy             err=7.4e-01/7.4e-01  not exact  predicted not exact 
+2D KL: gradients at points WITHOUT values     node 9: Dx             err=1.5e+00/1.5e+00  not exact  predicted not exact 
+2D KL: gradients at points WITHOUT values     node 9: Dy             err=4.4e+00/4.4e+00  not exact  predicted not exact 
+2D KL: gradients at points WITHOUT values     node 10: Dx            err=2.0e+00/2.0e+00  not exact  predicted not exact 
+2D KL: gradients at points WITHOUT values     node 10: Dy            err=5.1e-01/5.1e-01  not exact  predicted not exact 
+
+prediction agrees with observation for 83/83 data; unstable: 0;  24s

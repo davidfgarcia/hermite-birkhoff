@@ -1,68 +1,84 @@
-dim,pattern,datum,predicted,err,observed
-1,"{0,1,2,3}",f,True,0.0,True
-1,"{0,1,2,3}",Dx,True,0.0,True
-1,"{0,1,2,3}",Dxx,True,0.0,True
-1,"{0,1,2,3}",Dxxx,True,0.0,True
-1,"{0,1,2}",f,True,0.0,True
-1,"{0,1,2}",Dx,True,0.0,True
-1,"{0,1,2}",Dxx,True,0.0,True
-1,"{0,2}",f,True,0.0,True
-1,"{0,2}",Dxx,False,0.024743126706935903,False
-1,"{0,3}",f,True,0.0,True
-1,"{0,3}",Dxxx,False,0.5120225398101329,False
-1,{1},Dx,False,0.016321741442261187,False
-1,{2},Dxx,False,0.011773910525896276,False
-1,"{1,2}",Dx,False,0.030027889360050297,False
-1,"{1,2}",Dxx,False,0.2744580038836192,False
-1,"{0,1,3}",f,True,0.0,True
-1,"{0,1,3}",Dx,True,0.0,True
-1,"{0,1,3}",Dxxx,False,1.8003012996323489,False
-1,"{0,2,3}",f,True,0.0,True
-1,"{0,2,3}",Dxx,False,0.742772954571202,False
-1,"{0,2,3}",Dxxx,False,2.434134810285384,False
-2,"f, Dx",f,True,0.0,True
-2,"f, Dx",Dx,True,0.0,True
-2,"f, Dx, Dy",f,True,0.0,True
-2,"f, Dx, Dy",Dx,True,0.0,True
-2,"f, Dx, Dy",Dy,True,0.0,True
-2,"f, Dv (directional)",f,True,0.0,True
-2,"f, Dv (directional)",0.6Dx + 0.8Dy,True,0.0,True
-2,Dx only,Dx,False,2.2863624752061265,False
-2,"f, Dxx",f,True,0.0,True
-2,"f, Dxx",Dxx,False,2.416252068454696,False
-2,"f, Dx, Dxy",f,True,0.0,True
-2,"f, Dx, Dxy",Dx,True,0.0,True
-2,"f, Dx, Dxy",Dxy,False,5.086103163982085,False
-2,"f, Dx, Dy, Dxy",f,True,0.0,True
-2,"f, Dx, Dy, Dxy",Dx,True,0.0,True
-2,"f, Dx, Dy, Dxy",Dy,True,0.0,True
-2,"f, Dx, Dy, Dxy",Dxy,True,0.0,True
-2,"f, Laplacian",f,True,0.0,True
-2,"f, Laplacian",Dxx + Dyy,False,6.848432628935005,False
-2,"f, Dx, Dy, Laplacian",f,True,0.0,True
-2,"f, Dx, Dy, Laplacian",Dx,True,0.0,True
-2,"f, Dx, Dy, Laplacian",Dy,True,0.0,True
-2,"f, Dx, Dy, Laplacian",Dxx + Dyy,True,0.0,True
-2,full Hermite k=2,f,True,0.0,True
-2,full Hermite k=2,Dx,True,0.0,True
-2,full Hermite k=2,Dy,True,0.0,True
-2,full Hermite k=2,Dxx,True,0.0,True
-2,full Hermite k=2,Dxy,True,0.0,True
-2,full Hermite k=2,Dyy,True,0.0,True
-2,KL: values + gradients at the SAME points,node 0: f,True,0.0,True
-2,KL: values + gradients at the SAME points,node 0: Dx,True,0.0,True
-2,KL: values + gradients at the SAME points,node 0: Dy,True,0.0,True
-2,KL: values + gradients at the SAME points,node 1: f,True,0.0,True
-2,KL: values + gradients at the SAME points,node 1: Dx,True,0.0,True
-2,KL: values + gradients at the SAME points,node 1: Dy,True,0.0,True
-2,KL: values + gradients at the SAME points,node 2: f,True,0.0,True
-2,KL: values + gradients at the SAME points,node 2: Dx,True,0.0,True
-2,KL: values + gradients at the SAME points,node 2: Dy,True,0.0,True
-2,KL: gradients at points WITHOUT values,node 0: f,True,0.0,True
-2,KL: gradients at points WITHOUT values,node 1: f,True,0.0,True
-2,KL: gradients at points WITHOUT values,node 8: Dx,False,0.07308954213306743,False
-2,KL: gradients at points WITHOUT values,node 8: Dy,False,0.7442448485067749,False
-2,KL: gradients at points WITHOUT values,node 9: Dx,False,1.5110820095683715,False
-2,KL: gradients at points WITHOUT values,node 9: Dy,False,4.401879320838149,False
-2,KL: gradients at points WITHOUT values,node 10: Dx,False,2.0303827816633366,False
-2,KL: gradients at points WITHOUT values,node 10: Dy,False,0.5095072489191256,False
+dim,pattern,datum,predicted,err,err_r1e4,verdict
+1,"{0,1,2,3}",f,exact,2.051213805735419e-39,2.051217204795643e-27,exact
+1,"{0,1,2,3}",Dx,exact,9.822108336495403e-49,9.822116173685058e-33,exact
+1,"{0,1,2,3}",Dxx,exact,3.6260215141693174e-36,3.626030835003824e-24,exact
+1,"{0,1,2,3}",Dxxx,exact,2.939239410355341e-45,2.9392405498334705e-29,exact
+1,"{0,1,2}",f,exact,5.848574601649788e-38,5.848575739061773e-26,exact
+1,"{0,1,2}",Dx,exact,1.5299958988300538e-48,1.5299968553106722e-32,exact
+1,"{0,1,2}",Dxx,exact,1.2133600833064645e-35,1.213361309431683e-23,exact
+1,"{0,2}",f,exact,1.274389232115371e-38,1.274389476088057e-26,exact
+1,"{0,2}",Dxx,not exact,0.024743126706935927,0.024743126706935927,not exact
+1,"{0,3}",f,exact,4.1921984420386255e-38,4.192198890462731e-26,exact
+1,"{0,3}",Dxxx,not exact,0.5120225398101329,0.5120225398101329,not exact
+1,{1},Dx,not exact,0.016321741442261183,0.016321741442261183,not exact
+1,{2},Dxx,not exact,0.011773910525896276,0.011773910525896276,not exact
+1,"{1,2}",Dx,not exact,0.0300278893600503,0.0300278893600503,not exact
+1,"{1,2}",Dxx,not exact,0.2744580038836192,0.2744580038836192,not exact
+1,"{0,1,3}",f,exact,1.1485585000870816e-37,1.1485585178771728e-25,exact
+1,"{0,1,3}",Dx,exact,8.02517716621549e-49,8.025184402014513e-33,exact
+1,"{0,1,3}",Dxxx,not exact,1.8003012996323486,1.8003012996323486,not exact
+1,"{0,2,3}",f,exact,8.355605713358529e-38,8.355604468364064e-26,exact
+1,"{0,2,3}",Dxx,not exact,0.7427729545712018,0.7427729545712018,not exact
+1,"{0,2,3}",Dxxx,not exact,2.434134810285384,2.434134810285384,not exact
+2,"f, Dx",f,exact,8.957441428946012e-35,8.957419372545752e-23,exact
+2,"f, Dx",Dx,exact,5.492589135994007e-44,5.492601204035653e-28,exact
+2,"f, Dx, Dy",f,exact,5.257435917270374e-34,5.2574525529950005e-22,exact
+2,"f, Dx, Dy",Dx,exact,3.1180410259470155e-43,3.118045709388706e-27,exact
+2,"f, Dx, Dy",Dy,exact,6.353517588240167e-44,6.353523400395714e-28,exact
+2,"f, Dv (directional)",f,exact,1.8386289520529083e-37,1.8349286557690108e-25,exact
+2,"f, Dv (directional)",+0.6Dx +0.8Dy,exact,2.0051601310772072e-44,2.0051704285861152e-28,exact
+2,Dx only,Dx,not exact,2.286362475206127,2.286362475206127,not exact
+2,"f, Dxx",f,exact,7.645448273298432e-35,7.645387681759842e-23,exact
+2,"f, Dxx",Dxx,not exact,2.4162520684546966,2.4162520684546966,not exact
+2,"f, Dx, Dxy",f,exact,4.67253433089815e-34,4.672551276236239e-22,exact
+2,"f, Dx, Dxy",Dx,exact,3.1477041575322745e-43,3.1477091408455762e-27,exact
+2,"f, Dx, Dxy",Dxy,not exact,5.086103163982085,5.086103163982085,not exact
+2,"f, Dx, Dy, Dxy",f,exact,3.5997891503435795e-34,3.5998022384948467e-22,exact
+2,"f, Dx, Dy, Dxy",Dx,exact,2.4038173130815196e-43,2.4038206980676286e-27,exact
+2,"f, Dx, Dy, Dxy",Dy,exact,7.973608665908165e-45,7.973584477103747e-29,exact
+2,"f, Dx, Dy, Dxy",Dxy,exact,6.9382061000160035e-43,6.938239154419715e-27,exact
+2,"f, Laplacian",f,exact,1.915017841472225e-35,1.9149634244364594e-23,exact
+2,"f, Laplacian",Dxx Dyy,not exact,6.848432628935005,6.848432628935005,not exact
+2,"f, Dx, Dy, Laplacian",f,exact,2.803144746909277e-34,2.803158017648274e-22,exact
+2,"f, Dx, Dy, Laplacian",Dx,exact,2.479295853123849e-43,2.4792996427356923e-27,exact
+2,"f, Dx, Dy, Laplacian",Dy,exact,1.264298672973225e-44,1.264294553113865e-28,exact
+2,"f, Dx, Dy, Laplacian",Dxx Dyy,exact,1.4470488354254714e-30,1.4470518366023622e-18,exact
+2,full Hermite k=2,f,exact,5.133609445545686e-34,5.133630282322231e-22,exact
+2,full Hermite k=2,Dx,exact,4.005208949161641e-43,4.005215258853277e-27,exact
+2,full Hermite k=2,Dy,exact,7.616314418571715e-44,7.616324128243559e-28,exact
+2,full Hermite k=2,Dxx,exact,2.222809042153792e-30,2.2228138315902927e-18,exact
+2,full Hermite k=2,Dxy,exact,7.34460661522202e-43,7.344636113148562e-27,exact
+2,full Hermite k=2,Dyy,exact,2.6624499622190147e-31,2.662458963991292e-19,exact
+2,"a2: f, Dx, Dy, Dxy",f,exact,1.4894215643748023e-32,1.4894205451271584e-20,exact
+2,"a2: f, Dx, Dy, Dxy",Dx,exact,7.80426732687384e-42,7.80425027760944e-26,exact
+2,"a2: f, Dx, Dy, Dxy",Dy,exact,7.652982063693868e-42,7.652998165019764e-26,exact
+2,"a2: f, Dx, Dy, Dxy",Dxy,exact,4.92132081211723e-40,4.9212999225559564e-24,exact
+2,"a2: f, Dx, Dy, Dxx",f,exact,1.4884528481141158e-32,1.4884518195753626e-20,exact
+2,"a2: f, Dx, Dy, Dxx",Dx,exact,7.76242780377993e-42,7.762410822947137e-26,exact
+2,"a2: f, Dx, Dy, Dxx",Dy,exact,7.588413094863087e-42,7.588429261343236e-26,exact
+2,"a2: f, Dx, Dy, Dxx",Dxx,not exact,89.06117642516102,89.06117642516102,not exact
+2,"a2: f, Dx, Dy, Dxx-Dyy",f,exact,1.4766814430084965e-32,1.4766804297744605e-20,exact
+2,"a2: f, Dx, Dy, Dxx-Dyy",Dx,exact,7.738209712084156e-42,7.738192786590042e-26,exact
+2,"a2: f, Dx, Dy, Dxx-Dyy",Dy,exact,7.552407339371229e-42,7.552423586902186e-26,exact
+2,"a2: f, Dx, Dy, Dxx-Dyy",Dxx -Dyy,exact,1.595346138297371e-30,1.5951671073987046e-18,exact
+2,"a2: f, Dx, Dy, Laplacian",f,exact,1.474836695933318e-32,1.4748356804557097e-20,exact
+2,"a2: f, Dx, Dy, Laplacian",Dx,exact,7.724721951749471e-42,7.724705040408161e-26,exact
+2,"a2: f, Dx, Dy, Laplacian",Dy,exact,7.563843296442195e-42,7.563859453284342e-26,exact
+2,"a2: f, Dx, Dy, Laplacian",Dxx Dyy,not exact,175.85499900351823,175.85499900351823,not exact
+2,KL: values + gradients at the SAME points,node 0: f,exact,6.307836771842779e-32,6.307792858000947e-20,exact
+2,KL: values + gradients at the SAME points,node 0: Dx,exact,7.478752929167722e-42,7.478977765453667e-26,exact
+2,KL: values + gradients at the SAME points,node 0: Dy,exact,3.6467980576443437e-41,3.646776917879051e-25,exact
+2,KL: values + gradients at the SAME points,node 1: f,exact,1.5200540728008213e-34,1.5200537291182438e-22,exact
+2,KL: values + gradients at the SAME points,node 1: Dx,exact,7.868517606552838e-45,7.868516517724589e-29,exact
+2,KL: values + gradients at the SAME points,node 1: Dy,exact,7.4424192608027e-44,7.4424142368041545e-28,exact
+2,KL: values + gradients at the SAME points,node 2: f,exact,1.8775344167989071e-34,1.877535162782955e-22,exact
+2,KL: values + gradients at the SAME points,node 2: Dx,exact,1.6904941250328596e-44,1.6904937409486136e-28,exact
+2,KL: values + gradients at the SAME points,node 2: Dy,exact,1.109747020281106e-44,1.1097451549650616e-28,exact
+2,KL: gradients at points WITHOUT values,node 0: f,exact,1.7406417862784972e-32,1.740627024718397e-20,exact
+2,KL: gradients at points WITHOUT values,node 1: f,exact,3.0312238688871046e-34,3.031223654461293e-22,exact
+2,KL: gradients at points WITHOUT values,node 8: Dx,not exact,0.07308954213306741,0.07308954213306741,not exact
+2,KL: gradients at points WITHOUT values,node 8: Dy,not exact,0.7442448485067749,0.7442448485067749,not exact
+2,KL: gradients at points WITHOUT values,node 9: Dx,not exact,1.5110820095683715,1.5110820095683715,not exact
+2,KL: gradients at points WITHOUT values,node 9: Dy,not exact,4.401879320838149,4.401879320838149,not exact
+2,KL: gradients at points WITHOUT values,node 10: Dx,not exact,2.0303827816633366,2.0303827816633366,not exact
+2,KL: gradients at points WITHOUT values,node 10: Dy,not exact,0.5095072489191256,0.5095072489191256,not exact

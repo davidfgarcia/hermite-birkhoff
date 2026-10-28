@@ -1,18 +1,29 @@
-dim,pattern,added,datum,err
-1,{1},f,Dx,0.0
-1,{2},"Dx, f",Dxx,0.0
-1,"{0,2}",-1Dx,f,0.0
-1,"{0,2}",-1Dx,Dxx,0.0
-1,"{1,2}",f,Dx,0.0
-1,"{1,2}",f,Dxx,0.0
-1,"{0,1,3}",-1Dxx,f,0.0
-1,"{0,1,3}",-1Dxx,Dx,0.0
-1,"{0,1,3}",-1Dxx,Dxxx,0.0
-2,Dx only,f,Dx,0.0
-2,"f, Dxx",-1Dx,f,0.0
-2,"f, Dxx",-1Dx,Dxx,0.0
-2,"f, Dx, Dxy",Dy,f,0.0
-2,"f, Dx, Dxy",Dy,Dx,0.0
-2,"f, Dx, Dxy",Dy,Dxy,0.0
-2,"f, Laplacian","-1Dx, -1Dy",f,0.0
-2,"f, Laplacian","-1Dx, -1Dy",Dxx + Dyy,2.7755575615628914e-17
+pattern,added,datum,before,after,err_after
+"1d: {0,2}",-Dx,f,exact,exact,7.193346089832155e-38
+"1d: {0,2}",-Dx,Dxx,not exact,exact,7.508667065228449e-36
+"1d: {0,3}","Dx, Dxx",f,exact,exact,3.40823688405153e-39
+"1d: {0,3}","Dx, Dxx",Dxxx,not exact,exact,1.1305003913644009e-45
+1d: {1},f,Dx,not exact,exact,4.244294172889722e-49
+1d: {2},"Dx, f",Dxx,not exact,exact,9.345710843395781e-36
+"1d: {1,2}",f,Dx,not exact,exact,2.9830915449751083e-49
+"1d: {1,2}",f,Dxx,not exact,exact,6.973263758223881e-36
+"1d: {0,1,3}",-Dxx,f,exact,exact,2.3141588118205618e-39
+"1d: {0,1,3}",-Dxx,Dx,exact,exact,1.4350516925479215e-48
+"1d: {0,1,3}",-Dxx,Dxxx,not exact,exact,3.785810990011837e-45
+"1d: {0,2,3}",-Dx,f,exact,exact,6.373605009760232e-39
+"1d: {0,2,3}",-Dx,Dxx,not exact,exact,5.8729626260802464e-36
+"1d: {0,2,3}",-Dx,Dxxx,not exact,exact,4.784525989647485e-45
+2d: Dx only,f,Dx,not exact,exact,1.949636535699766e-44
+"2d: f, Dxx",-Dx,f,exact,exact,5.444102757795927e-35
+"2d: f, Dxx",-Dx,Dxx,not exact,exact,3.0586924737368893e-31
+"2d: f, Dx, Dxy",Dy,f,exact,exact,4.753520108777053e-34
+"2d: f, Dx, Dxy",Dy,Dx,exact,exact,3.147480636477819e-43
+"2d: f, Dx, Dxy",Dy,Dxy,not exact,exact,7.234461115157654e-43
+"2d: f, Laplacian","-Dx, -Dy",f,exact,exact,1.2313035220978833e-35
+"2d: f, Laplacian","-Dx, -Dy",Dxx Dyy,not exact,exact,2.267106050443411e-31
+kl: gradient-only nodes,f,Dx,not exact,exact,9.170179195026677e-44
+kl: gradient-only nodes,f,Dy,not exact,exact,2.1255921540733818e-43
+kl: gradient-only nodes,f,Dx,not exact,exact,4.320276332705142e-42
+kl: gradient-only nodes,f,Dy,not exact,exact,2.8590311013665927e-42
+kl: gradient-only nodes,f,Dx,not exact,exact,1.6136407007778057e-43
+kl: gradient-only nodes,f,Dy,not exact,exact,2.30111558811784e-43
