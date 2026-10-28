@@ -126,6 +126,8 @@ formula for the error in each datum.
   \item A convergence theorem for compactly supported $C^\infty$ singular weights
         (Theorem~\ref{thm:convergence}): $|D^\beta(u-f)|\le C\delta^{m+1-|\beta|}$ for
         $|\beta|\le m$, under a local norming condition on the data, uniformly up to the nodes.
+        This extends Levin's approximation-order result for function values~\cite{Levin1998} to
+        Hermite--Birkhoff data and to derivatives.
   \item Numerical experiments in one, two and three dimensions that confirm each of these
         statements datum by datum, based on a numerically stable evaluator of SWIMLS.
 \end{enumerate}
@@ -426,6 +428,18 @@ $|x-x_i|^\alpha$; this is the term $|x-x_i|^\alpha\sigma(x)$. The part they cann
 $\nu(x)\in N_i$, is decided by the other nodes: at $x=x_i$ it is the polynomial $Z(x_i)$ that fits
 their data best among all polynomials that match the data at $x_i$, but in general it moves
 with $x$. Both $\nu$ and $\sigma$ are smooth, and this is what makes $u$ smooth at the nodes.
+
+\begin{remark}\label{rem:bg}
+The smoothness of $u$ alone can also be obtained from the Backus--Gilbert form of moving least
+squares~\cite[Proposition~1]{Levin1998}, in which the coefficients of the data minimise
+$\sum w_{j}(x)^{-1}a_{j,s}^2$ subject to polynomial reproduction; the singular weights then enter
+through the smooth functions $w_j^{-1}=\rho_j^{-1}|x-x_j|^\alpha$. The augmented matrix
+$\bigl(\begin{smallmatrix}D&E\\E^{\mathsf T}&0\end{smallmatrix}\bigr)$ of this problem, with
+$D=2\operatorname{diag}(w_j^{-1})$, remains invertible at $x=x_i$ exactly when the data at $x_i$
+are linearly independent on $\Pm$, i.e.\ under~\ref{A2}; for function values this is Levin's
+argument~\cite[Proposition~2 and Theorem~3]{Levin1998}. Theorem~\ref{thm:structure} gives
+more: the decomposition~\eqref{eq:structure}, on which the error analysis rests.
+\end{remark}
 
 \begin{remark}\label{rem:odd}
 The decomposition~\eqref{eq:structure} is canonical up to the choice of the complement $R$ of
@@ -873,13 +887,15 @@ $\|D^\beta(u-f)\|_{L^\infty(\Omega)}\le C\,h^{m+1-|\beta|}|f|_{m+1,\Omega_\delta
 $\Omega_\delta=\Omega+B(0,\delta)$.
 \end{theorem}
 
-The constant comes from a compactness argument and is not explicit. The bound has the same
-order as for classical moving least squares with value
-data~\cite{Levin1998,Wendland2005,Zuppa2003,Mirzaei2015}, and it holds near and at the nodes,
-where the weights are singular. The structure of the proof is the classical one, polynomial
-reproduction and a bound on a scaled Lebesgue function; what is new is the bound near the
-nodes, which rests on Theorem~\ref{thm:structure}, and the treatment of general differential
-data.
+The constant comes from a compactness argument and is not explicit. For function values,
+local polynomials and interpolating weights that behave like $|x-x_j|^{-2}$ near the nodes, the
+estimate with $\beta=0$ is Levin's approximation-order theorem~\cite[Theorem~5]{Levin1998}, and
+our proof follows his: polynomial reproduction, continuity of the coefficients as functions of
+the local configuration, and invariance under scaling, for compactly supported $C^\infty$
+weights and separated nodes. Theorem~\ref{thm:convergence} extends it to every even $\alpha$,
+to Hermite--Birkhoff data (where the scaling of the derivative data in~\eqref{eq:Jdelta} is
+essential), and to the derivatives of the interpolant up to order $m$; for non-interpolating
+moving least squares with values, bounds of this type are in~\cite{Wendland2005,Zuppa2003,Mirzaei2015}.
 
 \begin{proof}
 \emph{Step 1: shape functions and reproduction.} The minimiser of~\eqref{eq:Jdelta} is linear in
@@ -992,8 +1008,9 @@ $t=|z_i|^\alpha$ it gives the shape functions near $\mathcal C_0$, as $C^\infty$
   \item \emph{Compact support.} The proof uses that only the finitely many nodes in
         $B(x,\delta)$ influence $u(x)$, so that the scaled configurations form a compact set.
         For weights with a Gaussian factor every node contributes, and an extension would need
-        estimates of the tails; the experiments of Section~\ref{sec:numerics} show the same
-        rates for such weights.
+        estimates of the tails; Levin already expected such an extension for
+        values~\cite[p.~1524]{Levin1998}, and the experiments of Section~\ref{sec:numerics}
+        show the same rates for such weights.
   \item \emph{Scaling of derivative data.} The factors $\delta^{2r_{j,s}}$ in~\eqref{eq:Jdelta}
         make the scaled problem independent of $\delta$. Without them the relative weight of
         derivative data grows like $\delta^{-2r}$ as $\delta\to0$, and the argument does not
