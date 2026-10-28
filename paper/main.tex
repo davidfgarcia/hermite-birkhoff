@@ -604,8 +604,9 @@ $\partial_x\partial_y^2f$, since $\Delta\xi_1^3=6\xi_1=3\,\Delta(\xi_1\xi_2^2)$.
 \begin{example}\label{ex:harmonic}
 Data given by harmonic symbols are reproduced with the smallest exponent $\alpha=2$, whatever
 their order, as soon as the symbol space at each node is D-invariant, since derivatives of
-harmonic polynomials are harmonic. Toan, Mai, Long and Phung~\cite[Theorem~4.1]{ToanMaiLongPhung2026}
-construct regular interpolation schemes of degree $n$ from such data only: the $k$-th node carries
+harmonic polynomials are harmonic. Toan, Mai, Long and Manh~\cite[Theorem~4.1]{ToanMaiLongPhung2026}
+construct regular interpolation schemes of degree $n\ge2$ from such data only, for any distinct
+nodes: the $k$-th node carries
 every harmonic symbol of degree at most $n-2k+2$, for $k=1,\dots,\lfloor n/2\rfloor+1$, and the
 total number of data equals $\dim\Pi_n$. With $m=n$ and $\alpha=2$, SWIMLS on nodes carrying
 such data reproduces every datum, by Corollary~\ref{cor:exact}; Section~\ref{sec:hermite-num}
@@ -1320,13 +1321,14 @@ cardinal basis functions}, Appl. Math. Comput. \textbf{218} (2012), 9248--9260,
 doi:10.1016/j.amc.2012.03.002.
 
 \bibitem{Coman1998}
-Gh.~Coman, \emph{Shepard operators of {B}irkhoff type}, Calcolo \textbf{35} (1998), 197--203.
-% from the reference list of DellAccioDiTommasoSurvey; not checked against the journal
+Gh.~Coman, \emph{Shepard operators of {B}irkhoff-type}, Calcolo \textbf{35} (1998), no.~4,
+197--203, doi:10.1007/s100920050016.
+% verified: https://link.springer.com/article/10.1007/s100920050016
 
 \bibitem{CalderonZygmund1964}
 A.~P. Calder\'on and A.~Zygmund, \emph{On higher gradients of harmonic functions}, Studia Math.
-\textbf{24} (1964), 211--226.
-% TO VERIFY (title, pages)
+\textbf{24} (1964), no.~2, 211--226, doi:10.4064/sm-24-2-211-226.
+% verified: IMPAN journal page; Ch. 2, Lemma 1 as quoted in ToanMaiLongPhung2026, Remark 2.5
 
 \bibitem{deBoor2005}
 C.~de Boor, \emph{Ideal interpolation}, Approximation Theory XI: Gatlinburg 2004 (C.~K. Chui, M.~Neamtu, and L.~L. Schumaker, eds.), Nashboro Press, Brentwood, TN, 2005, pp.~59--91.
@@ -1343,7 +1345,9 @@ doi:10.1016/j.cam.2015.12.016.
 
 \bibitem{DellAccioDiTommasoSurvey}
 F.~Dell'Accio and F.~Di Tommaso, \emph{Scattered data interpolation by {S}hepard's like methods:
-classical results and recent advances}, Dolomites Res. Notes Approx. \textbf{9} (2016), 32--44.
+classical results and recent advances}, Dolomites Res. Notes Approx. \textbf{9} (2016), Special
+Issue, 32--44, doi:10.14658/pupj-drna-2016-Special\_Issue-5.
+% verified: DRNA bibliography page (EMIS mirror)
 
 \bibitem{Farwig1986}
 R.~Farwig, \emph{Rate of convergence of {S}hepard's global interpolation formula}, Math. Comp.
@@ -1391,8 +1395,8 @@ D.~H. McLain, \emph{Two dimensional interpolation from random data}, Comput. J. 
 
 \bibitem{Mirzaei2015}
 D.~Mirzaei, \emph{Analysis of moving least squares approximation revisited}, J. Comput. Appl.
-Math. (2015); preprint arXiv:1501.04969.
-% verified: arXiv abstract page and CORE record (journal, year); volume and pages not verified
+Math. \textbf{282} (2015), 237--250.
+% volume and pages from two citing papers (BIT 2017; arXiv:1508.07539); DOI not verified
 
 \bibitem{MirzaeiSchabackDehghan2012}
 D.~Mirzaei, R.~Schaback, and M.~Dehghan, \emph{On generalized moving least squares and diffuse derivatives}, IMA J. Numer. Anal. \textbf{32} (2012), no.~3, 983--1000, doi:10.1093/imanum/drr030.
@@ -1433,9 +1437,10 @@ from optimality}, ESAIM Math. Model. Numer. Anal. \textbf{39} (2005), 883--908,
 doi:10.1051/m2an:2005039.
 
 \bibitem{ToanMaiLongPhung2026}
-Toan, Mai, Long, and Phung, \emph{Multivariate {H}ermite interpolation with interpolation
-conditions induced by harmonic polynomials}, J. Approx. Theory \textbf{318} (2026), 106303.
-% TO VERIFY (full author names, DOI)
+D.~V. Toan, T.~T.~T. Mai, T.~V. Long, and P.~V. Manh, \emph{Multivariate {H}ermite interpolation with
+interpolation conditions induced by harmonic polynomials}, J. Approx. Theory \textbf{318} (2026),
+106303, doi:10.1016/j.jat.2026.106303.
+% verified: the article PDF (first page and running heads) and Elsevier metadata
 
 \bibitem{Wendland2005}
 H.~Wendland, \emph{Scattered Data Approximation}, Cambridge Monographs on Applied and Computational Mathematics, vol.~17, Cambridge University Press, Cambridge, 2005, doi:10.1017/CBO9780511617539.

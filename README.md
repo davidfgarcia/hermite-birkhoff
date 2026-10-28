@@ -24,10 +24,11 @@ item is closed. Closed items are marked "Done <date>".
 
 ### Paper content
 
-- [ ] **Harmonic stencils (optional).** Toan et al., Thm 4.1, build regular schemes from harmonic
+- [x] **Harmonic stencils (optional).** Done Oct 28: Example 4.8. Toan et al., Thm 4.1, build regular schemes from harmonic
   data only (node k carries every harmonic symbol of degree ≤ d − 2k + 2, k = 1..⌊d/2⌋ + 1). With
   α = 2 SWIMLS reproduces all of them: a remark or example next to the "harmonic node" of E1.
-- [ ] **Data defined by an operator equation (optional).** A datum whose value comes from a
+- [x] **Data defined by an operator equation (optional).** Done Oct 28: one paragraph of outlook at
+  the end of the conclusions. A datum whose value comes from a
   differential equation (e.g. y″ or Δu at a node) is just another Hermite–Birkhoff datum, and the
   exactness rule says when it is reproduced (α = 4 for y″ in 1-D and for Δu in d-D, since
   Δ|ξ|² ≠ 0). At most one sentence of outlook; the BVP work belongs to paper 2.
@@ -59,18 +60,26 @@ item is closed. Closed items are marked "Done <date>".
     stencils for the "harmonic node" of E1 and for the 2-D work in swimls-bvps.
   - Their "Taylor type polynomial" is the harmonic projection under the same apolar (Fischer)
     inner product, and they note that this product is also called Bombieri.
-- [ ] **Cite Toan et al. (JAT 2026) and Calderón–Zygmund (1964)** next to the Fischer adjointness
-  lemma and the condition-(ii) discussion. One option is to state the decomposition above as a
-  remark: it explains why (ii) is the natural condition. *(Paper text: whoever owns
-  `paper/main.tex`.)*
+- [x] **Cite Toan et al. (JAT 2026) and Calderón–Zygmund (1964)** next to the Fischer adjointness
+  lemma and the condition-(ii) discussion. Done Oct 28: Remark 3.2 states the orthogonal
+  decomposition Π_n = ker Δ^ℓ ⊕ |z|^(2ℓ) Π_(n−2ℓ) and cites both; the condition-(ii) discussion
+  refers to it.
 - [ ] **"Cited by" check** in Google Scholar or Scopus for Komargodski–Levin (2006) and Levin (1998).
-  The citation databases were unreachable during the search.
-- [ ] **HAL hal-01007945**, "Blended Hermite MLS Approximation for Discretizing Biharmonic PDEs":
-  take a look (blocked during the search).
-- [ ] **Mirzaei (2015)**, J. Comput. Appl. Math.: confirm volume, pages and DOI.
-- [ ] **Shepard (1968)**: confirm the DOI against the ACM page.
-- [ ] **Coman (1998)**, Calcolo 35, and the Dell'Accio–Di Tommaso survey (Dolomites Res. Notes
-  Approx. 9, 2016): confirm the bibliographic data against the journals.
+  Partly done Oct 28: Google Scholar lists 33 works citing Komargodski–Levin, but blocks automated
+  access to the list (CAPTCHA), so it has to be read by hand:
+  https://scholar.google.com/scholar?cites=18392318205662650330 . Those found by web search are
+  tangential (Ghorbani–Garshasbi 2021, 1-D Hermite Shepard/MLS without theory; Joyot et al. 2008,
+  below; engineering Hermite-MLS papers). Levin (1998) still to filter for derivative data.
+- [x] **HAL hal-01007945**, "Blended Hermite MLS Approximation for Discretizing Biharmonic PDEs".
+  Done Oct 28: Joyot, Chinesta, Villon, Khoshnoudirad, WCCM-VIII (Venice, 2008), conference
+  abstract; Hermite MLS for fourth-order PDEs in structural mechanics. Tangential, no overlap.
+- [x] **Mirzaei (2015)**, J. Comput. Appl. Math. Done Oct 28: vol. 282, pp. 237–250 (from two
+  citing papers); the DOI could not be confirmed and is left out.
+- [x] **Shepard (1968)**. Done Oct 28: DOI 10.1145/800186.810616 matches the ACM DL record
+  (pages 517–524 from secondary sources).
+- [x] **Coman (1998)** and the **Dell'Accio–Di Tommaso survey**. Done Oct 28: Calcolo 35(4)
+  197–203, doi:10.1007/s100920050016 (Springer); DRNA 9 (2016) Special Issue, 32–44,
+  doi:10.14658/pupj-drna-2016-Special_Issue-5. Toan et al. and Calderón–Zygmund verified too.
 
 ### Code
 
