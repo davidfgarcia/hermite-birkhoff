@@ -73,6 +73,31 @@ published Zenodo record. All three repos stay private until then.
    repos public, only when paper 2 is ready to submit. Put the reserved DOIs in paper 2's
    bibliography.
 
+#### Patent prior art: first pass (Oct 29, keyword search on Google Patents)
+
+Not a professional search: keyword queries in English and Chinese on Google Patents. To be
+redone by a patent attorney (classification search, e.g. CPC G06F17/13, G06F17/17, G06F30/23)
+before the non-provisional. **Nothing found claims MLS with singular (interpolating) weights and
+Hermite–Birkhoff data, or collocation with nodal derivative unknowns on such a trial space.**
+Nearest documents:
+- US6718291B1, Shapiro & Tsukanov (Intact Solutions), priority 1999: mesh-free solution
+  structures with implicit (R-function) geometry; boundary conditions incl. Neumann interpolated
+  by inverse-distance-type functions. Expired (2022). Relevant to the R-function future-work item.
+- US7499050B2 / US20060103648A1, Livermore Software (now Ansys), priority 2004: mesh-free
+  (MLS, Galerkin-type) analysis of 3-D shells. No derivative nodal data. Expired.
+- US20070165025A1 / US20080246767A1, IBM, priority 2006: re-meshing via implicit MLS fields
+  that interpolate the surface and match normals (gradient data). Expired (adjusted 2026-07-31).
+- CN115803744A, Oxford University Innovation, priority 2020, pending: hybrid grid/meshfree
+  "algebraic volume" finite-volume method; flux derivatives at nodes from weighted least squares.
+  Finite-volume based, no SWIMLS, no collocation with Hermite data.
+- CN102831280A: MLS-based meshless deformation simulation (graphics). CN101944144A: meshless
+  cloth simulation. CN108520146A, CN113779802A: element-free Galerkin variants. Not close.
+- Searched without relevant hits: "interpolating/Hermite moving least squares", MLS +
+  collocation + Gauss points / orthogonal spline collocation, RBF collocation with Hermite data,
+  scattered-data interpolation with gradients and compact-support weights.
+Open: the Google Scholar "cited by" check for Komargodski–Levin (2006) and Levin (1998) (papers,
+not patents), by hand; see Literature and references.
+
 ### Paper content
 
 - [x] **Harmonic stencils (optional).** Done Oct 28: Example 4.8. Toan et al., Thm 4.1, build regular schemes from harmonic
