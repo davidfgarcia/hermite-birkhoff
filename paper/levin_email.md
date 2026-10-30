@@ -34,5 +34,6 @@ https://github.com/davidfgarcia/hermite-birkhoff.
 
 With best regards,
 
-David Figueiras Garcia
+David Figueiras-Garcia
 Seattle, Washington, USA
+david@figueiras-garcia.net
