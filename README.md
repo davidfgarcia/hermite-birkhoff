@@ -56,6 +56,23 @@ to boundary value problems, lives in `swimls-bvps` and will cite this one, so pa
 (and ideally to a journal) first. This is the single list for paper 1; it stays here until every
 item is closed. Closed items are marked "Done <date>".
 
+### Release sequence (decided by David, Oct 29) — keep this order
+
+Nothing may become public before step 1: no arXiv, no email to Levin, no public repo, no
+published Zenodo record. All three repos stay private until then.
+
+1. [ ] **Patent:** file the US provisional application (micro entity, $65). Paper 1 and paper 2
+   drafts as the specification. Record the filing date and application number here; the
+   12-month deadline for the non-provisional (and PCT, if wanted) runs from that date.
+2. [ ] **Levin email** (`hermite-birkhoff/paper/levin_email.md`): send on or after the filing day.
+3. [ ] **Paper 1 to arXiv:** upload `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`; affiliation
+   "Independent researcher"; arXiv's default non-exclusive license. Then make
+   `hermite-birkhoff` public and add "Patent pending" to the README License section.
+4. [ ] **Zenodo:** drafts and reserved DOIs for `swimls-bvps` and `quadrature-bvps` may be
+   prepared now (license: PolyForm Noncommercial 1.0.0), but publish them, and make those
+   repos public, only when paper 2 is ready to submit. Put the reserved DOIs in paper 2's
+   bibliography.
+
 ### Paper content
 
 - [x] **Harmonic stencils (optional).** Done Oct 28: Example 4.8. Toan et al., Thm 4.1, build regular schemes from harmonic
