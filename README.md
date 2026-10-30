@@ -255,9 +255,10 @@ Alexa–Adamson 2009 (singular-weight point set surfaces with Hermite/normal dat
 
 ### Before and after submission
 
-- [ ] **Venue** (David's decision). Recommendation: J. Approx. Theory first (approximation theory
-  with numerical support; Toan et al. 2026 appeared there), then Adv. Comput. Math. Constructive
-  Approximation would want more theory (a proof of Conjecture 4.19).
+- [x] **Venue**: **Journal of Approximation Theory** (decided by David, Oct 29, 2026). Fallback:
+  Adv. Comput. Math.; Constructive Approximation only with more theory (a proof of Conjecture
+  4.19). Submit after the arXiv posting; check JAT's guide for authors then (a clean PDF is
+  enough for the first submission; the Elsevier class only after acceptance).
 - [ ] **arXiv** (David submits; needs his arXiv account), then journal submission, before paper 2.
   When posted, write the arXiv number in "Results cited by paper 2" above, for paper 2 to cite.
   The source package is built by `bash paper/make_arxiv.sh` → `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`
