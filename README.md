@@ -46,6 +46,10 @@ The software in this repository is licensed under the
 - **Commercial use requires a separate commercial license**, which may involve fees. Contact
   david@figueiras-garcia.net.
 
+**Patent pending:** US provisional patent application 64/187,586 (filed October 29, 2026) covers
+the methods implemented here. For non-commercial use, the license above includes the necessary
+patent rights.
+
 The paper sources (`paper/`) are not covered by this license: © 2026 David Figueiras-Garcia,
 all rights reserved.
 
@@ -76,7 +80,8 @@ Step 1 done Oct 29, 2026: steps 2–4 may now go ahead ("patent pending").
    - The correspondence address on file is temporary: when David moves, file form AIA/122
      in Patent Center.
    - The official filing receipt arrives in Patent Center in a few weeks: check names and title.
-2. [ ] **Levin email** (`hermite-birkhoff/paper/levin_email.md`): send on or after the filing day.
+2. [ ] **Levin email** (final draft kept outside the repo, with the arXiv endorsement request):
+   send once this repo is public.
 3. [ ] **Paper 1 to arXiv:** upload `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`; affiliation
    "Independent researcher"; arXiv's default non-exclusive license. Then make
    `hermite-birkhoff` public and add "Patent pending" to the README License section.
@@ -271,5 +276,5 @@ Alexa–Adamson 2009 (singular-weight point set surfaces with Hermite/normal dat
     least-squares" (Math. Comp. 1998), and Remark 4.2 credits his Backus–Gilbert smoothness
     argument.
 
-  Attach the PDF, keep it short, and invite comments before submission. Draft: `paper/levin_email.md`
+  Attach the PDF, keep it short, and invite comments before submission. Draft kept outside the repo
   (confirm his current address first).
