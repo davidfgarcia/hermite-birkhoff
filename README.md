@@ -49,6 +49,10 @@ The software in this repository is licensed under the
 The paper sources (`paper/`) are not covered by this license: © 2026 David Figueiras-Garcia,
 all rights reserved.
 
+## AI assistance
+
+Developed with the assistance of Claude (Anthropic); see the declaration at the end of the paper (`paper/main.tex`).
+
 ## Action items
 
 Open work on paper 1 (this repo: the interpolation method on its own). Paper 2, the application
