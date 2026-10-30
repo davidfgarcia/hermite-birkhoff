@@ -58,12 +58,20 @@ item is closed. Closed items are marked "Done <date>".
 
 ### Release sequence (decided by David, Oct 29) — keep this order
 
-Nothing may become public before step 1: no arXiv, no email to Levin, no public repo, no
-published Zenodo record. All three repos stay private until then.
+Step 1 done Oct 29, 2026: steps 2–4 may now go ahead ("patent pending").
 
-1. [ ] **Patent:** file the US provisional application (micro entity, $65). Paper 1 and paper 2
-   drafts as the specification. Record the filing date and application number here; the
-   12-month deadline for the non-provisional (and PCT, if wanted) runs from that date.
+1. [x] **Patent:** US provisional application **64/187,586**, filed **Oct 29, 2026** (receipt
+   11:34 PM ET; micro entity, fee 3005, $65 paid). Specification: front
+   section + implementation appendix, paper 1 (App. A), paper 2 draft (App. B), 67 pages;
+   SHA-512 digests on the receipt match the files sent. Receipts kept by David.
+   Inventor and applicant: David Figueiras Garcia.
+   - **Deadline: Fri Oct 29, 2027** for the US non-provisional (and PCT, if wanted) claiming
+     this date; otherwise the provisional lapses. Patent attorney for that step.
+   - Material added to paper 2 after Oct 29, 2026 is not covered; if substantial, file another
+     provisional before publishing it.
+   - The correspondence address on file is temporary: when David moves, file form AIA/122
+     in Patent Center.
+   - The official filing receipt arrives in Patent Center in a few weeks: check names and title.
 2. [ ] **Levin email** (`hermite-birkhoff/paper/levin_email.md`): send on or after the filing day.
 3. [ ] **Paper 1 to arXiv:** upload `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`; affiliation
    "Independent researcher"; arXiv's default non-exclusive license. Then make
