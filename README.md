@@ -33,6 +33,22 @@ swimls-bvps notes is now Proposition 4.9, `prop:necessity`.)
 
 arXiv number of paper 1: *not yet posted* (to be filled in here when it is).
 
+## License
+
+The software in this repository is licensed under the
+[PolyForm Noncommercial License 1.0.0](LICENSE) (SPDX: `PolyForm-Noncommercial-1.0.0`).
+
+- **Non-commercial use is free, with no permission needed:** personal study, research,
+  experiment and teaching, and use by educational institutions, public research
+  organizations, charities and government bodies. If you use it, a short note to
+  david@figueiras-garcia.net is appreciated; this is a courtesy request, not a condition of
+  the license.
+- **Commercial use requires a separate commercial license**, which may involve fees. Contact
+  david@figueiras-garcia.net.
+
+The paper sources (`paper/`) are not covered by this license: © 2026 David Figueiras-Garcia,
+all rights reserved.
+
 ## Action items
 
 Open work on paper 1 (this repo: the interpolation method on its own). Paper 2, the application
