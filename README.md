@@ -95,8 +95,8 @@ Nearest documents:
 - Searched without relevant hits: "interpolating/Hermite moving least squares", MLS +
   collocation + Gauss points / orthogonal spline collocation, RBF collocation with Hermite data,
   scattered-data interpolation with gradients and compact-support weights.
-Open: the Google Scholar "cited by" check for Komargodski–Levin (2006) and Levin (1998) (papers,
-not patents), by hand; see Literature and references.
+Papers: the "cited by" check is done (Oct 29); see Literature and references. Closest paper:
+Alexa–Adamson 2009 (singular-weight point set surfaces with Hermite/normal data).
 
 ### Paper content
 
@@ -170,12 +170,41 @@ not patents), by hand; see Literature and references.
   lemma and the condition-(ii) discussion. Done Oct 28: Remark 3.2 states the orthogonal
   decomposition Π_n = ker Δ^ℓ ⊕ |z|^(2ℓ) Π_(n−2ℓ) and cites both; the condition-(ii) discussion
   refers to it.
-- [ ] **"Cited by" check** in Google Scholar or Scopus for Komargodski–Levin (2006) and Levin (1998).
-  Partly done Oct 28: Google Scholar lists 33 works citing Komargodski–Levin, but blocks automated
-  access to the list (CAPTCHA), so it has to be read by hand:
-  https://scholar.google.com/scholar?cites=18392318205662650330 . Those found by web search are
-  tangential (Ghorbani–Garshasbi 2021, 1-D Hermite Shepard/MLS without theory; Joyot et al. 2008,
-  below; engineering Hermite-MLS papers). Levin (1998) still to filter for derivative data.
+- [x] **"Cited by" check** for Komargodski–Levin (2006) and Levin (1998). Done Oct 29 through the
+  built-in browser on David's Mac: Google Scholar blocks it ("unusual traffic"), so OpenAlex and
+  Semantic Scholar were used instead. Komargodski–Levin: 19 citing works in OpenAlex, 22 in
+  Semantic Scholar (Scholar says 33; the rest are probably theses and non-indexed venues). Levin
+  (1998), 811 citing works: filtered in OpenAlex by title/abstract and full text for hermite,
+  birkhoff, "derivative data", "singular weight", "interpolating moving least", collocation
+  (60 distinct hits, all read). **Nothing does SWIMLS with general Hermite–Birkhoff data, its
+  exactness theory, or collocation on it.** To cite (none is cited yet):
+  - *Paper 1, closest:* M. Alexa, A. Adamson, "Interpolatory point set surfaces — convexity and
+    Hermite data", ACM Trans. Graph. 28(2) (2009), doi:10.1145/1516522.1516531. Point set
+    surfaces interpolate with singular weights; they report that the extension to Hermite
+    (normal) data is numerically unstable and propose a "Hermite point set surface" instead.
+    Position: implicit surfaces with normals only; ours is polynomial MLS with arbitrary
+    differential data, exactness conditions and a stable evaluator.
+  - *Paper 1:* I. V. Tokmakov, A. F. Wagner, M. Minkoff, "Gradient incorporation in
+    one-dimensional applications of interpolating moving least-squares methods for fitting
+    potential energy surfaces", Theor. Chem. Acc. (2007), doi:10.1007/s00214-007-0358-7 (IMLS with
+    gradient data, chemistry; check its weight: the chemistry IMLS usually regularises the
+    singularity). Context: the Dawes–Thompson IMLS line (J. Chem. Phys. 2007, 2008).
+  - *Paper 1:* D. Kraaijpoel, T. van Leeuwen, "Raising the order of multivariate approximation
+    schemes using supplementary derivative data", Procedia Comput. Sci. 1 (2010),
+    doi:10.1016/j.procs.2010.04.034 (generic order raising with derivative data, applies to MLS).
+  - *Paper 1/2:* G. C. Bridhani, U. Saravanan, Hermite-type MLS bases with six dof per node,
+    PARTICLES 2023 (doi:10.23967/c.particles.2023.001) and Acta Mech. (2026,
+    doi:10.1007/s00707-026-04746-x): Hermite-type MLS as a meshfree (Galerkin) basis.
+  - *Paper 2:* N. Trask, M. Maxey, X. Hu, "Compact moving least squares: an optimization framework
+    for generating high-order compact meshless discretizations", J. Comput. Phys. (2016),
+    doi:10.1016/j.jcp.2016.08.045 (compact meshless stencils; compare with the embedded variant).
+  - *Paper 2:* M. Shirzadi, M. Dehghan, A. F. Bastani, "Optimal uniform error estimates for moving
+    least-squares collocation…", Numer. Methods PDE (2020), doi:10.1002/num.22520 (MLS point
+    collocation error analysis).
+  - Also seen, lower priority: Ghorbani–Garshasbi 2021 (already noted), Ritt–Harker–O'Leary 2019
+    (value + derivative fusion, polynomials), Gambaruto 2026 (meshfree local polynomial
+    regression solver), Wang–Hao–Cheng 2014 (interpolating EFG for two-point BVPs), Schaback 2025
+    (greedy local recovery), Bayona 2019 (MLS vs RBF+poly derivatives).
 - [x] **HAL hal-01007945**, "Blended Hermite MLS Approximation for Discretizing Biharmonic PDEs".
   Done Oct 28: Joyot, Chinesta, Villon, Khoshnoudirad, WCCM-VIII (Venice, 2008), conference
   abstract; Hermite MLS for fourth-order PDEs in structural mechanics. Tangential, no overlap.
