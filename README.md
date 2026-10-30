@@ -80,8 +80,9 @@ Step 1 done Oct 29, 2026: steps 2–4 may now go ahead ("patent pending").
    - The correspondence address on file is temporary: when David moves, file form AIA/122
      in Patent Center.
    - The official filing receipt arrives in Patent Center in a few weeks: check names and title.
-2. [ ] **Levin email** (final draft kept outside the repo, with the arXiv endorsement request):
-   send once this repo is public.
+2. [x] **Levin email** sent Oct 29, 2026 (levin@tauex.tau.ac.il), with the paper PDF and a request
+   to endorse for math.NA (arXiv code O4S9PT; Levin qualifies). `hermite-birkhoff` made public the
+   same day. Waiting for endorsement; if none in 1–2 weeks, find another math.NA endorser.
 3. [ ] **Paper 1 to arXiv:** upload `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`; affiliation
    "Independent researcher"; arXiv's default non-exclusive license. Then make
    `hermite-birkhoff` public and add "Patent pending" to the README License section.
