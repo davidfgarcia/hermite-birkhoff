@@ -177,7 +177,8 @@ Alexa–Adamson 2009 (singular-weight point set surfaces with Hermite/normal dat
   (1998), 811 citing works: filtered in OpenAlex by title/abstract and full text for hermite,
   birkhoff, "derivative data", "singular weight", "interpolating moving least", collocation
   (60 distinct hits, all read). **Nothing does SWIMLS with general Hermite–Birkhoff data, its
-  exactness theory, or collocation on it.** To cite (none is cited yet):
+  exactness theory, or collocation on it.** Alexa–Adamson, Tokmakov et al. and Kraaijpoel–van
+  Leeuwen are now cited in paper 1's introduction (Oct 29); the rest are candidates:
   - *Paper 1, closest:* M. Alexa, A. Adamson, "Interpolatory point set surfaces — convexity and
     Hermite data", ACM Trans. Graph. 28(2) (2009), doi:10.1145/1516522.1516531. Point set
     surfaces interpolate with singular weights; they report that the extension to Hermite
