@@ -82,8 +82,12 @@ Step 1 done Oct 29, 2026: steps 2–4 may now go ahead ("patent pending").
    - The official filing receipt arrives in Patent Center in a few weeks: check names and title.
 2. [x] **Levin email** sent Oct 29, 2026 (levin@tauex.tau.ac.il), with the paper PDF and a request
    to endorse for math.NA (arXiv code O4S9PT; Levin qualifies). `hermite-birkhoff` made public the
-   same day. Waiting for endorsement; if none in 1–2 weeks, find another math.NA endorser.
-3. [ ] **Paper 1 to arXiv:** upload `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`; affiliation
+   same day. Levin endorsed on Oct 31, 2026 (and suggested his mesh-independent surface paper,
+   now cited as Levin 2004).
+3. [x] **Paper 1 to arXiv:** submitted Oct 31, 2026 (temporary id submit/8310244, math.NA,
+   with the Levin 2004 citation); announcement expected Mon Nov 2, 20:00 ET. Pending: arXiv
+   number into this README and paper 2's bibliography; thank-you email to Levin with the link.
+   Originally: upload `paper/arxiv/hermite-birkhoff-arxiv.tar.gz`; affiliation
    "Independent researcher"; arXiv's default non-exclusive license. Then make
    `hermite-birkhoff` public and add "Patent pending" to the README License section.
 4. [ ] **Zenodo:** drafts and reserved DOIs for `swimls-bvps` and `quadrature-bvps` may be
