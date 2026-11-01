@@ -53,6 +53,17 @@ class SWIMLS2D3(SWIMLS2D):
         if self.degree < 3:
             raise ValueError("degree >= 3 is needed for third derivatives")
 
+    def _gauss_width(self, x):
+        return self.delta
+
+    def _gauss_part(self, x, tk, r2k):
+        """first, second, third derivatives (in x) of r2 / delta^2 for a constant width."""
+        d2 = self.delta ** 2
+        P1 = {k: 2 * tk[:, k] / d2 for k in range(2)}
+        P2 = {(k, l): np.full(len(r2k), 2.0 * (k == l) / d2) for k, l in SECOND}
+        P3 = {klm: np.zeros(len(r2k)) for klm in THIRD}
+        return P1, P2, P3
+
     def phi3(self, x):
         """(phi (R,), grad (2, R), hess (3, R) [xx, xy, yy], third (4, R) [xxx, xxy, xyy, yyy])."""
         x = np.asarray(x, dtype=float)
@@ -61,23 +72,33 @@ class SWIMLS2D3(SWIMLS2D):
         if np.any(r2 < (1e-14 * max(1.0, np.ptp(self.nodes))) ** 2):
             raise ValueError("evaluation at a node: use the nodal data directly")
         a, d = self.alpha, self.delta
-        lw = -0.5 * a * np.log(r2) - r2 / d ** 2
+        dw = self._gauss_width(x)                    # Gaussian width (= delta unless overridden)
+        lw = -0.5 * a * np.log(r2) - r2 / dw ** 2
         lw -= lw.max()
         w = np.exp(lw)
-        lev = (1.0 + np.sqrt(r2) / d) ** (2 * self.degree)
+        lev = (1.0 + np.sqrt(r2) / dw) ** (2 * self.degree)
         keep = np.nonzero((w * lev > self.cutoff)[self.row_node])[0]
         nd, sy = self.row_node[keep], self.row_sym[keep]
         tk, r2k, W = t[nd], r2[nd], w[nd]
 
-        g = -a * tk / r2k[:, None] - 2 * tk / d ** 2                     # L_k
-        L2, L3 = {}, {}
+        g, L2, L3 = {}, {}, {}
+        for k in range(2):
+            g[k] = -a * tk[:, k] / r2k
         for k, l in SECOND:
             dkl = float(k == l)
-            L2[(k, l)] = (-a * (dkl / r2k - 2 * tk[:, k] * tk[:, l] / r2k ** 2) - 2 * dkl / d ** 2)
+            L2[(k, l)] = -a * (dkl / r2k - 2 * tk[:, k] * tk[:, l] / r2k ** 2)
         for k, l, m in THIRD:
             dkl, dkm, dlm = float(k == l), float(k == m), float(l == m)
             L3[(k, l, m)] = -a * (-2 * (dkl * tk[:, m] + dkm * tk[:, l] + dlm * tk[:, k]) / r2k ** 2
                                   + 8 * tk[:, k] * tk[:, l] * tk[:, m] / r2k ** 3)
+        P1, P2, P3 = self._gauss_part(x, tk, r2k)   # derivatives of r2 / width(x)^2
+        for k in range(2):
+            g[k] = g[k] - P1[k]
+        for kl in SECOND:
+            L2[kl] = L2[kl] - P2[kl]
+        for klm in THIRD:
+            L3[klm] = L3[klm] - P3[klm]
+        g = np.stack([g[0], g[1]], axis=1)
         L2f = lambda k, l: L2[tuple(sorted((k, l)))]
         h2 = {kl: g[:, kl[0]] * g[:, kl[1]] + L2[kl] for kl in SECOND}
         h3 = {}
@@ -150,3 +171,59 @@ class SWIMLS2D3(SWIMLS2D):
         hess = np.array([full(deriv(_mi(kl))) for kl in SECOND])
         third = np.array([full(deriv(_mi(klm))) for klm in THIRD])
         return u, grad, hess, third
+
+
+class SWIMLS2D3V(SWIMLS2D3):
+    """SWIMLS2D3 with a position-dependent Gaussian width delta(x) and EXACT derivatives of the
+    resulting approximant (the d delta / dx terms included).  The polynomial basis and the row
+    scaling keep the constant `delta` given to the constructor (a change of basis and of row units,
+    which does not change the local fit), so only the weight depends on delta(x):
+        log w = -(alpha/2) log r2 - r2 u(x),   u = delta(x)^-2,
+        d(r2 u) = r2_k u + r2 u_k, ...  (r2_k = 2 t_k, r2_kl = 2 d_kl, r2_klm = 0).
+    width_fn(x) -> (d, d1 (2,), d2 (3,) [xx, xy, yy], d3 (4,) [xxx, xxy, xyy, yyy])."""
+
+    def __init__(self, *args, width_fn=None, **kw):
+        super().__init__(*args, **kw)
+        if width_fn is None:
+            raise ValueError("width_fn is required")
+        self.width_fn = width_fn
+        self._cache = None
+
+    def _w(self, x):
+        key = (float(x[0]), float(x[1]))
+        if self._cache is None or self._cache[0] != key:
+            self._cache = (key, self.width_fn(np.asarray(x, float)))
+        return self._cache[1]
+
+    def _gauss_width(self, x):
+        return self._w(x)[0]
+
+    def _gauss_part(self, x, tk, r2k):
+        dd, d1, d2v, d3v = self._w(x)
+        D2 = {(0, 0): d2v[0], (0, 1): d2v[1], (1, 1): d2v[2]}
+        D3 = dict(zip(THIRD, d3v))
+        dl = lambda *ix: D2[tuple(sorted(ix))] if len(ix) == 2 else D3[tuple(sorted(ix))]
+        u = dd ** -2.0
+        uk = {k: -2 * dd ** -3 * d1[k] for k in range(2)}
+        ukl = {(k, l): 6 * dd ** -4 * d1[k] * d1[l] - 2 * dd ** -3 * dl(k, l) for k, l in SECOND}
+        uf = lambda k, l: ukl[tuple(sorted((k, l)))]
+        uklm = {}
+        for k, l, m in THIRD:
+            uklm[(k, l, m)] = (-24 * dd ** -5 * d1[k] * d1[l] * d1[m]
+                               + 6 * dd ** -4 * (dl(k, l) * d1[m] + dl(k, m) * d1[l] + dl(l, m) * d1[k])
+                               - 2 * dd ** -3 * dl(k, l, m))
+        r1 = {k: 2 * tk[:, k] for k in range(2)}
+        r2d = lambda k, l: 2.0 * (k == l)
+        P1 = {k: r1[k] * u + r2k * uk[k] for k in range(2)}
+        P2 = {(k, l): r2d(k, l) * u + r1[k] * uk[l] + r1[l] * uk[k] + r2k * ukl[(k, l)]
+              for k, l in SECOND}
+        P3 = {}
+        for k, l, m in THIRD:
+            P3[(k, l, m)] = (r2d(k, l) * uk[m] + r2d(k, m) * uk[l] + r2d(l, m) * uk[k]
+                             + r1[k] * uf(l, m) + r1[l] * uf(k, m) + r1[m] * uf(k, l)
+                             + r2k * uklm[(k, l, m)])
+        return P1, P2, P3
+
+    def phi(self, x):
+        u, g, H, _ = self.phi3(x)
+        return u, g, H
